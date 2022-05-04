@@ -51,3 +51,7 @@ void Pendulum::applyTorque(double torque)
 	// Update angle
 	this->setAngle(this->getAngle() + this->getVelocity() * TIME_DELTA);
 }
+
+Pendulum::Pendulum(double a, double v): angle{a}, velocity{v}
+{
+}

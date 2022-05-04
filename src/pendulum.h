@@ -16,10 +16,10 @@
 */
 class Pendulum {
 private:
-	/// Current angle of the pendulum in [-M_PI; M_PI]
+	/// Current angle of the pendulum in radians.
 	double angle;
 
-	/// Current velocity of the pendulum in[-1; 1]
+	/// Current velocity of the pendulum in [-MAX_SPEED; MAX_SPEED]
 	double velocity;
 
 	/// Setter for angle state
@@ -58,11 +58,21 @@ public:
 	/**
 	* \brief Apply the given torque to the pendulum and advance the simulation.
 	*
-	* \param[in] torque the torque applied to the pendulum. If the given value 
-	* is not within the [-MAX_TORQUE, MAX_TORQUE] interval, it will be 
+	* \param[in] torque the torque applied to the pendulum. If the given value
+	* is not within the [-MAX_TORQUE, MAX_TORQUE] interval, it will be
 	* saturated to the closest bound.
 	*/
 	void applyTorque(double torque);
+
+	/**
+	* \brief Default constructor for a pendulum.
+	*
+	* \param[in] a the initial angular position of the pendulum. Default value 
+	* is 0.0, that is downard position.
+	* \param[in] c the initial angular velocity of the pendulum. Default value 
+	* is 0.0.
+	*/
+	Pendulum(double a = 0.0, double v = 0.0);
 
 };
 
