@@ -7,6 +7,10 @@
 #ifndef PENDULUM_H
 #define PENDULUM_H
 
+#define _USE_MATH_DEFINES // To get M_PI
+#include <math.h>
+#include <cmath>
+
 /**
 * \brief Inverted pendulum class
 *
@@ -72,7 +76,7 @@ public:
 	* \param[in] c the initial angular velocity of the pendulum. Default value 
 	* is 0.0.
 	*/
-	Pendulum(double a = 0.0, double v = 0.0);
+	Pendulum(double a = M_PI, double v = 0.0);
 
 };
 

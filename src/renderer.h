@@ -23,7 +23,7 @@
 /**
 * Namespace for rendering pendulum with the SDL2 lib.
 */
-namespace Render {
+namespace Renderer {
 
 	/**
 	* \brief Initializes SDL renderer and TTF font
@@ -31,9 +31,32 @@ namespace Render {
 	void renderInit();
 
 	/**
+	 * \brief Function for rendering text in the displayed window.
+	 *
+	 * \param[in] text The string of character to display.
+	 * \param[in] posX Abscissa of the text top-left corner.
+	 * \param[in] posY Ordinate of the text top-left corner.
+	 */
+	void displayText(const char* text, int posX, int posY);
+
+	/**
+	 * \brief Display the environment.
+	 *
+	 * \param[in] state Current angle of the pendulum to display.
+	 * \param[in] torque the torque currently applied to the pendulum.
+	 * \param[in] frame the frame number to display in the top left corner.
+	 * \param[in] generation the generation number to display in the top left corner.
+	 * \return An boolean value is returned to the controller loop depending
+	 * on the action made by the user:
+	 * - true: Exit the program.
+	 * - false: No event
+	 */
+	bool renderEnv(double state, double torque, uint64_t frame, uint64_t generation);
+
+	/**
 	 * \brief Close SDL and destroy opened textures.
 	*/
 	void renderFinalize();
-}
+};
 
 #endif // !RENDERER_H

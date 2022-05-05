@@ -4,8 +4,6 @@
 * \license CeCILL-C
 */
 
-#define _USE_MATH_DEFINES // To get M_PI
-#include <cmath>
 #include <algorithm>
 
 #include "pendulum.h"
