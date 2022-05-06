@@ -26,12 +26,6 @@ private:
 	/// Current velocity of the pendulum in [-MAX_SPEED; MAX_SPEED]
 	double velocity;
 
-	/// Setter for angle state
-	void setAngle(double newValue);
-
-	/// Setter for velocity
-	void setVelocity(double newValue);
-
 public:
 	// Constants for the pendulum behavior
 
@@ -61,6 +55,12 @@ public:
 
 	/// Getter for velocity
 	double getVelocity() const;
+
+	/// Setter for angle state
+	void setAngle(double newValue);
+
+	/// Setter for velocity
+	void setVelocity(double newValue);
 
 	/**
 	* \brief Apply the given torque to the pendulum and advance the simulation.

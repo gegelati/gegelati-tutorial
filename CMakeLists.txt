@@ -210,6 +210,7 @@ file(GLOB
 	training_files
 	./src/training/*.cpp
 	./src/training/*.h
+	params.json
 )
 include_directories(${GEGELATI_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2IMAGE_INCLUDE_DIR} ${SDL2TTF_INCLUDE_DIR} "./src/")
 add_executable(tpg-training ${pendulum_files} ${training_files})

@@ -7,7 +7,10 @@
 #ifndef PENDULUM_WRAPPER_H
 #define PENDULUM_WRAPPER_H
 
+#define SOLUTION
+
 #include <gegelati.h>
+#include "pendulum.h"
 
 /**
 * \brief Learning environment wrapper for interfacing the pendulum with GEGELATI.
@@ -22,6 +25,19 @@ protected:
 	/// These actions are expressed as real numbers in [-1, 1], and will be multiplied
 	/// by the MAX_TORQUE of the Pendulum to apply the corresponding action.
 	static const std::vector<double> actions;
+
+#ifdef SOLUTION
+	/// Pendulum interfaced with the GEGELATI Lib  
+	Pendulum pendulum;    
+
+	/// DataHandler wrappers
+	Data::PrimitiveTypeArray<double> data;
+#endif
+
+#ifdef SOLUTION
+	double accumulatedReward;
+#endif // SOLUTION
+
 
 public:
 
