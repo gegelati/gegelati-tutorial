@@ -175,7 +175,7 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 	uint64_t clock = SDL_GetPerformanceCounter();
 	float elapsed = (clock - previousFrameClock) / (float)SDL_GetPerformanceFrequency();
 
-	SDL_Delay(timeDelta*1000 - elapsed);
+	SDL_Delay((Uint32)(timeDelta*1000 - elapsed));
 	previousFrameClock = SDL_GetPerformanceCounter();
 
 	// Static action selected. 

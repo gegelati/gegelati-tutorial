@@ -189,21 +189,29 @@ if (WIN32)
 endif()
 	
 # *******************************************
-# ************** Executable  ****************
+# ************** Executables  ****************
 # *******************************************
 
-# Executable to learn the TPG
-file(GLOB_RECURSE
+# Common files for all projects
+file(GLOB
 	pendulum_files
-	./src/pendulum.cpp
-	./src/renderer.cpp
-	./src/pendulum.h
-	./src/renderer.h
+	./src/*.cpp
+	./src/*.h
 )
 
-
-include_directories(${GEGELATI_INCLUDE_DIRS}  ${SDL2_INCLUDE_DIR} ${SDL2IMAGE_INCLUDE_DIR} ${SDL2TTF_INCLUDE_DIR})
-add_executable(manual-control ${pendulum_files} "./src/main-manual.cpp")
-target_link_libraries(manual-control ${GEGELATI_LIBRARIES}  ${SDL2_LIBRARY} ${SDL2IMAGE_LIBRARY} ${SDL2TTF_LIBRARY})
+# Sub project for manual control of the pendulum
+include_directories(${SDL2_INCLUDE_DIR} ${SDL2IMAGE_INCLUDE_DIR} ${SDL2TTF_INCLUDE_DIR} "./src/")
+add_executable(manual-control ${pendulum_files} "./src/manual/main-manual.cpp")
+target_link_libraries(manual-control ${SDL2_LIBRARY} ${SDL2IMAGE_LIBRARY} ${SDL2TTF_LIBRARY})
 target_compile_definitions(manual-control PRIVATE ROOT_DIR="${CMAKE_SOURCE_DIR}")
 
+# Sub project for the training of the TPG
+file(GLOB
+	training_files
+	./src/training/*.cpp
+	./src/training/*.h
+)
+include_directories(${GEGELATI_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2IMAGE_INCLUDE_DIR} ${SDL2TTF_INCLUDE_DIR} "./src/")
+add_executable(tpg-training ${pendulum_files} ${training_files})
+target_link_libraries(tpg-training ${GEGELATI_LIBRARIES} ${SDL2_LIBRARY} ${SDL2IMAGE_LIBRARY} ${SDL2TTF_LIBRARY})
+target_compile_definitions(tpg-training PRIVATE ROOT_DIR="${CMAKE_SOURCE_DIR}")

@@ -1,5 +1,5 @@
 /**
-* \file main.c
+* \file main-manual.cpp
 * \author Karol Desnos
 * \license CeCILL-C
 */
