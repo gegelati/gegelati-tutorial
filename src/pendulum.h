@@ -36,22 +36,25 @@ public:
 	// Constants for the pendulum behavior
 
 	/// Maximum angular velocity of the pendulum.
-	static const double MAX_SPEED;
+	const double MAX_SPEED;
 
 	/// Maximum torque applicable to the pendulum.
-	static const double MAX_TORQUE;
+	const double MAX_TORQUE;
 
 	/// Time step used for simulating the pendulum behavior.
-	static const double TIME_DELTA;
+	const double TIME_DELTA;
 
 	/// Gravity constant.
-	static const double G;
+	const double G;
 
 	/// Theoretical mass of the pendulum.
-	static const double MASS;
+	const double MASS;
 
 	/// Theoretical length of the pendulum.
-	static const double LENGTH;
+	const double LENGTH;
+
+	/// Theoretical length of the pendulum.
+	const double FRICTION;
 
 	/// Getter for angle state
 	double getAngle() const;
@@ -71,12 +74,22 @@ public:
 	/**
 	* \brief Default constructor for a pendulum.
 	*
-	* \param[in] a the initial angular position of the pendulum. Default value 
+	* \param[in] a the initial angular position of the pendulum. Default value
 	* is 0.0, that is downard position.
-	* \param[in] c the initial angular velocity of the pendulum. Default value 
+	* \param[in] c the initial angular velocity of the pendulum. Default value
 	* is 0.0.
+	* \param[in] maxSpeed Maximum speed of the pendulum
+	* \param[in] maxTorque maximum torque applicable to the pendulum.
+	* \param[in] timeDelta Simulation step duration.
+	* \param[in] gravity Universal constant
+	* \param[in] mass Weight of the pendulum.
+	* \param[in] length Length of the pendulum.
+	* \param[in] friction Friction slowing down the pendulum proportionally to 
+	* its velovity.
 	*/
-	Pendulum(double a = M_PI, double v = 0.0);
+	Pendulum(double a = M_PI, double v = 0.0, double maxSpeed = 16.0,
+		double maxTorque = 2.0, double timeDelta = 0.01, double gravity = 9.81,
+		double mass = 0.8, double length = 1.0, double friction = 0.005);
 
 };
 

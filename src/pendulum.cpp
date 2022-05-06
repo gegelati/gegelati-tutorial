@@ -8,13 +8,6 @@
 
 #include "pendulum.h"
 
-const double Pendulum::MAX_SPEED = 8.0;
-const double Pendulum::MAX_TORQUE = 2.0;
-const double Pendulum::TIME_DELTA = 0.05;
-const double Pendulum::G = 9.81;
-const double Pendulum::MASS = 1.0;
-const double Pendulum::LENGTH = 1.0;
-
 void Pendulum::setAngle(double newValue)
 {
 	this->angle = newValue;
@@ -46,10 +39,18 @@ void Pendulum::applyTorque(double torque)
 		(3.f / (MASS * LENGTH * LENGTH)) * torque) * TIME_DELTA);
 	this->setVelocity(std::fmin(std::fmax(this->getVelocity(), -MAX_SPEED), MAX_SPEED));
 
+	// Apply friction
+	this->setVelocity(this->getVelocity() * (1 - FRICTION));
+
 	// Update angle
 	this->setAngle(this->getAngle() + this->getVelocity() * TIME_DELTA);
 }
 
-Pendulum::Pendulum(double a, double v): angle{a}, velocity{v}
+Pendulum::Pendulum(double a, double v, double maxSpeed,
+	double maxTorque, double timeDelta, double gravity,
+	double mass, double length, double friction) :
+	angle{ a }, velocity{ v }, MAX_SPEED{ maxSpeed }, MAX_TORQUE{ maxTorque },
+	TIME_DELTA{ timeDelta }, G{ gravity }, MASS{ mass }, LENGTH{ length },
+	FRICTION{ friction }
 {
 }

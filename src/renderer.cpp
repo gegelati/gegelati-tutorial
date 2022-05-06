@@ -5,6 +5,7 @@
 #include <cmath>
 #include <float.h>
 #include <cstdio>
+#include <iostream>
 
 #include "renderer.h"
 
@@ -21,6 +22,8 @@ typedef struct sdlDisplay {
 
 // sdlDisplay instance
 static sdlDisplay display;
+
+uint64_t previousFrameClock;
 
 void Renderer::renderInit() {
 	display.screen = NULL;
@@ -91,6 +94,8 @@ void Renderer::renderInit() {
 		fprintf(stderr, "SDL: could not create texture - exiting\n");
 		exit(1);
 	}
+
+	previousFrameClock = SDL_GetPerformanceCounter();
 }
 
 void Renderer::displayText(const char* text, int posX, int posY) {
@@ -116,9 +121,10 @@ void Renderer::displayText(const char* text, int posX, int posY) {
 	/* Free resources */
 	SDL_FreeSurface(textSurf);
 	SDL_DestroyTexture(texture);
+
 }
 
-bool Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t generation) {
+int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t generation, double timeDelta) {
 	static long int i = 0;
 	static double max_fps = 0.;
 	static double avg_fps = 0.;
@@ -166,25 +172,64 @@ bool Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t g
 	SDL_RenderPresent(display.renderer);
 
 	// Smoother rendering
-	SDL_Delay(25);
+	uint64_t clock = SDL_GetPerformanceCounter();
+	float elapsed = (clock - previousFrameClock) / (float)SDL_GetPerformanceFrequency();
+
+	SDL_Delay(timeDelta*1000 - elapsed);
+	previousFrameClock = SDL_GetPerformanceCounter();
+
+	// Static action selected. 
+	// Action is reset only when key is released.
+	// This is needed because repeated action are not grabbed at every frame 
+	// even when the key remains pressed.
+	static int action = 0;
 
 	SDL_Event event;
-	// Grab next events off the queue.
-	SDL_PollEvent(&event);
-	switch (event.type)
-	{
-	case SDL_KEYDOWN:
-		switch (event.key.keysym.sym) {
-		case SDLK_q:
-			return true;
+	// Grab all next events off the queue.
+	while (SDL_PollEvent(&event)){
+		switch (event.type)
+		{
+		case SDL_KEYDOWN:
+			switch (event.key.keysym.sym) {
+			case SDLK_q:
+				action = INT_MIN;
+				break;
+			case SDLK_c:
+				action = -3;
+				break;
+			case SDLK_v:
+				action = -2;
+				break;
+			case SDLK_b:
+				action = -1;
+				break;
+			case SDLK_KP_1:
+				action = 1;
+				break;
+			case SDLK_KP_2:
+				action = 2;
+				break;
+			case SDLK_KP_3:
+				action = 3;
+				break;
+			}
+			break;
+		case SDL_QUIT:
+			action = INT_MIN;
+			break;
+		case SDL_KEYUP:
+			action = 0;
+			break;
+		default:
+			break;
 		}
-	case SDL_QUIT:
-		return true;
-	default:
-		break;
+		// Exit while loop on exit
+		if (action == INT_MIN) {
+			break;
+		}
 	}
 
-	return false;
+	return action;
 }
 
 void Renderer::renderFinalize()
