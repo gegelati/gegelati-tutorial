@@ -26,3 +26,10 @@ void fillInstructionSet(Instructions::Set& set) {
 	set.add(*(new Instructions::LambdaInstruction<double>(exp, "$0 = exp($1);")));
 	set.add(*(new Instructions::LambdaInstruction<double>(ln, "$0 = log($1);")));
 }
+
+void deleteInstructions(Instructions::Set& set)
+{
+	for (unsigned int i = 0; i < set.getNbInstructions(); i++) {
+		delete (&set.getInstruction(i));
+	}
+}

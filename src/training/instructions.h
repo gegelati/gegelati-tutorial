@@ -20,4 +20,9 @@
 */
 void fillInstructionSet(Instructions::Set& set);
 
+/**
+* Delete the dynamically allocated instructions.
+*/
+void deleteInstructions(Instructions::Set& set);
+
 #endif

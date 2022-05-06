@@ -16,18 +16,39 @@
 #include "main-training.h"
 
 int main(int argc, char** argv) {
-	std::cout << "Pendulum TPG training." << std::endl;
+	try { // Global exception catching.
 
-	// Create the instruction set for programs
-	Instructions::Set set;
-	fillInstructionSet(set);
+		std::cout << "Pendulum TPG training." << std::endl;
 
-	// Set the parameters for the learning process.
-	// Controls mutations probability, program lengths, and graph size among 
-	// other things. Loads them from the file params.json
-	Learn::LearningParameters params;
-	File::ParametersParser::loadParametersFromJson(ROOT_DIR "/params.json", params);
+		// Create the instruction instructionSet for programs
+		Instructions::Set instructionSet;
+		fillInstructionSet(instructionSet);
 
-	// Setup the learning environment
-	PendulumWrapper pw;
+		// Set the parameters for the learning process.
+		// Controls mutations probability, program lengths, and graph size among 
+		// other things. Loads them from the file params.json
+		Learn::LearningParameters params;
+		File::ParametersParser::loadParametersFromJson(ROOT_DIR "/params.json", params);
+
+		// Setup the Learning Environment (LE)
+		PendulumWrapper pendulumLE;
+
+		// Instantiate and initialize the Learning Agent (LA)
+		Learn::LearningAgent la(pendulumLE, instructionSet, params);
+		la.init();
+
+		// Basic logger for the training process
+		Log::LABasicLogger basicLogger(la);
+
+		// Train for params.nbGenerations generations
+		for (int i = 0; i < params.nbGenerations; i++) {
+			la.trainOneGeneration(i);
+		}
+
+		// Cleanup instruction set
+		deleteInstructions(instructionSet);
+	}
+	catch (const std::exception& ex) {
+		std::cerr << ex.what() << std::endl;
+	}
 }
