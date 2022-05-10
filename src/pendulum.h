@@ -51,10 +51,10 @@ public:
 	const double FRICTION;
 
 	/// Getter for angle state
-	double getAngle() const;
+	double& getAngle();
 
 	/// Getter for velocity
-	double getVelocity() const;
+	double& getVelocity();
 
 	/// Setter for angle state
 	void setAngle(double newValue);
@@ -84,7 +84,7 @@ public:
 	* \param[in] gravity Universal constant
 	* \param[in] mass Weight of the pendulum.
 	* \param[in] length Length of the pendulum.
-	* \param[in] friction Friction slowing down the pendulum proportionally to 
+	* \param[in] friction Friction slowing down the pendulum proportionally to
 	* its velovity.
 	*/
 	Pendulum(double a = M_PI, double v = 0.0, double maxSpeed = 16.0,

@@ -9,6 +9,8 @@ const std::vector<double> PendulumWrapper::actions{ 0.0 };
 #ifdef SOLUTION
 PendulumWrapper::PendulumWrapper() : LearningEnvironment(actions.size()), pendulum(), data(2)
 {
+	data.at(0).setPointer(&this->pendulum.getAngle());
+	data.at(1).setPointer(&this->pendulum.getVelocity());
 }
 #else
 PendulumWrapper::PendulumWrapper() : LearningEnvironment(actions.size())
@@ -22,7 +24,8 @@ std::vector<std::reference_wrapper<const Data::DataHandler>> PendulumWrapper::ge
 {
 #ifdef SOLUTION
 	std::vector<std::reference_wrapper<const Data::DataHandler>> result;
-	result.push_back(this->data);
+	result.push_back(this->data.at(0));
+	result.push_back(this->data.at(1));
 	return result;
 #else
 	return std::vector<std::reference_wrapper<const Data::DataHandler>>();
@@ -34,10 +37,6 @@ void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode)
 #ifdef SOLUTION
 	this->pendulum.setAngle(M_PI);
 	this->pendulum.setVelocity(0.0);
-
-	// Copy the resulting angle and velocity in the data handler
-	this->data.setDataAt(typeid(double), 0, this->pendulum.getAngle());
-	this->data.setDataAt(typeid(double), 1, this->pendulum.getVelocity());
 #endif // SOLUTION
 #ifdef SOLUTION
 	this->accumulatedReward = 0.0;
@@ -53,10 +52,6 @@ void PendulumWrapper::doAction(uint64_t actionID)
 
 	// Apply it to the pendulum
 	this->pendulum.applyTorque(torque);
-
-	// Copy the resulting angle and velocity in the data handler
-	this->data.setDataAt(typeid(double), 0, this->pendulum.getAngle());
-	this->data.setDataAt(typeid(double), 1, this->pendulum.getVelocity());
 #endif
 #ifdef SOLUTION
 	// Get the angle value between -M_PI and M_PI (0 being the upward position)

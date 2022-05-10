@@ -19,7 +19,7 @@
 * learning environment.
 */
 class PendulumWrapper : public Learn::LearningEnvironment {
-protected:
+public:
 
 	/// Array containing the actions available for the TPG.
 	/// These actions are expressed as real numbers in [-1, 1], and will be multiplied
@@ -28,18 +28,15 @@ protected:
 
 #ifdef SOLUTION
 	/// Pendulum interfaced with the GEGELATI Lib  
-	Pendulum pendulum;    
+	Pendulum pendulum;
 
 	/// DataHandler wrappers
-	Data::PrimitiveTypeArray<double> data;
+	std::vector<Data::PointerWrapper<double>> data;
 #endif
 
 #ifdef SOLUTION
 	double accumulatedReward;
 #endif // SOLUTION
-
-
-public:
 
 	PendulumWrapper();
 
@@ -95,29 +92,29 @@ public:
 	virtual void doAction(uint64_t actionID) override;
 
 	/**
-     * \brief Returns the current score of the Environment.
-     *
-     * The returned score will be used as a reward during the learning
-     * phase of a LearningAgent.
-     *
-     * \return the current score for the LearningEnvironment.
-     */
+	 * \brief Returns the current score of the Environment.
+	 *
+	 * The returned score will be used as a reward during the learning
+	 * phase of a LearningAgent.
+	 *
+	 * \return the current score for the LearningEnvironment.
+	 */
 	virtual double getScore(void) const override;
 
 	/**
-     * \brief Method for checking if the LearningEnvironment has reached a
-     * terminal state.
-     *
-     * The boolean value returned by this method, when equal to true,
-     * indicates that the LearningEnvironment has reached a terminal state.
-     * A terminal state is a state in which further calls to the doAction
-     * method will have no effects on the dataSources of the
-     * LearningEnvironment, or on its score. For example, this terminal
-     * state may be reached for a Game Over state within a game, or in case
-     * the objective of the learning agent has been successfuly reached.
-     *
-     * \return a boolean indicating termination.
-     */
+	 * \brief Method for checking if the LearningEnvironment has reached a
+	 * terminal state.
+	 *
+	 * The boolean value returned by this method, when equal to true,
+	 * indicates that the LearningEnvironment has reached a terminal state.
+	 * A terminal state is a state in which further calls to the doAction
+	 * method will have no effects on the dataSources of the
+	 * LearningEnvironment, or on its score. For example, this terminal
+	 * state may be reached for a Game Over state within a game, or in case
+	 * the objective of the learning agent has been successfuly reached.
+	 *
+	 * \return a boolean indicating termination.
+	 */
 	virtual bool isTerminal(void) const override;
 };
 

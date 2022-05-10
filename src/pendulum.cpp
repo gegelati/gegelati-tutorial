@@ -18,12 +18,12 @@ void Pendulum::setVelocity(double newValue)
 	this->velocity = newValue;
 }
 
-double Pendulum::getAngle() const
+double& Pendulum::getAngle()
 {
 	return this->angle;
 }
 
-double Pendulum::getVelocity() const
+double& Pendulum::getVelocity()
 {
 	return this->velocity;
 }

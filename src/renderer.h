@@ -7,6 +7,8 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include <deque>
+
 #define DISPLAY_W 500
 #define DISPLAY_H 500
 
@@ -53,7 +55,26 @@ namespace Renderer {
 	 * \param[in] timeDelta time in second between two frames.
 	 */
 	int renderEnv(double state, double torque, uint64_t frame, uint64_t generation, double timeDelta);
-	
+
+	/**
+	* \brief Separate control loop for displaying replays in parallel to training.
+	*
+	* Function initialazing and controlling a display rendering replays of the
+	* pendulum oscillations.
+	* This function should be launched in its own thread.
+	*
+	* \param[in,out] exit Boolean value for controlling the end of the display
+	* and the main program.
+	* \param[in,out] doDisplay Boolean value used as a semaphore to control the
+	* creation of a new replay. This boolean value is set to true to start the
+	* creation of a new replay, and this function resets it to false to
+	* indicate that the replay has been created.
+	* \param[in] generation Integer value representing the current generation
+	* of the training process.
+	* \param[in] replay deque used to transmit the replay to the secondary thread.
+	*/
+	void replayThread(std::atomic<bool>& exit, std::atomic<bool>& doDisplay, std::atomic<uint64_t>& generation, double delta, std::deque<std::tuple<uint64_t, double, double>>& replay);
+
 	/**
 	 * \brief Close SDL and destroy opened textures.
 	*/

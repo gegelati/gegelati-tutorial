@@ -30,20 +30,16 @@ void Renderer::renderInit() {
 	display.renderer = NULL;
 
 	// Initialize SDL
-	fprintf(stderr, "SDL_Init_Start\n");
 	if (SDL_Init(SDL_INIT_VIDEO)) {
 		fprintf(stderr, "Could not initialize SDL - %s\n", SDL_GetError());
 		exit(1);
 	}
-	fprintf(stderr, "SDL_Init_End\n");
 
 
 	// Initialize SDL TTF for text display
-	fprintf(stderr, "SDL_TTF_Init_Start\n");
 	if (TTF_Init()) {
 		printf("TTF initialization failed: %s\n", TTF_GetError());
 	}
-	fprintf(stderr, "SDL_TTF_Init_End\n");
 
 	// Open Font for text display
 	display.font = TTF_OpenFont(PATH_TTF, 20);
@@ -175,7 +171,7 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 	uint64_t clock = SDL_GetPerformanceCounter();
 	float elapsed = (clock - previousFrameClock) / (float)SDL_GetPerformanceFrequency();
 
-	SDL_Delay((Uint32)(timeDelta*1000 - elapsed));
+	SDL_Delay((Uint32)(std::max(1.0, timeDelta * 1000 - elapsed)));
 	previousFrameClock = SDL_GetPerformanceCounter();
 
 	// Static action selected. 
@@ -186,7 +182,7 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 
 	SDL_Event event;
 	// Grab all next events off the queue.
-	while (SDL_PollEvent(&event)){
+	while (SDL_PollEvent(&event)) {
 		switch (event.type)
 		{
 		case SDL_KEYDOWN:
@@ -230,6 +226,52 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 	}
 
 	return action;
+}
+
+void Renderer::replayThread(std::atomic<bool>& exit, std::atomic<bool>& doDisplay, std::atomic<uint64_t>& generation, double delta, std::deque<std::tuple<uint64_t, double, double>>& replay)
+{
+	// Init Display
+	renderInit();
+
+	// Initialize shared var
+	exit = false;
+	double angleDisplay = M_PI;
+	double torqueDisplay = 0.0;
+	uint64_t frame = 0;
+	std::deque<std::tuple<uint64_t, double, double>> localReplay;
+
+	while (!exit) {
+
+		// Was a replay requested?
+		if (doDisplay) {
+			// copy the replay 
+			localReplay = replay;
+			doDisplay = false;
+		}
+
+		if (!localReplay.empty()) {
+			angleDisplay = (double)std::get<1>(localReplay.front());
+			torqueDisplay = (double)std::get<2>(localReplay.front());
+			frame = std::get<0>(localReplay.front());
+			localReplay.pop_front();
+		}
+
+		int event = Renderer::renderEnv(angleDisplay, torqueDisplay, frame, generation, delta);
+		switch (event) {
+		case INT_MIN:
+			exit = true;
+			doDisplay = false;
+			break;
+		case 0:
+		default:
+			// Nothing to do
+			break;
+		}
+	}
+	Renderer::renderFinalize();
+	printf("\nProgram will terminate at the end of next generation.\n");
+	std::cout.flush();
+
 }
 
 void Renderer::renderFinalize()
