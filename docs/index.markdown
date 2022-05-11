@@ -5,14 +5,24 @@
 layout: home
 ---
 
-# Introduction
+# GEGELATI introductory tutorial
 
-# 0. Setup and build the tutorial project
+The objective of this tutorial is gently guide you through the training of your first Tangled Program Graph (TPG) with the [<span style="font-variant: small-caps;">Gegelati</span>](https://github.com/gegelati/gegelati) library. 
+People following this tutorial are assumed to be already acquainted with basic structural and evolutionary concepts of TPGs. 
+In case you're not already familiar with these concepts, a basic introduction to these concepts and to <span style="font-variant: small-caps;">Gegelati</span> can be found in the [linked 12-minute video](https://youtu.be/t0Ta5Vo5h7s).
 
-# 1. Meet the pendulum
+The following topics are covered in this tutorial:
+* Configuration of a C++ project with [<span style="font-variant: small-caps;">Gegelati</span>](https://github.com/gegelati/gegelati).
+* Manual interaction with a Reinforcement Learning (RL) environment.
+* Interfacing of a RL environment with <span style="font-variant: small-caps;">Gegelati</span>.
+* Training of a TPG.
 
-# 2. Interfacing with GEGELATI
+## 0. Setup and build the tutorial project
 
-# 3. Train your first TPG
+## 1. Meet the pendulum
 
-# 4. The fun is only beginning.
+## 2. Interfacing with GEGELATI
+
+## 3. Train your first TPG
+
+## 4. The fun is only beginning.
