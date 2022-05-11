@@ -1,11 +1,9 @@
 ---
 # Feel free to add content and custom Front Matter to this file.
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
+title: GEGELATI introductory tutorial
 layout: home
 ---
-
-# GEGELATI introductory tutorial
 
 The objective of this tutorial is gently guide you through the training of your first Tangled Program Graph (TPG) with the [<span style="font-variant: small-caps;">Gegelati</span>](https://github.com/gegelati/gegelati) library. 
 People following this tutorial are assumed to be already acquainted with basic structural and evolutionary concepts of TPGs. 
