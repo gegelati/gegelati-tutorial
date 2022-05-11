@@ -57,6 +57,21 @@ if(${TESTING})
 endif()
 
 # *******************************************
+# *********** LIBRARIES and Dat *************
+# *******************************************
+
+MESSAGE("Download dat content.")
+execute_process(COMMAND sh -c ${CMAKE_SOURCE_DIR}/dat/download_dat.sh
+				WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/dat/)
+
+if(WIN32)
+    MESSAGE("Download windows pre-built libraries.")
+	execute_process(COMMAND sh -c ${CMAKE_SOURCE_DIR}/lib/windows_download_visual_libs.sh
+					WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/lib/)
+endif()
+
+
+# *******************************************
 # *********** GEGELATI LIBRARY **************
 # *******************************************
 
