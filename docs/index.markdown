@@ -5,6 +5,10 @@ title: GEGELATI introductory tutorial
 layout: home
 ---
 
+{% details Read more about that **thing**... %}
+  That **thing** is...
+{% enddetails %}
+
 The objective of this tutorial is to gently guide you through the training of your first Tangled Program Graph (TPG) with the [<span style="font-variant: small-caps;">Gegelati</span>](https://github.com/gegelati/gegelati) library. 
 People following this tutorial are assumed to be already acquainted with basic structural and evolutionary concepts of TPGs. 
 In case you're not already familiar with these concepts, a basic introduction to these concepts and to <span style="font-variant: small-caps;">Gegelati</span> can be found in the [linked 10-minute video](https://youtu.be/t0Ta5Vo5h7s).
@@ -43,10 +47,12 @@ cmake --version
 ```
 CMake version 3.12 or newer must be installed for this tutorial. 
 <details><summary>In case CMake is not installed follow the click here to display installation advice.</summary>
+
 The latest version of CMake can be downloaded at the following URL: https://cmake.org/download/. 
 For a simple installation, choose the binary version for windows. 
 During the installation process, select the "ADD TO PATH FOR ALL USERS" option. 
-Reboot your system at the end of the installation.</details>
+Reboot your system at the end of the installation.
+</details>
 
 
 ### Third-Party Library
@@ -54,11 +60,14 @@ Several third party libraries need to be installed for this tutorial: <span styl
 The installation process for different OSes is given below.
 
 <details><summary>On Windows</summary>
+
 All library binaries will be downloaded automatically when running the CMake project.
 When using MSVC, all DLLs are copied automatically in the executable foldere.
-When using other compilers, if the library are not found during the build process, please refer to the [`/tutorial-gegelati/lib/ReadMe.md`](../lib/ReadMe.md) file for solutions.</details>
+When using other compilers, if the library are not found during the build process, please refer to the [`/tutorial-gegelati/lib/ReadMe.md`](../lib/ReadMe.md) file for solutions.
+</details>
 
 <details><summary>On Linux</summary>
+
 The SDL library (`SDL2`, `SDL2_Image`, and `SDL2_ttf`) are available in most package repository.
 For example, on Ubuntu, simply type the following command:
 ```bash
@@ -72,7 +81,8 @@ git clone -b master https://github.com/gegelati/gegelati.git
 cd gegelati/bin
 cmake ..
 cmake --build . --target install # On Linux
-```</details>
+```
+</details>
 
 
 ### Tutorial files
