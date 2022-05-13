@@ -25,13 +25,15 @@ int main(int argc, char** argv) {
 	// Initialize the display
 	Renderer::renderInit();
 
-	// Simulate a few steps
+	// Available actions
+	double torques[] = { -p.MAX_TORQUE, -0.66 * p.MAX_TORQUE,  -0.33 * p.MAX_TORQUE,
+	0.0 , 0.33 * p.MAX_TORQUE, 0.66 * p.MAX_TORQUE,  p.MAX_TORQUE };
+
+	// Simulation and display loop.
 	int frame = 0;
 	bool exit = false;
 	bool forward = false;
 	double torque = 0.0;
-	double torques[] = { -p.MAX_TORQUE, -0.66 * p.MAX_TORQUE,  -0.33 * p.MAX_TORQUE,
-	0.0 , 0.33 * p.MAX_TORQUE, 0.66 * p.MAX_TORQUE,  p.MAX_TORQUE };
 	while(!exit) {
 		frame++;		
 
