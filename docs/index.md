@@ -128,7 +128,7 @@ The default parameter values were carefully chosen to give human beings a chance
 Feel free to try other configurations by parameterizing the construction of the pendulum, in the `/tutorial-gegelati/src/manual/main-manual.cpp`
 
 {% details `Pendulum` constructor documentation %}
-```C++
+```cpp
 /**
 * \brief Default constructor for a pendulum.
 *
@@ -152,8 +152,18 @@ Pendulum(double a = M_PI, double v = 0.0, double maxSpeed = 16.0,
 
 {% enddetails %}
 
-
 ## 2. Interfacing with GEGELATI
+
+To train a Tangled Program Graph with <span style="font-variant: small-caps;">Gegelati</span>, the library needs to interact with the learning environment.
+To achieve this purpose, the learning environment must be presented to the library using a standardized API.
+In the case of <span style="font-variant: small-caps;">Gegelati</span>, this interfacing is done by specializing the `Learn::LearningEnvironment` class.
+
+| LearningEnvironment |
+|:------------------- |
+|+doAction(int)       |
+
+The following step will guide you through the creation of a `PendulumWrapper` class, inheriting from the `Learn::LearningEnvironment` class and interfacing the `Pendulum` class with <span style="font-variant: small-caps;">Gegelati</span>.
+
 
 ## 3. Train your first TPG
 
