@@ -5,11 +5,20 @@ function log() {
 }
 
 ## dowload font
-curl -o DejaVuSans.ttf https://preesm.github.io/assets/downloads/DejaVuSans.ttf
+if [ ! -f "DejaVuSans.ttf" ] 
+then
+	curl -o DejaVuSans.ttf https://preesm.github.io/assets/downloads/DejaVuSans.ttf
+fi
 
 # download pendulum
-curl -o pendulum.png https://preesm.github.io/assets/downloads/pendulum.png
+if [ ! -f "pendulum.png" ] 
+then
+	curl -o pendulum.png https://preesm.github.io/assets/downloads/pendulum.png
+fi
 
 # download arrow
-curl -o arrow.png https://preesm.github.io/assets/downloads/arrow.png
+if [ ! -f "arrow.png" ] 
+then
+	curl -o arrow.png https://preesm.github.io/assets/downloads/arrow.png
+fi
 
