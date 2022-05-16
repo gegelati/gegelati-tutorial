@@ -158,9 +158,15 @@ To train a Tangled Program Graph with <span style="font-variant: small-caps;">Ge
 To achieve this purpose, the learning environment must be presented to the library using a standardized API.
 In the case of <span style="font-variant: small-caps;">Gegelati</span>, this interfacing is done by specializing the `Learn::LearningEnvironment` class.
 
-| LearningEnvironment |
-|:------------------- |
-|+doAction(int)       |
+|          LearningEnvironment       |
+|:-----------------------------------|
+|+getNbActions(): int                |
+|+getDataSources(): std::vector<>    |
+|+reset(): void                      |
+|+doAction(int): void                |
+|+getScore(): double                 |
+|+isTerminal(): bool                 |
+
 
 The following step will guide you through the creation of a `PendulumWrapper` class, inheriting from the `Learn::LearningEnvironment` class and interfacing the `Pendulum` class with <span style="font-variant: small-caps;">Gegelati</span>.
 
