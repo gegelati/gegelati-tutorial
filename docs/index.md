@@ -42,7 +42,7 @@ To check if the CMake tool is already available on your workstation simply type 
 cmake --version
 ```
 CMake version 3.12 or newer must be installed for this tutorial.
-{% details In case CMake is not installed follow the click here to display installation advice. %}
+{% details In case CMake is not installed follow the click here to display installation advice. (Click to expand) %}
 The latest version of CMake can be downloaded at the following URL: https://cmake.org/download/.
 For a simple installation, choose the binary version for windows.
 During the installation process, select the "ADD TO PATH FOR ALL USERS" option.
@@ -54,13 +54,13 @@ Reboot your system at the end of the installation.
 Several third party libraries need to be installed for this tutorial: <span style="font-variant: small-caps;">Gegelati</span>, `SDL2`, `SDL2_Image`, and `SDL2_ttf`.
 The installation process for different OSes is given below.
 
-{% details On Windows: %}
+{% details On Windows: (Click to expand) %}
 All library binaries will be downloaded automatically when running the CMake project.
 When using MSVC, all DLLs are copied automatically in the executable foldere.
 When using other compilers, if the library are not found during the build process, please refer to the [`/tutorial-gegelati/lib/ReadMe.md`](../lib/ReadMe.md) file for solutions.
 {% enddetails %}
 
-{% details On Linux: %}
+{% details On Linux: (Click to expand) %}
 The SDL library (`SDL2`, `SDL2_Image`, and `SDL2_ttf`) are available in most package repository.
 For example, on Ubuntu, simply type the following command:
 ```bash
@@ -127,7 +127,7 @@ The simulation parameters of the pendulum can be changed when instantiating the 
 The default parameter values were carefully chosen to give human beings a chance at stabilizing the pendulum.
 Feel free to try other configurations by parameterizing the construction of the pendulum, in the `/tutorial-gegelati/src/manual/main-manual.cpp`
 
-{% details `Pendulum` constructor documentation %}
+{% details `Pendulum` constructor documentation (Click to expand) %}
 ```cpp
 /**
 * \brief Default constructor for a pendulum.
@@ -188,6 +188,7 @@ static const std::vector<double> actions;
 
 #### Todo #1:
 Your first task is to update the definition of this vector in the `pendulum_wrapper.cpp` file, so that the 7 actions available to you in the manual version are also the one made available to the TPG.
+It should be noted that the size of this `vector` is automatically used in the `PendulumWrapper` constructor to initialize the `LearningEnvironment` parent class with the number of actions available.
 A single line of code needs to me modified in this task.
 
 {%details Solution to #1 %}
@@ -250,14 +251,19 @@ PointerWrapper(T* ptr = nullptr);
 void setPointer(T* ptr);
 ```
 
-#### Todo #3
+#### Todo #3:
 Instantiate two instances of the `Data::PointerWrapper` class as attributes of the `PendulumWrapper`.
 In the constructor of the `PendulumWrapper`, make these two `Data::PointerWrapper` point to the `angle` and `velocity` attributes of the `pendulum`.
 Then, update the `getDataSources()` to return a vector referring to these two `Data::PointerWrapper`.
+This task requires less than 10 lines of C++ code.
 
 _C++ tip:_ Pushing a variable `T var` to a `std::vector<std::references_wrapper<T>> vect` is done with a simple call to `vect.push_back(var)`.
 
-{% details Solution to #3 %}
+{% details Solution to #3 (Click to expand) %}
+
+This solution is based on a vector of `Data::PointerWrapper<double>`.
+Alternative solutions based on two `Data::PointerWrapper<double>` are perfectly viable.
+
 ```cpp
 /* pendulum_wrapper.h : After pendulum declaration */
 /// DataHandler wrappers
@@ -280,6 +286,71 @@ std::vector<std::reference_wrapper<const Data::DataHandler>> PendulumWrapper::ge
 }
 ```
 {% enddetails %}
+
+### Actions on the pendulum
+After exposing the pendulum attributes to the learning agent, this step will give it the ability to act on the pendulum.
+
+The number of discrete actions that can be taken by the learning agent is given by the `getNbActions()` method from the learning environment.
+The value returned by this method is already set when building the `LearningEnvironment` parent class of the `PendulumWrapper`.
+
+To execute an action, the learning agent calls the `doAction(int)` method of the learning environment with an argument corresponding to the action to execute.
+
+#### TODO #4
+Implement the `PendulumWrapper::doAction(int)` method using the actions defined in the `actions` attribute.
+To apply a torque to the pendulum, the `Pendulum::applyTorque(double)` method must be used.
+```cpp
+/**
+* \brief Apply the given torque to the pendulum and advance the simulation.
+*
+* \param[in] torque the torque applied to the pendulum. If the given value
+* is not within the [-MAX_TORQUE, MAX_TORQUE] interval, it will be
+* saturated to the closest bound.
+*/
+void applyTorque(double torque);
+```
+Two lines of C++ code are sufficient for this task.
+
+{% details Solution to #4 (Click to expand) %}
+```cpp
+/* pendulum_wrapper.cpp */
+void PendulumWrapper::doAction(uint64_t actionID)
+{
+  	// Retrieve the torque corresponding to the ID
+  	double torque = this->actions[actionID] * pendulum.MAX_TORQUE;
+
+  	// Apply it to the pendulum
+  	this->pendulum.applyTorque(torque);
+}
+```
+{% enddetails %}
+
+#### TODO #5
+To train the TPG, the reinforcement learning process requires making many attempts to stabilize it in the upward position.
+Between each attempt, the initial position of the pendulum is reset using the `reset()` method.
+Implement this method so that the pendulum managed by the `PendulumWrapper` always starts in a downward static state.
+Two lines of code are needed for this task.
+
+At this point, the arguments of the `reset` methods can be ignored.
+Their utility will be covered in a more advanced tutorial.
+
+{% details Solution to #5 (Click to expand) %}
+```cpp
+/* pendulum_wrapper.cpp */
+void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode)
+{
+	this->pendulum.setAngle(M_PI);
+	this->pendulum.setVelocity(0.0);
+}
+```
+{% enddetails %}
+
+### Reward mechanism
+In this last step, you are going to implement the reward mechanism used by <span style="font-variant: small-caps;">Gegelati</span> to identify the best strategies for controlling the pendulum.
+
+The objective of this learning environment is to steady the pendulum in the upward position.
+While it is easy to measure the distance of the pendulum to the upward position at each simulation step, appreciating the steadiness of the pendulum in this position can only be achieved over time.
+Hence, the computation of the reward will be accumulated in a `double` attribute of the `PendulumWrapper`.
+At each simulation step, this reward will be incremented as follows:
 
 
 ## 3. Train your first TPG
