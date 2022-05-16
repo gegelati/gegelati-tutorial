@@ -10,7 +10,10 @@
 #define SOLUTION
 
 #include <gegelati.h>
+
+#ifdef SOLUTION
 #include "pendulum.h"
+#endif // SOLUTION
 
 /**
 * \brief Learning environment wrapper for interfacing the pendulum with GEGELATI.

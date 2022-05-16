@@ -156,8 +156,9 @@ Pendulum(double a = M_PI, double v = 0.0, double maxSpeed = 16.0,
 
 To train a Tangled Program Graph with <span style="font-variant: small-caps;">Gegelati</span>, the library needs to interact with the learning environment.
 To achieve this purpose, the learning environment must be presented to the library using a standardized API.
-In the case of <span style="font-variant: small-caps;">Gegelati</span>, this interfacing is done by specializing the `Learn::LearningEnvironment` class.
+In the case of <span style="font-variant: small-caps;">Gegelati</span>, this interfacing is done by specializing the `Learn::LearningEnvironment` abstract class.
 
+<!-->
 |          LearningEnvironment       |
 |:-----------------------------------|
 |+getNbActions(): int                |
@@ -166,9 +167,58 @@ In the case of <span style="font-variant: small-caps;">Gegelati</span>, this int
 |+doAction(int): void                |
 |+getScore(): double                 |
 |+isTerminal(): bool                 |
-
+</!-->
 
 The following step will guide you through the creation of a `PendulumWrapper` class, inheriting from the `Learn::LearningEnvironment` class and interfacing the `Pendulum` class with <span style="font-variant: small-caps;">Gegelati</span>.
+
+### `PendulumWrapper` skeleton.
+The `pendulum_wrapper.h` and `pendulum_wrapper.cpp` files already contain the skeleton of the `PendulumWrapper` class, which you'll complete throughout the next steps.
+To make the class compilable, this code already defines empty methods overriding all the pure virtual methods from the `Learn::LearningEnvironment`.
+Comments in the header file explain the purpose of each method.
+
+A first specific attribute of the `PendulumWrapper` class is already declared, the `actions` vector.
+```cpp
+/* From pendulum_wrapper.h */
+/// Array containing the actions available for the TPG.
+/// These actions are expressed as real numbers in [-1, 1], and will be multiplied
+/// by the MAX_TORQUE of the Pendulum to apply the corresponding action.
+static const std::vector<double> actions;
+```
+
+#### Todo #1:
+Your first task is to update the definition of this vector in the `pendulum_wrapper.cpp` file, so that the 7 actions available to you in the manual version are also the one made available to the TPG.
+A single line of code needs to me modified in this task.
+
+{%details Solution to #1 %}
+```cpp
+const std::vector<double> PendulumWrapper::actions{ -1.0, -0.66, -0.33, 0.0, 0.33, 0.66, 1.0 };
+```
+{% enddetails %}
+
+### `Pendulum` attribute and data accessor.
+In this step, you will add attributes to the `PendulumWrapper` class to contain a copy of the managed pendulum, and to expose the attributes of this pendulum to the learning agent.
+
+#### Todo #2:
+Add an instance of the `Pendulum` class to the attributes of the `PendulumWrapper` class.
+Don't forget to include the `pendulum.h` file and update the constructor of the class to initialize the `Pendulum` instance, keeping default parameters for now.
+
+{%details Solution to #2 %}
+```cpp
+/* pendulum_wrapper.h: After other includes */
+#include <pendulum.h>
+```
+```cpp
+/* pendulum_wrapper.h: After actions declaration */
+  /// Pendulum interfaced with the GEGELATI Lib  
+  Pendulum pendulum;
+```
+```cpp
+/* pendulum_wrapper.cpp*/
+PendulumWrapper::PendulumWrapper() : LearningEnvironment(actions.size(), pendulum())
+{
+}
+```
+{% enddetails %}
 
 
 ## 3. Train your first TPG
