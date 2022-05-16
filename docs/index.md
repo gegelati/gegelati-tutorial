@@ -107,7 +107,7 @@ In this learning environment, it is possible to apply a clockwise or a counter c
 
 As illustrated in the previous GIF, the objective of learning agent trained within this learning environment is to stabilize the pendulum in the upward position.
 It is important to note that the maximum torque that can be applied to the pendulum is not strong enough to bring the pendulum to the upward position.
-Hence, the only way to bring the pendulum to this position is to progressivelly gain some momentum with accelerated swings.
+Hence, the only way to bring the pendulum to this position is to progressively gain some momentum with accelerated swings.
 
 ### Build and swing!
 To better appreciate the difficulty of this task, the first learning agent trained in this tutorial relies on a well known machine learning technique: your brain!
@@ -176,6 +176,7 @@ The `pendulum_wrapper.h` and `pendulum_wrapper.cpp` files already contain the sk
 To make the class compilable, this code already defines empty methods overriding all the pure virtual methods from the `Learn::LearningEnvironment`.
 Comments in the header file explain the purpose of each method.
 
+### `Pendulum` attributes
 A first specific attribute of the `PendulumWrapper` class is already declared, the `actions` vector.
 ```cpp
 /* From pendulum_wrapper.h */
@@ -195,9 +196,6 @@ const std::vector<double> PendulumWrapper::actions{ -1.0, -0.66, -0.33, 0.0, 0.3
 ```
 {% enddetails %}
 
-### `Pendulum` attribute and data accessor.
-In this step, you will add attributes to the `PendulumWrapper` class to contain a copy of the managed pendulum, and to expose the attributes of this pendulum to the learning agent.
-
 #### Todo #2:
 Add an instance of the `Pendulum` class to the attributes of the `PendulumWrapper` class.
 Don't forget to include the `pendulum.h` file and update the constructor of the class to initialize the `Pendulum` instance, keeping default parameters for now.
@@ -216,6 +214,69 @@ Don't forget to include the `pendulum.h` file and update the constructor of the 
 /* pendulum_wrapper.cpp*/
 PendulumWrapper::PendulumWrapper() : LearningEnvironment(actions.size(), pendulum())
 {
+}
+```
+{% enddetails %}
+
+### Data access
+In this step, you will expose the angle and velocity attributes of the pendulum so that they can be observed by the <span style="font-variant: small-caps;">Gegelati</span> library.
+
+During the training process, the <span style="font-variant: small-caps;">Gegelati</span> library accesses the data from the environment using the `getDataSources()` method.
+This method returns the observable state of the environment as a vector of references to `Data::DataHandler`.
+
+The `Data::DataHandler` interface class provides a set of services that simplifies the training of TPGs.
+In particular, in addition to methods for accessing the data, the `Data::DataHandler` supports methods for dynamically checking what the addressing space of a data source is, or which data types can be provided by a data source.
+It is also possible for a `Data::DataHandler` to give access to data with a data type differing from the native type used for storing the data.
+For example, with a `Primitive2DArray<char>(10,10)` data handler storing a 2D array of `char[10][10]`, individual elements of the array can be accessed using the native data type `char`; but it is also possible to access a 3-by-2 subregion of data by requesting an access to data with type `char[3][2]`.
+For more details on these features, please refer to the doxygen documentation built and delivered with the <span style="font-variant: small-caps;">Gegelati</span> library.
+
+In the case of the pendulum, we will use the `Data::PointerWrapper<T>` specialization of the `Data::DataHandler` class, which acts as an interface between a native pointer (`T *`) and <span style="font-variant: small-caps;">Gegelati</span>.
+Only the following 2 methods of this class needs to be used in this tutorial:
+
+```cpp
+/**
+ *  \brief Constructor for the PointerWrapper class.
+ *
+ * \param[in] ptr the pointer managed by the PointerWrapper.
+ */
+PointerWrapper(T* ptr = nullptr);
+
+/**
+ * \brief Set the pointer of the PointerWrapper.
+ *
+ * \param[in] ptr the new pointer managed by the PointerWrapper.
+ *
+ */
+void setPointer(T* ptr);
+```
+
+#### Todo #3
+Instantiate two instances of the `Data::PointerWrapper` class as attributes of the `PendulumWrapper`.
+In the constructor of the `PendulumWrapper`, make these two `Data::PointerWrapper` point to the `angle` and `velocity` attributes of the `pendulum`.
+Then, update the `getDataSources()` to return a vector referring to these two `Data::PointerWrapper`.
+
+_C++ tip:_ Pushing a variable `T var` to a `std::vector<std::references_wrapper<T>> vect` is done with a simple call to `vect.push_back(var)`.
+
+{% details Solution to #3 %}
+```cpp
+/* pendulum_wrapper.h : After pendulum declaration */
+/// DataHandler wrappers
+std::vector<Data::PointerWrapper<double>> data;
+```
+```cpp
+/* pendulum_wrapper.cpp */
+PendulumWrapper::PendulumWrapper() : LearningEnvironment(actions.size()), pendulum(), data(2)
+{
+	data.at(0).setPointer(&this->pendulum.getAngle());
+	data.at(1).setPointer(&this->pendulum.getVelocity());
+}
+
+std::vector<std::reference_wrapper<const Data::DataHandler>> PendulumWrapper::getDataSources()
+{
+	std::vector<std::reference_wrapper<const Data::DataHandler>> result;
+	result.push_back(this->data.at(0));
+	result.push_back(this->data.at(1));
+	return result;
 }
 ```
 {% enddetails %}
