@@ -350,8 +350,11 @@ In this last step, you are going to implement the reward mechanism used by <span
 The objective of this learning environment is to steady the pendulum in the upward position.
 While it is easy to measure the distance of the pendulum to the upward position at each simulation step, appreciating the steadiness of the pendulum in this position can only be achieved over time.
 Hence, the computation of the reward will be accumulated in a `double` attribute of the `PendulumWrapper`.
-At each simulation step, this reward will be incremented as follows:
+At each simulation step $i$, this reward will be updated as follows:
 
+$$reward_{i+1} = reward_{i} - (\theta^2 + 0.1 \cdot \omega^2 + 0.001\cdot \tau^2)$$
+
+where $\theta$ is the angular distance to the upward position, $\omega$ is the velocity of the pendulum, and $\tau$ the torque applied to the pendulum.
 
 ## 3. Train your first TPG
 
