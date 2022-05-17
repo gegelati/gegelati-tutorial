@@ -75,7 +75,7 @@ public:
 	* \brief Default constructor for a pendulum.
 	*
 	* \param[in] a the initial angular position of the pendulum. Default value
-	* is 0.0, that is downard position.
+	* is M_PI, that is downard position.
 	* \param[in] c the initial angular velocity of the pendulum. Default value
 	* is 0.0.
 	* \param[in] maxSpeed Maximum speed of the pendulum
@@ -88,7 +88,7 @@ public:
 	* its velovity.
 	*/
 	Pendulum(double a = M_PI, double v = 0.0, double maxSpeed = 16.0,
-		double maxTorque = 2.0, double timeDelta = 0.01, double gravity = 9.81,
+		double maxTorque = 1.8, double timeDelta = 0.01, double gravity = 9.81,
 		double mass = 0.8, double length = 1.0, double friction = 0.005);
 
 };

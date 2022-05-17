@@ -42,7 +42,7 @@ To check if the CMake tool is already available on your workstation simply type 
 cmake --version
 ```
 CMake version 3.12 or newer must be installed for this tutorial.
-{% details In case CMake is not installed follow the click here to display installation advice. (Click to expand) %}
+{% details In case CMake is not installed follow the click here to display installation advice. %}
 The latest version of CMake can be downloaded at the following URL: https://cmake.org/download/.
 For a simple installation, choose the binary version for windows.
 During the installation process, select the "ADD TO PATH FOR ALL USERS" option.
@@ -133,7 +133,7 @@ Feel free to try other configurations by parameterizing the construction of the 
 * \brief Default constructor for a pendulum.
 *
 * \param[in] a the initial angular position of the pendulum. Default value
-* is 0.0, that is downard position.
+* is M_PI, that is downard position.
 * \param[in] c the initial angular velocity of the pendulum. Default value
 * is 0.0.
 * \param[in] maxSpeed Maximum speed of the pendulum
@@ -146,7 +146,7 @@ Feel free to try other configurations by parameterizing the construction of the 
 * its velovity.
 */
 Pendulum(double a = M_PI, double v = 0.0, double maxSpeed = 16.0,
-  double maxTorque = 2.0, double timeDelta = 0.01, double gravity = 9.81,
+  double maxTorque = 1.8, double timeDelta = 0.01, double gravity = 9.81,
   double mass = 0.8, double length = 1.0, double friction = 0.005);
 ```
 
@@ -352,9 +352,65 @@ While it is easy to measure the distance of the pendulum to the upward position 
 Hence, the computation of the reward will be accumulated in a `double` attribute of the `PendulumWrapper`.
 At each simulation step $i$, this reward will be updated as follows:
 
-$$reward_{i+1} = reward_{i} - (\theta^2 + 0.1 \cdot \omega^2 + 0.001\cdot \tau^2)$$
+$$ reward_{0} = 0 $$
+$$ reward_{i} = reward_{i-1} - (0.1 \cdot \theta^2 + 0.01 \cdot \omega^2 + 0.001\cdot \tau^2) $$
 
 where $\theta$ is the angular distance to the upward position, $\omega$ is the velocity of the pendulum, and $\tau$ the torque applied to the pendulum.
+Intuitively, the purpose of this equation is to minimize the angular distance to the upward position as a primary criteria, but also the velocity of the pendulum when reaching this position, and the torque applied to the pendulum to reach and stay in this position.
+
+#### Todo #6
+Implement the rewarding mechanism in the `PendulumWrapper` class by:
+* Adding an `accumulatedReward` attribute.
+* Updating this reward after each action in the `doAction(int)` method.
+* Returning this reward in the `getScore()` method.
+* Resetting this reward in the `reset(int, LearningMode)` method.
+Less than 10 new lines of code are needed for this task.
+
+_C++ tip:_ The `double fmod(double, double)` method can be used to compute the modulo of two `double` numbers.
+
+{% details Solution to #6 (Click to expand) %}
+
+```cpp
+/* pendulum_wrapper.h : After the PointerWrapper */
+	double accumulatedReward;
+```
+
+```cpp
+/* pendulum_wrapper.cpp */
+void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode)
+{
+	this->pendulum.setAngle(M_PI);
+	this->pendulum.setVelocity(0.0);
+
+	this->accumulatedReward = 0.0;
+}
+
+void PendulumWrapper::doAction(uint64_t actionID)
+{
+	// Retrieve the torque corresponding to the ID
+	double torque = this->actions[actionID] * pendulum.MAX_TORQUE;
+
+	// Apply it to the pendulum
+	this->pendulum.applyTorque(torque);
+
+	// Get the angle value between -M_PI and M_PI (0 being the upward position)
+	double angle = fmod(this->pendulum.getAngle() + M_PI, 2.0 * M_PI) - M_PI;
+
+	// Compute a reward based on the angle to the upward position, the velocity and the torque.
+	// All three values should be minimized.
+	double reward = -(0.1f*(angle * angle) + 0.01f * (this->pendulum.getVelocity() * this->pendulum.getVelocity()) + 0.001f * (torque * torque));
+
+	// Accumulate the reward
+	accumulatedReward += reward;
+}
+
+double PendulumWrapper::getScore(void) const
+{
+	return accumulatedReward;
+}
+```
+
+{% enddetails %}
 
 ## 3. Train your first TPG
 

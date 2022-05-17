@@ -15,7 +15,6 @@
 #include "replay.h"
 
 #include "pendulum_wrapper.h"
-#include "main-training.h"
 
 int main(int argc, char** argv) {
 	try { // Global exception catching.

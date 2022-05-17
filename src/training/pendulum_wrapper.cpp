@@ -59,7 +59,7 @@ void PendulumWrapper::doAction(uint64_t actionID)
 
 	// Compute a reward based on the angle to the upward position, the velocity and the torque.
 	// All three values should be minimized.
-	double reward = -((angle * angle) + 0.1f * (this->pendulum.getVelocity() * this->pendulum.getVelocity()) + 0.001f * (torque * torque));
+	double reward = -(0.1f*(angle * angle) + 0.01f * (this->pendulum.getVelocity() * this->pendulum.getVelocity()) + 0.001f * (torque * torque));
 
 	// Accumulate the reward
 	accumulatedReward += reward;
@@ -69,13 +69,10 @@ void PendulumWrapper::doAction(uint64_t actionID)
 double PendulumWrapper::getScore(void) const
 {
 #ifdef SOLUTION
-	// Return the accumulated reward, divided by 10 for better display.
-	return accumulatedReward / 10;
+	return accumulatedReward;
 #else
 	return 0.0;
 #endif // SOLUTION
-
-	
 }
 
 bool PendulumWrapper::isTerminal(void) const
