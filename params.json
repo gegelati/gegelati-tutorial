@@ -8,7 +8,7 @@
 	// Boolean used to activate an evaluation of the surviving roots in validation
 	// mode after the training at each generation.
 	// "doValidation" : false, // Default value
-	"doValidation" : true,
+	"doValidation" : false,
 	// Maximum number of actions performed on the learning environment during the
 	// each evaluation of a root.
 	// "maxNbActionsPerEval" : 1000, // Default value

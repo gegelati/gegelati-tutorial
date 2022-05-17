@@ -186,7 +186,7 @@ A first specific attribute of the `PendulumWrapper` class is already declared, t
 static const std::vector<double> actions;
 ```
 
-#### Todo #1:
+#### TODO #1:
 Your first task is to update the definition of this vector in the `pendulum_wrapper.cpp` file, so that the 7 actions available to you in the manual version are also the one made available to the TPG.
 It should be noted that the size of this `vector` is automatically used in the `PendulumWrapper` constructor to initialize the `LearningEnvironment` parent class with the number of actions available.
 A single line of code needs to me modified in this task.
@@ -197,7 +197,7 @@ const std::vector<double> PendulumWrapper::actions{ -1.0, -0.66, -0.33, 0.0, 0.3
 ```
 {% enddetails %}
 
-#### Todo #2:
+#### TODO #2:
 Add an instance of the `Pendulum` class to the attributes of the `PendulumWrapper` class.
 Don't forget to include the `pendulum.h` file and update the constructor of the class to initialize the `Pendulum` instance, keeping default parameters for now.
 
@@ -251,7 +251,7 @@ PointerWrapper(T* ptr = nullptr);
 void setPointer(T* ptr);
 ```
 
-#### Todo #3:
+#### TODO #3:
 Instantiate two instances of the `Data::PointerWrapper` class as attributes of the `PendulumWrapper`.
 In the constructor of the `PendulumWrapper`, make these two `Data::PointerWrapper` point to the `angle` and `velocity` attributes of the `pendulum`.
 Then, update the `getDataSources()` to return a vector referring to these two `Data::PointerWrapper`.
@@ -358,7 +358,7 @@ $$ reward_{i} = reward_{i-1} - (0.1 \cdot \theta^2 + 0.01 \cdot \omega^2 + 0.001
 where $\theta$ is the angular distance to the upward position, $\omega$ is the velocity of the pendulum, and $\tau$ the torque applied to the pendulum.
 Intuitively, the purpose of this equation is to minimize the angular distance to the upward position as a primary criteria, but also the velocity of the pendulum when reaching this position, and the torque applied to the pendulum to reach and stay in this position.
 
-#### Todo #6
+#### TODO #6
 Implement the rewarding mechanism in the `PendulumWrapper` class by:
 * Adding an `accumulatedReward` attribute.
 * Updating this reward after each action in the `doAction(int)` method.
@@ -409,9 +409,69 @@ double PendulumWrapper::getScore(void) const
 	return accumulatedReward;
 }
 ```
-
 {% enddetails %}
 
 ## 3. Train your first TPG
+The code needed to interface the pendulum with <span style="font-variant: small-caps;">Gegelati</span> is now complete.
+This section will (finally) let you train a TPG with the pendulum learning environment.
+
+### Training procedure
+The `main-training.cpp` file contains the entry point of the executable built with the `tpg-training` target.
+The program is structured as follows:
+1. Initialize the instruction set used in programs of the TPG.
+2. Load the training meta-parameters from the `gegelati-tutorial/params.json` file.
+3. Instantiate the `PendulumWrapper` learning environment.
+4. Instantiate the `Learn::LearningAgent` class. This utility class will manage most aspects of the training process of the TPG, including its initialization, mutations, and evaluation of the fitness of its roots within the learning environment.
+5. Initialize a display window. This display will be used throughout the training to show the behavior of the TPG root with the best score after each generation.
+6. Instantiate a logger for keeping track of the training statistics throughout the training.
+7. Iterate the genetic evolution process until the maximum number of generation is reached, or until the program is exited.
+8. Train one generation. This step, managed by the learning agent, includes the mutation of the TPG to reach the desired number of roots, the evaluation of all the TPG roots, and the decimation of worst fitting root.
+9. Create a replay of all actions performed by the best fitting root of the TPG, and trigger a refresh of the display.
+10. Go back to step 7.
+
+### Training in action
+Build and run the `tpg-training` target to observe the TPG training process in action.
+
+The first output of the training process are the logs generated in the console.
+An example of log is presented hereafter:
+
+```bash
+Pendulum TPG training.
+                      Train
+      Gen   NbVert      Min      Avg      Max  T_mutat   T_eval  T_total
+        0      164 -7624.63 -1383.36  -980.33     0.00     1.51     1.51
+        1      167 -4848.23 -1263.68  -980.33     7.28     1.56    10.38
+        2      170 -6862.46 -1242.03  -844.01     2.63     1.53    14.55
+        3      170 -7707.18 -1181.00  -844.01     7.60     1.48    23.65
+        4      168
+```
+
+The generated log contain a table that can be exported in the CSV format by giving a file path to the `LABasicLogger` constructor.
+This table contains the following columns:
+* _Gen_: Number of generation since the start of the training process.
+* _NbVert_: Number of vertices (teams + actions) in the TPG before the fitness of the roots is evaluated.
+* _Train.Min/Avg/Max_: Minimum, average, and maximum scores obtained during the evaluation process of all roots of the TPG.
+* _T\_mutat_: Time taken in seconds to apply the mutations to the TPG.
+* _T\_eval_: Time taken  in seconds to evaluate all roots of the TPG.
+* _T\_total_: Time  in seconds since the beginning of the training process.
+
+A few insights on these logs:
+* It may happen that the maximum score observed at generation $n+1$ is lower than the score observed at a previous generation $n$.
+This phenomenon occurs when the best root vertex observed at generation $n$ becomes an internal team of the TPG during the mutation process creating new roots for the next generation.
+While this may seem weird to see the score diminish, the genetic material that had lead to a better result is not lost.
+If the new roots introduced in the graph do a poor job, they will be decimated rapidly, and the best root will once again become a root.
+It may also happen that the remains an internal vertex of the TPG, but is copied during the mutation process, thus becoming a slightly altered root once again.
+In any case, the vertex which, as a root, provides the best reward since the beginning of the training is still the one returned by the learning agent when requesting the best root.
+* In this learning environment, the time taken for mutating the graph is quite long, especially compared to the time taken for evaluating the graph.
+The reason behind the abnormally long mutation times lies in a specific mechanism ensuring the originality of programs produced during the mutation process.
+Each time a new program is created, it is compared to randomly selected pre-existing programs.
+If the new program does not produce original outputs compared to other programs, it will be mutated over and over until its output becomes original.
+While producing an original output is simple in learning environment with large observable space, this is a lot trickier to achieve in a learning environment with only 2 observable variables.
+This is why the mutation time is long with this example.
+
+The second output of the training process is the display of the pendulum.
+While the score presented in the log are not easily interpretable, this display makes it possible to better appreciate how well the trained TPGs are doing.
+
+With default pendulum parameters and meta-parameters, the learning agent should be able to stabilize the pendulum in less than 25 generations.
 
 ## 4. The fun is only beginning.
