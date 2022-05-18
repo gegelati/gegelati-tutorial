@@ -79,9 +79,9 @@ cmake --build . --target install # On Linux
 
 
 ### Tutorial files
-To download the source files needed to follow this tutorial, simply download the following archive: [TODO](TODO).
+To download the source files needed to follow this tutorial, simply download the following archive: [gegelati-tutorial.zip](./data/gegelati-tutorial.zip).
 Unzip these file in your favorite folder.
-In the reminder of this tutorial, the parent folder where the files were unzipped will be referred as the `/gegelati-tutorial` folder.
+In the remainder of this tutorial, the parent folder where the files were unzipped will be referred as the `/gegelati-tutorial` folder.
 
 To create the C++ project for your default build chain (Makefile on linux, MSVC -when installed- on windows), simply type the following commands in a bash terminal:
 ```bash
@@ -411,7 +411,7 @@ double PendulumWrapper::getScore(void) const
 ```
 {% enddetails %}
 
-The `pendulum_wrapper.h` and `pendulum_wrapper.cpp` files resulting from this tutorial can be downloaded at the following [link]().
+The `pendulum_wrapper.h` and `pendulum_wrapper.cpp` files resulting from this tutorial can be downloaded at the following link: [pendulum_wrapper_solution.zip](./data/pendulum_wrapper_solution.zip).
 
 ## 3. Train your first TPG
 The code needed to interface the pendulum with <span style="font-variant: small-caps;">Gegelati</span> is now complete.

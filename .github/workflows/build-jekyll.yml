@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Prepare archives
+      - name: Prepare template files
         run: |
           python ./scripts/prepare_template.py
   
