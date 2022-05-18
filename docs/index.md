@@ -158,7 +158,7 @@ To train a Tangled Program Graph with <span style="font-variant: small-caps;">Ge
 To achieve this purpose, the learning environment must be presented to the library using a standardized API.
 In the case of <span style="font-variant: small-caps;">Gegelati</span>, this interfacing is done by specializing the `Learn::LearningEnvironment` abstract class.
 
-<!-->
+<!--
 |          LearningEnvironment       |
 |:-----------------------------------|
 |+getNbActions(): int                |
@@ -167,7 +167,7 @@ In the case of <span style="font-variant: small-caps;">Gegelati</span>, this int
 |+doAction(int): void                |
 |+getScore(): double                 |
 |+isTerminal(): bool                 |
-</!-->
+-->
 
 The following step will guide you through the creation of a `PendulumWrapper` class, inheriting from the `Learn::LearningEnvironment` class and interfacing the `Pendulum` class with <span style="font-variant: small-caps;">Gegelati</span>.
 
@@ -411,6 +411,8 @@ double PendulumWrapper::getScore(void) const
 ```
 {% enddetails %}
 
+The `pendulum_wrapper.h` and `pendulum_wrapper.cpp` files resulting from this tutorial can be downloaded at the following [link]().
+
 ## 3. Train your first TPG
 The code needed to interface the pendulum with <span style="font-variant: small-caps;">Gegelati</span> is now complete.
 This section will (finally) let you train a TPG with the pendulum learning environment.
@@ -446,7 +448,7 @@ Pendulum TPG training.
         4      168
 ```
 
-The generated log contain a table that can be exported in the CSV format by giving a file path to the `LABasicLogger` constructor.
+The generated logs contain a table that can be exported in the CSV format by giving a file path to the `LABasicLogger` constructor.
 This table contains the following columns:
 * _Gen_: Number of generation since the start of the training process.
 * _NbVert_: Number of vertices (teams + actions) in the TPG before the fitness of the roots is evaluated.
@@ -458,20 +460,45 @@ This table contains the following columns:
 A few insights on these logs:
 * It may happen that the maximum score observed at generation $n+1$ is lower than the score observed at a previous generation $n$.
 This phenomenon occurs when the best root vertex observed at generation $n$ becomes an internal team of the TPG during the mutation process creating new roots for the next generation.
-While this may seem weird to see the score diminish, the genetic material that had lead to a better result is not lost.
+While this may seem weird to see the score decrease, the genetic material that had lead to a better result is not lost.
 If the new roots introduced in the graph do a poor job, they will be decimated rapidly, and the best root will once again become a root.
-It may also happen that the remains an internal vertex of the TPG, but is copied during the mutation process, thus becoming a slightly altered root once again.
-In any case, the vertex which, as a root, provides the best reward since the beginning of the training is still the one returned by the learning agent when requesting the best root.
-* In this learning environment, the time taken for mutating the graph is quite long, especially compared to the time taken for evaluating the graph.
-The reason behind the abnormally long mutation times lies in a specific mechanism ensuring the originality of programs produced during the mutation process.
+It may also happen that the former best root remains an internal vertex of the TPG, but is copied during the mutation process, thus becoming a slightly altered root once again.
+In any case, the vertex which, as a root, has provided the best reward since the beginning of the training is still the one returned by the learning agent when requesting the best root with the `Learn::LearningAgent::getBestRoot()` method.
+* In this learning environment, the time taken for mutating the graph is quite long, especially compared to the time taken for evaluating the roots.
+The reason behind this abnormally long mutation times lies in a specific mechanism ensuring the originality of programs produced during the mutation process.
 Each time a new program is created, it is compared to randomly selected pre-existing programs.
 If the new program does not produce original outputs compared to other programs, it will be mutated over and over until its output becomes original.
 While producing an original output is simple in learning environment with large observable space, this is a lot trickier to achieve in a learning environment with only 2 observable variables.
 This is why the mutation time is long with this example.
 
 The second output of the training process is the display of the pendulum.
-While the score presented in the log are not easily interpretable, this display makes it possible to better appreciate how well the trained TPGs are doing.
+While the score presented in the logs are not easily interpretable, this display makes it possible to appreciate how well the trained TPGs are doing.
 
 With default pendulum parameters and meta-parameters, the learning agent should be able to stabilize the pendulum in less than 25 generations.
+During the first generations, the learning agent usually learns how to swing the pendulum closer to the upward position.
+Then it learns how to slow down the pendulum when it approaches the upward position.
+Finally, it finds a way to stabilize the pendulum.
 
 ## 4. The fun is only beginning.
+In this tutorial, you have learned:
+* How to setup a project with <span style="font-variant: small-caps;">Gegelati</span>.
+* Create a custom learning environment.
+* Train TPG in the learning environment.
+* Understand the basic logs generated during the training.
+
+While this tutorial illustrates the basic concepts of TPG training, <span style="font-variant: small-caps;">Gegelati</span> offers many features to play with TPGs.
+The following tutorials guide you through these features, starting from the result of this tutorial.
+These tutorial can be followed in any order, so feel free to explore them based on your personal interests and objectives.
+* _[Available Soon]_ Export, visualize and import TPG graphs in the DOT format.
+* _[Available Soon]_ Accelerate training with early termination, random initial states and testing.
+* _[Available Soon]_ Play with training meta-parameters.
+* _[Available Soon]_ Explore TPG statistics throughout the training.
+* _[Available Soon]_ Accelerate TPG training with deterministic multi-core support.
+* _[Available Soon]_ Generate standalone C code for ultra-fast inference.
+
+Several other open-source applications are available in the GitHub repository of <span style="font-variant: small-caps;">Gegelati</span>.
+Feel free to explore them to get a better understanding of the wonderful abilities of TPGs.
+* [<span style="font-variant: small-caps;">Gegelati</span>-apps](https://github.com/gegelati/gegelati-apps): MNIST, Tic-Tac-Toe, Nim Game
+* [ALE-wrapper](https://github.com/gegelati/ale-wrapper): Wrapper for the 50+ games of the Arcade Learning Environment.
+* [ArmLearn-wrapper](https://github.com/gegelati/armlearn-wrapper): Robotic arm control with 6 servo-motors.
+* [Gym-<span style="font-variant: small-caps;">Gegelati</span>](https://github.com/gegelati/gym-gegelati): Wrapper for OpenAI's Gym reinforcement learning dataset.
