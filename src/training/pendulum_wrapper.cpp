@@ -4,7 +4,7 @@
 const std::vector<double> PendulumWrapper::actions{ -1.0, -0.66, -0.33, 0.0, 0.33, 0.66, 1.0 };
 #else
 const std::vector<double> PendulumWrapper::actions{ 0.0 };
-#endif // !SOLUTION
+#endif // SOLUTION
 
 #ifdef SOLUTION
 PendulumWrapper::PendulumWrapper() : LearningEnvironment(actions.size()), pendulum(), data(2)
@@ -17,8 +17,6 @@ PendulumWrapper::PendulumWrapper() : LearningEnvironment(actions.size())
 {
 }
 #endif // SOLUTION
-
-
 
 std::vector<std::reference_wrapper<const Data::DataHandler>> PendulumWrapper::getDataSources()
 {
@@ -41,7 +39,6 @@ void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode)
 #ifdef SOLUTION
 	this->accumulatedReward = 0.0;
 #endif // SOLUTION
-
 }
 
 void PendulumWrapper::doAction(uint64_t actionID)

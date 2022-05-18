@@ -41,6 +41,7 @@ public:
 	double accumulatedReward;
 #endif // SOLUTION
 
+	/// Default constructor for the PendulumWrapper
 	PendulumWrapper();
 
 	/**
