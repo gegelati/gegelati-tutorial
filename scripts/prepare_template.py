@@ -90,3 +90,10 @@ if(not cppInputFile or not cppEmptyOutputFile or not hInputFile or not hEmptyOut
 filterSolution(hInputFile, hEmptyOutputFile, hSolutionOutputFile)
 filterSolution(cppInputFile, cppEmptyOutputFile, cppSolutionOutputFile)
 
+# Close files
+cppInputFile.close()
+cppEmptyOutputFile.close()
+cppSolutionOutputFile.close()
+hInputFile.close()
+hEmptyOutputFile.close()
+hSolutionOutputFile.close()

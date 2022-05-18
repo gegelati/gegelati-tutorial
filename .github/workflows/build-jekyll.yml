@@ -12,6 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Prepare archives
+        run: |
+          python ./scripts/prepare_template.py
+  
+      - name: Prepare archives
+        run: |
+          python ./scripts/prepare_archives.py
+
       # Use GitHub Actions' cache to cache dependencies on servers
       - uses: actions/cache@v2
         with:
