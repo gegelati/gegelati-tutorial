@@ -27,7 +27,7 @@ std::vector<std::reference_wrapper<const Data::DataHandler>> PendulumWrapper::ge
 	return result;
 #else
 	return std::vector<std::reference_wrapper<const Data::DataHandler>>();
-#endif
+#endif // SOLUTION
 }
 
 void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode)
@@ -49,7 +49,8 @@ void PendulumWrapper::doAction(uint64_t actionID)
 
 	// Apply it to the pendulum
 	this->pendulum.applyTorque(torque);
-#endif
+#endif // SOLUTION
+
 #ifdef SOLUTION
 	// Get the angle value between -M_PI and M_PI (0 being the upward position)
 	double angle = fmod(this->pendulum.getAngle() + M_PI, 2.0 * M_PI) - M_PI;

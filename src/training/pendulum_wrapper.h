@@ -35,7 +35,7 @@ public:
 
 	/// DataHandler wrappers
 	std::vector<Data::PointerWrapper<double>> data;
-#endif
+#endif // SOLUTION
 
 #ifdef SOLUTION
 	double accumulatedReward;
