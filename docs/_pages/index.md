@@ -1,6 +1,8 @@
 ---
 title: GEGELATI introductory tutorial
 permalink: /
+toc: true
+toc_sticky: true
 ---
 
 The objective of this tutorial is to gently guide you through the training of your first Tangled Program Graph (TPG) with the [<span style="font-variant: small-caps;">Gegelati</span>](https://github.com/gegelati/gegelati) library.
