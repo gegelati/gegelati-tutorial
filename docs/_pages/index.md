@@ -350,8 +350,10 @@ While it is easy to measure the distance of the pendulum to the upward position 
 Hence, the computation of the reward will be accumulated in a `double` attribute of the `PendulumWrapper`.
 At each simulation step $i$, this reward will be updated as follows:
 
+<div align="center">
 $$ reward_{0} = 0 $$
 $$ reward_{i} = reward_{i-1} - (0.1 \cdot \theta^2 + 0.01 \cdot \omega^2 + 0.001\cdot \tau^2) $$
+</div>
 
 where $\theta$ is the angular distance to the upward position, $\omega$ is the velocity of the pendulum, and $\tau$ the torque applied to the pendulum.
 Intuitively, the purpose of this equation is to minimize the angular distance to the upward position as a primary criteria, but also the velocity of the pendulum when reaching this position, and the torque applied to the pendulum to reach and stay in this position.
