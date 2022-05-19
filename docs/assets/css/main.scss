@@ -6,3 +6,18 @@
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+.page__content {
+	text-align: justify;
+}
+
+h2, h3 {
+	margin-bottom: 0px;
+	font-weight: bold;
+}
+
+h4 {
+	font-size: $h-size-6;
+	margin-bottom: 0px;
+	font-style: italic;
+}

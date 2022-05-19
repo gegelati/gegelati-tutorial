@@ -53,12 +53,20 @@ $type-size-7: 0.563em !default; // ~11px
 $type-size-8: 0.500em !default; // ~10px
 
 /* headline scale */
-$h-size-1: 1.563em !default; // ~25.008px
-$h-size-2: 1.25em !default; // ~20px
-$h-size-3: 1.125em !default; // ~18px
-$h-size-4: 1.0625em !default; // ~17px
-$h-size-5: 1.03125em !default; // ~16.5px
-$h-size-6: 1em !default; // ~16px
+// $h-size-1: 1.563em !default; // ~25.008px
+// $h-size-2: 1.25em !default; // ~20px
+// $h-size-3: 1.125em !default; // ~18px
+// $h-size-4: 1.0625em !default; // ~17px
+// $h-size-5: 1.03125em !default; // ~16.5px
+// $h-size-6: 1em !default; // ~16px
+
+/* headline scale */
+$h-size-1: 1.250em !default;
+$h-size-2: 1.125em !default;
+$h-size-3: 1.00em !default; 
+$h-size-4: 0.875em !default;
+$h-size-5: 0.75em !default; 
+$h-size-6: 0.6875em !default;
 
 /*
    Colors
