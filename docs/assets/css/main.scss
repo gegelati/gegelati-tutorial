@@ -17,7 +17,15 @@ h2, h3 {
 }
 
 h4 {
-	font-size: $h-size-6;
+	font-size: $h-size-5;
 	margin-bottom: 0px;
 	font-style: italic;
+}
+
+summary {
+	font-size: $type-size-5;
+}
+
+.MathJax_Display {
+	font-size: $type-size-5;
 }
