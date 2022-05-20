@@ -40,7 +40,7 @@ def zipFilesInDir(dirName, zipObj, regex, parentName="", withSubdirectories = Tr
 
 
 # Create the tutorialTemplate archive
-mainFolder = "tutorial-gegelati/"
+mainFolder = "gegelati-tutorial/"
 tutorialTemplateArchive = ZipFile("./docs/data/gegelati-tutorial.zip", "w")
 zipFileAdd(tutorialTemplateArchive,"bin/", mainFolder)
 zipFileAdd(tutorialTemplateArchive,"dat/download_dat.sh", mainFolder)
