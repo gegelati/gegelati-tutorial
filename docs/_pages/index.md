@@ -228,7 +228,7 @@ Don't forget to include the `pendulum.h` file and update the constructor of the 
 ```
 ```cpp
 /* pendulum_wrapper.cpp*/
-PendulumWrapper::PendulumWrapper() : LearningEnvironment(actions.size(), pendulum())
+PendulumWrapper::PendulumWrapper() : LearningEnvironment(actions.size()), pendulum()
 {
 }
 ```
