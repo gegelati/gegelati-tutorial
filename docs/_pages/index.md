@@ -26,7 +26,7 @@ Compatibility of this tutorial was tested with MS Visual Studio Community Editio
 
 ### Bash environment
 Some scripts embedded in the given files of this tutorial require the availability of a bash environment.
-While bash is natively supported in Linux, an installation is required on Windows.
+While bash is natively supported in Linux and Mac OS, an installation is required on Windows.
 We advise you to use the all-in-one binaries maintained by the git community, and available [here!](https://git-scm.com/downloads).
 When installing the tool, make sure that the tool is added to the PATH environment variable.
 
@@ -76,15 +76,32 @@ cmake --build . --target install # On Linux
 ```
 {% enddetails %}
 
+{% details On Mac OS: (Click to expand) %}
+The SDL library (`SDL2`, `SDL2_Image`, and `SDL2_ttf`) are available in [Homebrew](https://brew.sh/).
+Simply type the following command:
+```bash
+brew install sdl2 sdl2_image sdl2_ttf
+```
+
+To install <span style="font-variant: small-caps;">Gegelati</span>, you must build it and install it on your machine.
+The following commands should do the work to build the latest release:
+```bash
+git clone -b master https://github.com/gegelati/gegelati.git
+cd gegelati/bin
+cmake ..
+cmake --build . --target install # On Mac OS
+```
+{% enddetails %}
 
 ### Tutorial files
 To download the source files needed to follow this tutorial, simply download the following archive: [gegelati-tutorial.zip](./data/gegelati-tutorial.zip).
 Unzip these file in your favorite folder.
 In the remainder of this tutorial, the parent folder where the files were unzipped will be referred as the `/gegelati-tutorial` folder.
 
-To create the C++ project for your default build chain (Makefile on linux, MSVC -when installed- on windows), simply type the following commands in a bash terminal:
+To create the C++ project for your default build chain (Makefile on linux and Mac OS, MSVC -when installed- on windows), simply type the following commands in a bash terminal:
 ```bash
 cd /gegelati-tutorial/bin
+chmod +x ../dat/download_dat.sh
 cmake ..
 ```
 To select another IDE, use the `cmake -G "<MY_FAVORITE_IDE>" ..` command instead.
@@ -115,8 +132,8 @@ To build the first executable of this tutorial, open the project generated with 
 
 Once the build is complete, run the executable.
 Using the keyboard, you can try to manually balance the pendulum with 7 different actions:
-* [C], [V], [B]: Apply a clockwise torque to the pendulum. The strength of the torque applied to the pendulum decreases from left to right.
-* [1], [2], [3]: Apply a counter-clockwise torque to the pendulum. The strength of the torque applied to the pendulum increases from left to right.
+* [S], [D], [F]: Apply a clockwise torque to the pendulum. The strength of the torque applied to the pendulum decreases from left to right.
+* [J], [K], [L]: Apply a counter-clockwise torque to the pendulum. The strength of the torque applied to the pendulum increases from left to right.
 * No key: No torque is applied to the pendulum. Only gravity and friction will do their work.
 
 Good luck holding the pendulum in the upward position for more than a few seconds.

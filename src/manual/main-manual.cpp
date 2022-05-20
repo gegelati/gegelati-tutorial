@@ -14,8 +14,8 @@
 int main(int argc, char** argv) {
 	std::cout << "Pendulum manual control." << std::endl;
 	std::cout << "Press the following keys to control the pendulum:" << std::endl <<
-		"\t [C], [V], [B]: Apply a clockwise torque to the pendulum." << std::endl <<
-		"\t [1], [2], [3]: Apply a counter clockwise torque to the pendulum." << std::endl <<
+		"\t [S], [D], [F]: Apply a clockwise torque to the pendulum." << std::endl <<
+		"\t [J], [K], [L]: Apply a counter clockwise torque to the pendulum." << std::endl <<
 		"\t [Q]: Exit the simulator." << std::endl;
 	std::cout << std::endl << "Press [Enter] to start the simulation.";
 	getc(stdin);

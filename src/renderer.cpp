@@ -192,22 +192,22 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 			case SDLK_q:
 				action = INT_MIN;
 				break;
-			case SDLK_c:
+			case SDLK_s:
 				action = -3;
 				break;
-			case SDLK_v:
+			case SDLK_d:
 				action = -2;
 				break;
-			case SDLK_b:
+			case SDLK_f:
 				action = -1;
 				break;
-			case SDLK_KP_1:
+			case SDLK_j:
 				action = 1;
 				break;
-			case SDLK_KP_2:
+			case SDLK_k:
 				action = 2;
 				break;
-			case SDLK_KP_3:
+			case SDLK_l:
 				action = 3;
 				break;
 			}
