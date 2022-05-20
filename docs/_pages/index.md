@@ -100,7 +100,7 @@ In the remainder of this tutorial, the parent folder where the files were unzipp
 
 To create the C++ project for your default build chain (Makefile on linux and Mac OS, MSVC -when installed- on windows), simply type the following commands in a bash terminal:
 ```bash
-cd /gegelati-tutorial/bin
+cd gegelati-tutorial/bin
 cmake ..
 ```
 To select another IDE, use the `cmake -G "<MY_FAVORITE_IDE>" ..` command instead.
@@ -451,6 +451,7 @@ The program is structured as follows:
 
 ### Training in action
 Build and run the `tpg-training` target to observe the TPG training process in action.
+For a faster training, it is strongly advised to build the project in Release mode.
 
 The first output of the training process are the logs generated in the console.
 An example of log is presented hereafter:
