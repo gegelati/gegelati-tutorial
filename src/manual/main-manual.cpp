@@ -4,6 +4,7 @@
 * \license CeCILL-C
 */
 
+#include <climits>
 #include <iostream>
 #include <iomanip>
 

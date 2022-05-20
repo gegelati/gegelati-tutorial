@@ -7,6 +7,7 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include <atomic>
 #include <deque>
 
 #define DISPLAY_W 500

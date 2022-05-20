@@ -3,9 +3,11 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <cmath>
+#include <climits>
 #include <float.h>
 #include <cstdio>
 #include <iostream>
+#include <tuple>
 
 #include "renderer.h"
 
