@@ -5,7 +5,7 @@ toc: true
 toc_sticky: true
 ---
 
-The objective of this tutorial is to gently guide you through the training of your first Tangled Program Graph (TPG) with the [<span style="font-variant: small-caps;">Gegelati</span>](https://github.com/gegelati/gegelati) library.
+The objective of this tutorial is to guide you through the training of your first Tangled Program Graph (TPG) with the [<span style="font-variant: small-caps;">Gegelati</span>](https://github.com/gegelati/gegelati) library.
 People following this tutorial are assumed to be already acquainted with basic structural and evolutionary concepts of TPGs.
 In case you're not already familiar with these concepts, a basic introduction to these concepts and to <span style="font-variant: small-caps;">Gegelati</span> can be found in the [linked 10-minute video](https://youtu.be/t0Ta5Vo5h7s).
 
@@ -18,30 +18,29 @@ The following topics are covered in this tutorial:
 This tutorial does not require any particular prerequisites.
 While being fluent in C++ certainly is an asset to follow this tutorial, all pieces of codes that must be written during the tutorial are given in this assignment.
 
-
 ## 0. Setup and build the tutorial project
 
 ### C++ Environment:
 This tutorial requires a C++ development environment compatible with the C++17 standard.
 Compatibility of this tutorial was tested with MS Visual Studio Community Edition (MSVC) 2019, and GCC v9.
 
-
 ### Bash environment
 Some scripts embedded in the given files of this tutorial require the availability of a bash environment.
-While this is natively supported in Linux, an installation is required on Windows.
+While bash is natively supported in Linux, an installation is required on Windows.
 We advise you to use the all-in-one binaries maintained by the git community, and available [here!](https://git-scm.com/downloads).
 When installing the tool, make sure that the tool is added to the PATH environment variable.
 
 ### CMake
-CMake is a utility tool whose purpose is to ease the portability of complex C/C++ applications by generating projects for most popular IDEs (Code::Blocks, Visual Studio, Makefile, QT Creator, ...), on major operating systems (Linux, Windows, Mac OS).
+CMake is a utility tool whose purpose is to ease the portability of complex C/C++ applications by generating projects for most popular IDEs (CLion, Visual Studio, Makefile, QT Creator, ...), on major operating systems (Linux, Windows, Mac OS).
 To achieve this purpose, source code files and project dependencies are specified in a configuration file, called `CMakeLists.txt`, using a specific description language.
 When CMake is launched, it automatically generates a project for a specified IDE, where all dependencies to third-party libraries are configured.
 
+CMake version 3.12 or newer must be installed for this tutorial.
 To check if the CMake tool is already available on your workstation simply type the following command:
 ```bash
 cmake --version
+
 ```
-CMake version 3.12 or newer must be installed for this tutorial.
 {% details In case CMake is not installed follow the click here to display installation advice. %}
 The latest version of CMake can be downloaded at the following URL: https://cmake.org/download/.
 For a simple installation, choose the binary version for windows.
@@ -56,7 +55,7 @@ The installation process for different OSes is given below.
 
 {% details On Windows: (Click to expand) %}
 All library binaries will be downloaded automatically when running the CMake project.
-When using MSVC, all DLLs are copied automatically in the executable foldere.
+When using MSVC, all DLLs are copied automatically in the executable folders.
 When using other compilers, if the library are not found during the build process, please refer to the [`/tutorial-gegelati/lib/ReadMe.md`](../lib/ReadMe.md) file for solutions.
 {% enddetails %}
 
@@ -89,9 +88,9 @@ cd /gegelati-tutorial/bin
 cmake ..
 ```
 To select another IDE, use the `cmake -G "<MY_FAVORITE_IDE>" ..` command instead.
-The list of available IDE can be obtained by typing `cmake -G`.
+The list of available IDEs can be obtained by typing `cmake -G`.
 
-Alternatively, some IDEs, like Clion, natively support CMake project.
+Alternatively, some IDEs, like Clion, natively support CMake projects.
 In this case, simply open a new project in the `/gegelati-tutorial` folder.
 
 In all cases, make sure that no error appears during the generation of the CMake project.
@@ -125,7 +124,7 @@ Good luck holding the pendulum in the upward position for more than a few second
 ### Under the C++-hood
 The simulation parameters of the pendulum can be changed when instantiating the corresponding C++ class.
 The default parameter values were carefully chosen to give human beings a chance at stabilizing the pendulum.
-Feel free to try other configurations by parameterizing the construction of the pendulum, in the `/tutorial-gegelati/src/manual/main-manual.cpp`
+Feel free to try other configurations by parameterizing the construction of the pendulum, in the `/gegelati-tutorial/src/manual/main-manual.cpp`
 
 {% details `Pendulum` constructor documentation (Click to expand) %}
 ```cpp
@@ -169,7 +168,7 @@ In the case of <span style="font-variant: small-caps;">Gegelati</span>, this int
 |+isTerminal(): bool                 |
 -->
 
-The following step will guide you through the creation of a `PendulumWrapper` class, inheriting from the `Learn::LearningEnvironment` class and interfacing the `Pendulum` class with <span style="font-variant: small-caps;">Gegelati</span>.
+The following steps will guide you through the creation of a `PendulumWrapper` class, inheriting from the `Learn::LearningEnvironment` class and interfacing the `Pendulum` class with <span style="font-variant: small-caps;">Gegelati</span>.
 
 ### `PendulumWrapper` skeleton.
 The `pendulum_wrapper.h` and `pendulum_wrapper.cpp` files already contain the skeleton of the `PendulumWrapper` class, which you'll complete throughout the next steps.
@@ -177,7 +176,7 @@ To make the class compilable, this code already defines empty methods overriding
 Comments in the header file explain the purpose of each method.
 
 ### `Pendulum` attributes
-A first specific attribute of the `PendulumWrapper` class is already declared, the `actions` vector.
+A first specific attribute of the `PendulumWrapper` class is already declared: the `actions` vector.
 ```cpp
 /* From pendulum_wrapper.h */
 /// Array containing the actions available for the TPG.
@@ -228,6 +227,7 @@ This method returns the observable state of the environment as a vector of refer
 The `Data::DataHandler` interface class provides a set of services that simplifies the training of TPGs.
 In particular, in addition to methods for accessing the data, the `Data::DataHandler` supports methods for dynamically checking what the addressing space of a data source is, or which data types can be provided by a data source.
 It is also possible for a `Data::DataHandler` to give access to data with a data type differing from the native type used for storing the data.
+
 For example, with a `Primitive2DArray<char>(10,10)` data handler storing a 2D array of `char[10][10]`, individual elements of the array can be accessed using the native data type `char`; but it is also possible to access a 3-by-2 subregion of data by requesting an access to data with type `char[3][2]`.
 For more details on these features, please refer to the doxygen documentation built and delivered with the <span style="font-variant: small-caps;">Gegelati</span> library.
 
@@ -254,7 +254,7 @@ void setPointer(T* ptr);
 #### TODO #3:
 Instantiate two instances of the `Data::PointerWrapper` class as attributes of the `PendulumWrapper`.
 In the constructor of the `PendulumWrapper`, make these two `Data::PointerWrapper` point to the `angle` and `velocity` attributes of the `pendulum`.
-Then, update the `getDataSources()` to return a vector referring to these two `Data::PointerWrapper`.
+Then, update the `getDataSources()` method to return a vector referring to these two `Data::PointerWrapper`.
 This task requires less than 10 lines of C++ code.
 
 _C++ tip:_ Pushing a variable `T var` to a `std::vector<std::references_wrapper<T>> vect` is done with a simple call to `vect.push_back(var)`.
@@ -291,7 +291,7 @@ std::vector<std::reference_wrapper<const Data::DataHandler>> PendulumWrapper::ge
 After exposing the pendulum attributes to the learning agent, this step will give it the ability to act on the pendulum.
 
 The number of discrete actions that can be taken by the learning agent is given by the `getNbActions()` method from the learning environment.
-The value returned by this method is already set when building the `LearningEnvironment` parent class of the `PendulumWrapper`.
+The value returned by this method is already set when calling the constructor of the `LearningEnvironment` parent class of the `PendulumWrapper`.
 
 To execute an action, the learning agent calls the `doAction(int)` method of the learning environment with an argument corresponding to the action to execute.
 
