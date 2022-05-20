@@ -101,7 +101,6 @@ In the remainder of this tutorial, the parent folder where the files were unzipp
 To create the C++ project for your default build chain (Makefile on linux and Mac OS, MSVC -when installed- on windows), simply type the following commands in a bash terminal:
 ```bash
 cd /gegelati-tutorial/bin
-chmod +x ../dat/download_dat.sh
 cmake ..
 ```
 To select another IDE, use the `cmake -G "<MY_FAVORITE_IDE>" ..` command instead.
