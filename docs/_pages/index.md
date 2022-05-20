@@ -50,7 +50,7 @@ Reboot your system at the end of the installation.
 
 
 ### Third-Party Library
-Several third party libraries need to be installed for this tutorial: <span style="font-variant: small-caps;">Gegelati</span>, `SDL2`, `SDL2_Image`, and `SDL2_ttf`.
+Several third party libraries and tools need to be installed for this tutorial: <span style="font-variant: small-caps;">Gegelati</span>, `SDL2`, `SDL2_Image`, `SDL2_ttf`, and curl.
 The installation process for different OSes is given below.
 
 {% details On Windows: (Click to expand) %}
@@ -60,10 +60,10 @@ When using other compilers, if the library are not found during the build proces
 {% enddetails %}
 
 {% details On Linux: (Click to expand) %}
-The SDL library (`SDL2`, `SDL2_Image`, and `SDL2_ttf`) are available in most package repository.
+The SDL library (`SDL2`, `SDL2_Image`, `SDL2_ttf`, and curl) are available in most package repository.
 For example, on Ubuntu, simply type the following command:
 ```bash
-sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
+sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev curl
 ```
 
 To install <span style="font-variant: small-caps;">Gegelati</span>, you must build it and install it on your machine.
