@@ -16,7 +16,7 @@ The following topics are covered in this tutorial:
 * Training of a TPG.
 
 This tutorial does not require any particular prerequisites.
-While being fluent in C++ certainly is an asset to follow this tutorial, all pieces of codes that must be written during the tutorial are given in this assignment.
+While being fluent in C++ certainly is an asset to follow this tutorial, bits of that must be written during the tutorial are given in this assignment.
 
 ## 0. Setup and build the tutorial project
 
@@ -39,9 +39,8 @@ CMake version 3.12 or newer must be installed for this tutorial.
 To check if the CMake tool is already available on your workstation simply type the following command:
 ```bash
 cmake --version
-
 ```
-{% details In case CMake is not installed follow the click here to display installation advice. %}
+{% details In case CMake is not installed **click here** to display installation advice. %}
 The latest version of CMake can be downloaded at the following URL: https://cmake.org/download/.
 For a simple installation, choose the binary version for windows.
 During the installation process, select the "ADD TO PATH FOR ALL USERS" option.
@@ -120,7 +119,7 @@ The learning environment used in this tutorial is an inverted pendulum.
 The pendulum itself is a physical simulation of a weight attached to a pivot with a rigid cord, and subject to both gravity and friction.
 In this learning environment, it is possible to apply a clockwise or a counter clockwise torque to the pendulum to influence its swinging.
 
-As illustrated in the previous GIF, the objective of learning agent trained within this learning environment is to stabilize the pendulum in the upward position.
+As illustrated in the previous GIF, the objective of a learning agent trained within this learning environment is to stabilize the pendulum in the upward position.
 It is important to note that the maximum torque that can be applied to the pendulum is not strong enough to bring the pendulum to the upward position.
 Hence, the only way to bring the pendulum to this position is to progressively gain some momentum with accelerated swings.
 
