@@ -1,6 +1,6 @@
 ---
 title: Export, visualize and import TPG graphs in the DOT format
-permalink: /test/
+permalink: /tutos/export-visualize-import
 toc: true
 toc_sticky: true
 ---
