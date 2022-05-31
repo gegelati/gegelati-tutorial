@@ -17,6 +17,27 @@ The starting point of this tutorial is the C++ project obtained at the end of th
 ## 0. Export TPGs into DOT files.
 
 ### The DOT format
+DOT is a popular description language that makes it possible to describe graphs with a few lines of code.
+With a simple declarative syntax, labeled directed or undirected graphs with homogeneous or heterogeneous types of vertices can be described.
+In it simplest form, the DOT syntax (mostly) focuses on the description of the topology of graphs, leaving out graphical and layout concerns.
+These graphical and layouting concerns are handled automatically by dedicated visualization tools, such as the open-source [GraphViz](https://graphviz.org/) tool.
+
+A simple example of graph described with the DOT language is presented in the following excerpt:
+
+```dot
+digraph mygraph {
+  root -> A;
+  root -> B -> C;
+  A -> A;
+  B -> A;
+}
+```
+
+The visualization of this graph with `xdot` produces the following output:
+
+<div align=center><img src="../assets/images/dotgraph.svg"/></div>
+
+In <span style="font-variant: small-caps;">Gegelati</span>, the DOT language is used as the serialization file format for exporting, visualizing and importing TPGs.
 
 ### Export TPGs throughout training
 
