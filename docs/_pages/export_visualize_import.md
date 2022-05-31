@@ -41,6 +41,26 @@ In <span style="font-variant: small-caps;">Gegelati</span>, the DOT language is 
 
 ### Export TPGs throughout training
 
+To export TPGs in the DOT format, <span style="font-variant: small-caps;">Gegelati</span> provides the `File::TPGGraphDotExporter` class.
+Each instance of the `TPGGraphDotExporter` class is associated, on construction to a `TPG::TPGGraph`.
+The constructor of the exporter class is declared as follows:
+
+```cpp
+/**
+ * \brief Constructor for the exporter.
+ *
+ * \param[in] filePath initial path to the file where the dot content
+ *            will be written.
+ * \param[in] graph const reference to the graph whose content will
+ *            be exported in dot.
+ * \throws std::runtime_error in case no file could be opened at the
+ *         given filePath.
+ */
+TPGGraphDotExporter (const char *filePath, const TPG::TPGGraph &graph)
+```
+
+
+
 ### Export the best TPG
 
 ## 1. Visualization of TPG graphs.
