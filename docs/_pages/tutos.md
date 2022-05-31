@@ -1,5 +1,5 @@
 ---
-title: Export, visualize and import TPG graphs in the DOT format
+title: GEGELATI Tutorials
 permalink: /tutos/
 toc: true
 toc_sticky: true
