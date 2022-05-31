@@ -58,3 +58,17 @@ pendulumWrapperSolutionArchive = ZipFile("./docs/data/pendulum_wrapper_solution.
 pendulumWrapperSolutionArchive.write("src/training/pendulum_wrapper_solution.cpp", "pendulum_wrapper.cpp") # overwrite empty_file
 pendulumWrapperSolutionArchive.write("src/training/pendulum_wrapper_solution.h", "pendulum_wrapper.h") # overwrite empty_file
 pendulumWrapperSolutionArchive.close()
+
+# Create the gegelati-tutorial-solution archive
+mainFolder = "gegelati-tutorial/"
+tutorialSolutionArchive = ZipFile("./docs/data/gegelati-tutorial-solution.zip", "w")
+zipFileAdd(tutorialSolutionArchive,"bin/", mainFolder)
+zipFileAdd(tutorialSolutionArchive,"dat/download_dat.sh", mainFolder)
+zipFilesInDir("./",tutorialSolutionArchive, r'[^\.]+.*', mainFolder, False) # exclude .gitgnore
+zipFilesInDir("./lib/",tutorialSolutionArchive, r'.*', mainFolder)
+zipFilesInDir("src/",tutorialSolutionArchive, r'.*', mainFolder, False)
+zipFilesInDir("src/manual/",tutorialSolutionArchive, r'.*', mainFolder)
+zipFilesInDir("src/training",tutorialSolutionArchive, r'^(?!.*(pendulum_wrapper))', mainFolder, False) # all files except pendulum_wrapper
+tutorialSolutionArchive.write("src/training/pendulum_wrapper_solution.cpp", mainFolder + "src/training/pendulum_wrapper.cpp" ) # overwrite empty_file
+tutorialSolutionArchive.write("src/training/pendulum_wrapper_solution.h", mainFolder + "src/training/pendulum_wrapper.h") # overwrite empty_file
+tutorialSolutionArchive.close()
