@@ -120,7 +120,7 @@ for (int i = 0; i < params.nbGenerations && !exitProgram; i++) {
 {% enddetails %}
 
 ### Export the cleaned best TPG
-During the training process, the pseudo-random nature of the graph and program mutation causes the apparition of useless elements.
+During the training process, the pseudo-random nature of the graph and program mutations causes the apparition of useless elements.
 
 **Training roots:**
 At the end of the training process, the TPG needs to be exported for further utilization, for example for inferring the pre-trained TPG, as will be done later in this tutorial.
@@ -147,7 +147,7 @@ After the training process, hitchhiker programs can be cleaned from the TPG usin
 ```cpp
 // Clean unused vertices and teams
 std::shared_ptr<TPG::TPGGraph> tpg = la.getTPGGraph();
-((const TPG::TPGInstrumentedFactory&)tpg->getFactory()).clearUnusedTPGGraphElements(*tpg);
+TPG::TPGInstrumentedFactory().clearUnusedTPGGraphElements(*tpg);
 ```
 
 **Introns**:
@@ -172,7 +172,7 @@ la.keepBestPolicy();
 
 // Clean unused vertices and teams
 std::shared_ptr<TPG::TPGGraph> tpg = la.getTPGGraph();
-((const TPG::TPGInstrumentedFactory&)tpg->getFactory()).clearUnusedTPGGraphElements(*tpg);
+TPG::TPGInstrumentedFactory().clearUnusedTPGGraphElements(*tpg);
 
 // Clean introns
 tpg->clearProgramIntrons();
@@ -184,6 +184,47 @@ dotExporter.print();
 {% enddetails %}
 
 ## 1. Visualization of TPG graphs.
+To visualize TPGs described with DOT, a dedicated tool can be installed on your computer, such as graphviz.
+Alternatively, several website propose online viewers for graphs described with the DOT language.
+For example, [Edotor](https://edotor.net/), [GraphvizOnline](https://dreampuf.github.io/GraphvizOnline/), or [GraphViz Visual Editor](http://magjac.com/graphviz-visual-editor/) can be used to follow this tutorial.
+
+### TPG graphical semantics
+An excerpt of the visual representation of a TPG produced by GraphViz is presented hereafter:
+<div align="center"><img src="../assets/images/tpg00.png" height="550"/></div>
+
+The large colored circles in the graph represents the teams of the TPG.
+At the top of the image, the two darker teams are root teams of the TPG.
+Lighter teams are internal teams of the TPG, referenced in the graph stemming from at least one root of the TPG.
+The red rectangles represent the actions of the TPG.
+The integer numbers in the action rectangles represent the numbers associated to the discrete actions available in the learning environment.
+Finally, arrows linking teams to other teams of actions are separated in two halves: the first one linking the team to a program, represented with a tiny circle, and the second one linking the program to its destination team or action.
+In case several edges starting from different teams share a common program and destination, a single arrow exists between the program and its destination.
+
+### In-training TPGs and emergent behavior
+The training meta-parameters used in this tutorial, specified in `gegelati-tutorial/params.json`, specify that the trained TPG should contain 150 roots at each generation, 80% of which are removed during the decimation process.
+Hence, the DOT graph exported after each generation contain 30 root teams, which make them quite large when visualized.
+
+The first observable feature of TPGs during the training process are their maximum depth from root to actions.
+When the learning agent and the trained TPG are first initialized, the number of created root is equal to the number of actions available the TPG.
+Each of this root is connected to two actions, such that each action is itself connected to two roots.
+Hence, at initialization, the depth of the TPG is 1 between roots and actions.
+
+During the any iteration of the natural selection training process, additional roots are added to the TPGs to reach the desired 150 roots.
+These roots are obtained by cloning and mutating existing teams from the TPG.
+During this mutation process, program of mutated team can change their destination among surviving teams from the previous generation, but can never point towards another root introduced at the same generation.
+Hence, the maximum depth of the TPG can increase, at most, by one at each generation.
+This is why, when observing the TPG resulting from the first generation, the graph should contain
+30 roots with a maximum depth of 2 between roots and actions.
+
+In practice, the maximum depth of the TPG remains relatively stable, unless one of the root teams discovers a new valuable strategy.
+Indeed, in the absence of a reward breakthrough most newly introduced team, which may be responsible for an increase of the TPG depth, won't survive any generation.
+Thanks to this property, the depth of the TPG graphs automatically reflects the complexity of the strategy deployed for maximizing their rewards.
+Hence, when visualizing the TPGs obtained during the first generation, you will most likely not notice a big change in the maximum depth of the TPG.
+
+When a root team with a valuable behavior appears, it will survive for many generations, thus increasing its chance of being itself referenced by a new root team bringing further improvement of the TPG reward.
+When becoming an internal (i.e. non-root) team of the TPG, a team is protected from decimation, which further increases its life-span, and its chance of being referenced during future mutations.
+This natural self preservation of valuable behavior is called the emergent hierarchal structure of TPGs.
+
 
 ## 2. Standalone inference from imported DOT file.
 
