@@ -190,7 +190,7 @@ For example, [Edotor](https://edotor.net/), [GraphvizOnline](https://dreampuf.gi
 
 ### TPG graphical semantics
 An excerpt of the visual representation of a TPG produced by GraphViz is presented hereafter:
-<div align="center"><img src="../assets/images/tpg00.png" height="550"/></div>
+<div align="center"><img src="../assets/images/tpg00.png" height="450"/></div>
 
 The large colored circles in the graph represents the teams of the TPG.
 At the top of the image, the two darker teams are root teams of the TPG.
@@ -201,6 +201,7 @@ Finally, arrows linking teams to other teams of actions are separated in two hal
 In case several edges starting from different teams share a common program and destination, a single arrow exists between the program and its destination.
 
 ### In-training TPGs and emergent behavior
+
 The training meta-parameters used in this tutorial, specified in `gegelati-tutorial/params.json`, specify that the trained TPG should contain 150 roots at each generation, 80% of which are removed during the decimation process.
 Hence, the DOT graph exported after each generation contain 30 root teams, which make them quite large when visualized.
 
@@ -225,6 +226,8 @@ When a root team with a valuable behavior appears, it will survive for many gene
 When becoming an internal (i.e. non-root) team of the TPG, a team is protected from decimation, which further increases its life-span, and its chance of being referenced during future mutations.
 This natural self preservation of valuable behavior is called the emergent hierarchal structure of TPGs.
 
+#### TODO #3:
+Visualize the TPG obtained during throughout the training process, and the structure of the best TPG exported when exiting the training process.
 
 ## 2. Standalone inference from imported DOT file.
 
