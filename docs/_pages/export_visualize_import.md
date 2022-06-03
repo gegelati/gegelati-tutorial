@@ -167,12 +167,13 @@ Then, after the end of the iterative training process:
 {% details Solution to #2 (Click to expand) %}
 ```cpp
 /* main-training.cpp: After the for loop. */
-// Keep only the best root
-la.keepBestPolicy();
 
 // Clean unused vertices and teams
 std::shared_ptr<TPG::TPGGraph> tpg = la.getTPGGraph();
 TPG::TPGInstrumentedFactory().clearUnusedTPGGraphElements(*tpg);
+
+// Keep only the best root
+la.keepBestPolicy();
 
 // Clean introns
 tpg->clearProgramIntrons();
@@ -190,7 +191,7 @@ For example, [Edotor](https://edotor.net/), [GraphvizOnline](https://dreampuf.gi
 
 ### TPG graphical semantics
 An excerpt of the visual representation of a TPG produced by GraphViz is presented hereafter:
-<div align="center"><img src="../assets/images/tpg00.png" height="450"/></div>
+<div align="center"><img src="../assets/images/tpg00.png" width="400"/></div>
 
 The large colored circles in the graph represents the teams of the TPG.
 At the top of the image, the two darker teams are root teams of the TPG.
@@ -230,7 +231,25 @@ This natural self preservation of valuable behavior is called the emergent hiera
 Visualize the TPG obtained during throughout the training process, and the structure of the best TPG exported when exiting the training process.
 
 ## 2. Standalone inference from imported DOT file.
+Once a pre-trained TPG is exported, an import feature is indispensable to enable using this TPG for inference purposes.
+In this step, you will create an inference executable base on a TPG exported in the DOT format.
 
 ### Creation of a new executable in the CMake project.
+#### TODO #4
+1. Create a new `gegelati-tutorial/src/inference/main-inference.cpp` file.
+2. Update the CMake configuration file to add a new target to the project. To do that, add the following lines at the end of the `gegelati-tutorial/CMakeLists.txt` file:
+```cmake
+# Sub project for inference
+file(GLOB
+	inference_files
+	./src/inference/*.cpp
+	./src/inference/*.h
+	params.json
+)
+add_executable(tpg-inference ${pendulum_files} ${inference_files})
+target_link_libraries(tpg-inference ${GEGELATI_LIBRARIES} ${SDL2_LIBRARY} ${SDL2IMAGE_LIBRARY} ${SDL2TTF_LIBRARY})
+target_compile_definitions(tpg-inference PRIVATE ROOT_DIR="${CMAKE_SOURCE_DIR}")
+```
+3. Re-generate the project for your favorite IDE using appropriate CMake commands.
 
 ### Importing TPG for inference.
