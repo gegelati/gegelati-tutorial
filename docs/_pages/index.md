@@ -507,7 +507,7 @@ In this tutorial, you have learned:
 While this tutorial illustrates the basic concepts of TPG training, <span style="font-variant: small-caps;">Gegelati</span> offers many features to play with TPGs.
 The following tutorials guide you through these features, starting from the result of this tutorial.
 These tutorial can be followed in any order, so feel free to explore them based on your personal interests and objectives.
-* _[Available Soon]_ Export, visualize and import TPG graphs in the DOT format.
+* _[Partially Available]_ [Export, visualize and import TPG graphs in the DOT format.](/gegelati-tutorial/tutos/export-visualize-import)
 * _[Available Soon]_ Accelerate training with early termination, random initial states and testing.
 * _[Available Soon]_ Play with training meta-parameters.
 * _[Available Soon]_ Explore TPG statistics throughout the training.
