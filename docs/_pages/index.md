@@ -267,7 +267,7 @@ void setPointer(T* ptr);
 ```
 
 #### TODO #3:
-Instantiate two instances of the `Data::PointerWrapper` class as attributes of the `PendulumWrapper`.
+Instantiate two instances of the `Data::PointerWrapper<T>` class as attributes of the `PendulumWrapper`.
 In the constructor of the `PendulumWrapper`, make these two `Data::PointerWrapper` point to the `angle` and `velocity` attributes of the `pendulum`.
 Then, update the `getDataSources()` method to return a vector referring to these two `Data::PointerWrapper`.
 This task requires less than 10 lines of C++ code.
