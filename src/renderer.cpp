@@ -8,6 +8,7 @@
 #include <cstdio>
 #include <iostream>
 #include <tuple>
+#include <algorithm>  
 
 #include "renderer.h"
 
