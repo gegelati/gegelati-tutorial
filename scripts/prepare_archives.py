@@ -8,6 +8,7 @@ import re
 from zipfile import ZipFile
 import os
 from os.path import basename
+import shutil
 
 # Add a file to the zip archive, with an additional parentName folder.
 def zipFileAdd(zipObj, fileName, parentName = ""):
@@ -72,3 +73,6 @@ zipFilesInDir("src/training",tutorialSolutionArchive, r'^(?!.*(pendulum_wrapper)
 tutorialSolutionArchive.write("src/training/pendulum_wrapper_solution.cpp", mainFolder + "src/training/pendulum_wrapper.cpp" ) # overwrite empty_file
 tutorialSolutionArchive.write("src/training/pendulum_wrapper_solution.h", mainFolder + "src/training/pendulum_wrapper.h") # overwrite empty_file
 tutorialSolutionArchive.close()
+
+# Make the main-inference.cpp file available
+shutil.copy2("./src/inference/main-inference.cpp", "./docs/data/")

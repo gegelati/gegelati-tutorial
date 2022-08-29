@@ -95,21 +95,22 @@ Thanks to this features, it is easier to keep track of surviving teams throughou
 To print the trained TPG after each generation of the training process, edit the `/gegelati-tutorial/src/training/main-training.cpp` file as follows:
 * Instantiate an instance of the `TPGGraphDotExporter` before entering the iterative training process. To retrieve a pointer to the trained TPG, use the following method of the learning agent: `Learn::LearningAgent::getTPGGraph()`.
 * Use the instantiated exporter within the iterative training process to export a new dot file after each generation.
+* Print all generated files in the `/gegelati-tutorial/dat/` folder. You can use the `ROOT_DIR` macro within the c++ code to target the `/gegelati-tutorial` folder automatically.
   To trigger the printing of a file, use the `TPGGraphDotExporter::print()` method.
 
 {% details Solution to #1 (Click to expand) %}
 ```cpp
 /* main-training.cpp */
 // Create an exporter for all graphs
-File::TPGGraphDotExporter dotExporter("tpg_0000.dot", *la.getTPGGraph());
+File::TPGGraphDotExporter dotExporter(ROOT_DIR "/dat/tpg_0000.dot", *la.getTPGGraph());
 
 // Train for params.nbGenerations generations
 for (int i = 0; i < params.nbGenerations && !exitProgram; i++) {
   la.trainOneGeneration(i);
 
   // Export dot
-  char buff[13];
-  sprintf(buff, "tpg_%04d.dot", i);
+  char buff[150];
+  sprintf(buff, ROOT_DIR "/dat/tpg_%04d.dot", i);
   dotExporter.setNewFilePath(buff);
   dotExporter.print();    
 
@@ -179,7 +180,7 @@ la.keepBestPolicy();
 tpg->clearProgramIntrons();
 
 // Print the resulting TPG
-dotExporter.setNewFilePath("best_tpg.dot");
+dotExporter.setNewFilePath(ROOT_DIR "/dat/best_tpg.dot");
 dotExporter.print();
 ```
 {% enddetails %}
@@ -236,16 +237,19 @@ In this step, you will create an inference executable base on a TPG exported in 
 
 ### Creation of a new executable in the CMake project.
 #### TODO #4
-1. Create a new `gegelati-tutorial/src/inference/main-inference.cpp` file.
+1. Download the `main-inference.cpp` file and place it in the `gegelati-tutorial/src/inference/` folder: [Download Link](/gegelati-tutorial/data/main-inference.cpp).
 2. Update the CMake configuration file to add a new target to the project. To do that, add the following lines at the end of the `gegelati-tutorial/CMakeLists.txt` file:
 ```cmake
 # Sub project for inference
 file(GLOB
-	inference_files
-	./src/inference/*.cpp
-	./src/inference/*.h
-	params.json
+ inference_files
+ ./src/inference/*.cpp
+ ./src/inference/*.h
+ ./src/training/instructions.*
+ ./src/training/pendulum_wrapper.*
+ params.json
 )
+include_directories(${GEGELATI_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2IMAGE_INCLUDE_DIR} ${SDL2TTF_INCLUDE_DIR} "./src/" "./src/training/")
 add_executable(tpg-inference ${pendulum_files} ${inference_files})
 target_link_libraries(tpg-inference ${GEGELATI_LIBRARIES} ${SDL2_LIBRARY} ${SDL2IMAGE_LIBRARY} ${SDL2TTF_LIBRARY})
 target_compile_definitions(tpg-inference PRIVATE ROOT_DIR="${CMAKE_SOURCE_DIR}")
@@ -253,3 +257,29 @@ target_compile_definitions(tpg-inference PRIVATE ROOT_DIR="${CMAKE_SOURCE_DIR}")
 3. Re-generate the project for your favorite IDE using appropriate CMake commands.
 
 ### Importing TPG for inference.
+Open the `gegelati-tutorial/src/inference/main-inference.cpp` file which is pre-filled with the code needed to load and infer a TPG from a dot file.
+The program is structured as follows:
+1. Initialize the instruction set of the programs, with the same instructions as the ones used during training.
+2. Initialize the `PendulumWrapper` learning environment and the associated learning agent. While the learning agent is not strictly needed for inference purposes, as it provides a simple API to initialize the execution environment, which is easier to use it in this example. Also note that this learning agent can be reused as a basis to restart the training of a previously saved TPG.
+3. Load the TPG from a file using the `File::TPGGraphDotImporter` class with the following lines.
+   ```c++
+   // Load the TPG from the file
+   File::TPGGraphDotImporter importer(ROOT_DIR "/dat/best_tpg.dot", la.getEnvironment(), *la.getTPGGraph());
+   importer.importGraph();
+   ```
+   It is important to note that the importer does not create its own TPG, but fills and replace the one created by the learning agent.
+4. Instantiate the `TPG::TPGExecutionEngine` which will manage the inference of the loaded TPG graph.
+5. Initialize the display.
+6. In an infinite loop, simulate and display the `params.maxNbActionsPerEval` actions of the TPG on the pendulum.
+7. Each inference of the TPG is handled by the `TPG::TPGExecutionEngine`, which starts an execution of the TPG from a specified TPG vertex, with the current state of the pendulum learning environment. This executions produces a `trace`, which corresponds to the list of actors visited during one execution of the TPG. The last vertex visited in the `trace` is the action selected by the TPG.
+8. After each inference, the selected action is applied to the environment, and the display is updated.
+9. Necessary cleanups are executed after the simulation loop.
+
+#### TODO #5
+Build and run the best TPG saved from a previous training.
+Check that the result is identical to the score obtained during the training.
+This score is automatically printed in the console after `params.maxNbActionsPerEval` actions are performed, and before restarting the simulation.
+
+## Conclusion
+In this tutorial, you have seen how to and visualize TPGs during the training process, and also how to import them back for inference.
+The code presented in this tutorial can serve as a basis for many purposes, and notably to restart the training of a TPG saved during the training process.
