@@ -8,9 +8,9 @@ function log() {
 if [ ! -d "gegelatilib-1.1.0" ] 
 then
 	log "Download GEGELATI"
-	curl -L -o gegelatilib-1.1.0.zip https://github.com/gegelati/gegelati/releases/download/v1.1.0/gegelatilib-1.1.0.zip
-	unzip gegelatilib-1.1.0.zip
-	rm gegelatilib-1.1.0.zip
+	curl -L -o gegelatilib-1.2.0.zip https://github.com/gegelati/gegelati/releases/download/v1.2.0/gegelatilib-1.2.0.zip
+	unzip gegelatilib-1.2.0.zip
+	rm gegelatilib-1.2.0.zip
 fi
 
 ## SDL2
