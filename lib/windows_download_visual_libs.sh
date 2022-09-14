@@ -5,7 +5,7 @@ function log() {
 }
 
 ## Gegelati
-if [ ! -d "gegelatilib-1.1.0" ] 
+if [ ! -d "gegelatilib-1.2.0" ]
 then
 	log "Download GEGELATI"
 	curl -L -o gegelatilib-1.2.0.zip https://github.com/gegelati/gegelati/releases/download/v1.2.0/gegelatilib-1.2.0.zip
