@@ -110,6 +110,8 @@ In this case, simply open a new project in the `/gegelati-tutorial` folder.
 
 In all cases, make sure that no error appears during the generation of the CMake project.
 
+The generated C++ project contains 2 targets : `manual-control`, and `tpg-training`. Please note that at this point, only the `manual-control` target can be built successfully. In order to build the `tpg-training` target, additional code will be added in Section 2, when interfacing <span style="font-variant: small-caps;">Gegelati</span> with the learning environment.
+
 
 ## 1. Meet the pendulum
 The learning environment used in this tutorial is an inverted pendulum.
@@ -126,7 +128,8 @@ Hence, the only way to bring the pendulum to this position is to progressively g
 ### Build and swing!
 To better appreciate the difficulty of this task, the first learning agent trained in this tutorial relies on a well known machine learning technique: your brain!
 
-To build the first executable of this tutorial, open the project generated with CMake; then build and run the `manual-control` executable.
+To build the first executable of this tutorial, open the project generated with CMake; then build the `manual-control` target and run the produced executable. 
+In case of an error, make sure you are only building the right target, as other targets cannot be built successfully at this point in the tutorial.
 
 Once the build is complete, run the executable.
 Using the keyboard, you can try to manually balance the pendulum with 7 different actions:
