@@ -12,6 +12,10 @@ set (PROJECT_NAME pendulum-tutorial)
 
 project(${PROJECT_NAME})
 
+set(GEGELATI_VERSION "1.2.0")
+set(GEGELATI_ARCHIVE "gegelatilib-${GEGELATI_VERSION}.zip")
+set(GEGELATI_URL "https://github.com/gegelati/gegelati/releases/download/v${GEGELATI_VERSION}/${GEGELATI_ARCHIVE}")
+
 set(SDL2_VERSION "2.28.5")
 set(SDL2_MINGW_ARCHIVE "SDL2-devel-${SDL2_VERSION}-mingw.zip")
 set(SDL2_VC_ARCHIVE "SDL2-devel-${SDL2_VERSION}-VC.zip")
@@ -84,38 +88,56 @@ MESSAGE("Download dat content.")
 execute_process(COMMAND sh -c ${CMAKE_SOURCE_DIR}/dat/download_dat.sh
 				WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/dat/)
 
-if(WIN32)
-    MESSAGE("Download windows pre-built libraries.")
-	execute_process(COMMAND sh -c ${CMAKE_SOURCE_DIR}/lib/windows_download_visual_libs.sh
-					WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/lib/)
-endif()
-
+set(LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)				
 
 # *******************************************
 # *********** GEGELATI LIBRARY **************
 # *******************************************
 
 if(WIN32)
-	set(LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
-    # find the gegelatilib-x.y.z folder in the lib directory.
+
+	# find the Gegelati-x.y.z folder in the lib directory.
 	file(GLOB GEGELATI_ROOT_DIR "${LIBS_DIR}/gegelatilib-[\\.|0-9]*")
 	set(ENV{GEGELATI_DIR} ${GEGELATI_ROOT_DIR})
-endif()
-find_package(GEGELATI)
 
+	# if SDL lib folder exists
+	if(GEGELATI_ROOT_DIR MATCHES "$^")
+
+		if (NOT MSVC)
+			message(SEND_ERROR "Non-MSVC build on windows is not supported automatically. Please build the lib by yourself.")
+		endif()
+
+		message("Downloading GEGELATI library from ${GEGELATI_URL}")
+		file(DOWNLOAD ${GEGELATI_URL} "${LIBS_DIR}/${GEGELATI_ARCHIVE}")
+
+		message("Extracting GEGELATI library")
+		file(ARCHIVE_EXTRACT
+				INPUT "${LIBS_DIR}/${GEGELATI_ARCHIVE}"
+				DESTINATION ${LIBS_DIR})
+		file(REMOVE ${LIBS_DIR}/${GEGELATI_ARCHIVE})
+
+		file(GLOB GEGELATI_ROOT_DIR "${LIBS_DIR}/gegelatilib-[\\.|0-9]*")
+		set(ENV{GEGELATI_DIR} ${GEGELATI_ROOT_DIR})
+
+	endif ()
+
+endif()
+
+find_package(GEGELATI REQUIRED)
+
+if(NOT GEGELATI_FOUND)
+	MESSAGE(FATAL_ERROR "GEGELATI not found !")
+endif()
 
 if (WIN32)
 	file(GLOB
-		GEGELATI_DLL
-		${GEGELATI_ROOT_DIR}/bin/*.dll
-	)
+			GEGELATI_DLL
+			${GEGELATI_ROOT_DIR}/bin/*.dll
+			${GEGELATI_ROOT_DIR}/lib/*.dll
+			)
 
 	MESSAGE("Copy GEGELATI DLLs into ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 	file(COPY ${GEGELATI_DLL} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-	if(${CMAKE_GENERATOR} MATCHES "Visual Studio.*")
-		file(COPY ${GEGELATI_DLL} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug)
-		file(COPY ${GEGELATI_DLL} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release)
-	endif()
 endif()
 
 
@@ -377,3 +399,17 @@ include_directories(${GEGELATI_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2IMAGE_INC
 add_executable(tpg-training ${pendulum_files} ${training_files})
 target_link_libraries(tpg-training ${GEGELATI_LIBRARIES} ${SDL2_LIBRARY} ${SDL2IMAGE_LIBRARY} ${SDL2TTF_LIBRARY})
 target_compile_definitions(tpg-training PRIVATE ROOT_DIR="${CMAKE_SOURCE_DIR}")
+
+# Sub project for inference
+file(GLOB
+ inference_files
+ ./src/inference/*.cpp
+ ./src/inference/*.h
+ ./src/training/instructions.*
+ ./src/training/pendulum_wrapper.*
+ params.json
+)
+include_directories(${GEGELATI_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2IMAGE_INCLUDE_DIR} ${SDL2TTF_INCLUDE_DIR} "./src/" "./src/training/")
+add_executable(tpg-inference ${pendulum_files} ${inference_files})
+target_link_libraries(tpg-inference ${GEGELATI_LIBRARIES} ${SDL2_LIBRARY} ${SDL2IMAGE_LIBRARY} ${SDL2TTF_LIBRARY})
+target_compile_definitions(tpg-inference PRIVATE ROOT_DIR="${CMAKE_SOURCE_DIR}")
