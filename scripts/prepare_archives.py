@@ -44,8 +44,8 @@ def zipFilesInDir(dirName, zipObj, regex, parentName="", withSubdirectories = Tr
 mainFolder = "gegelati-tutorial/"
 tutorialTemplateArchive = ZipFile("./docs/data/gegelati-tutorial.zip", "w")
 zipFileAdd(tutorialTemplateArchive,"bin/", mainFolder)
-zipFileAdd(tutorialTemplateArchive,"dat/download_dat.sh", mainFolder)
 zipFilesInDir("./",tutorialTemplateArchive, r'[^\.]+.*', mainFolder, False) # exclude .gitgnore
+zipFilesInDir("./dat/",tutorialTemplateArchive, r'.*', mainFolder)
 zipFilesInDir("./lib/",tutorialTemplateArchive, r'.*', mainFolder)
 zipFilesInDir("src/",tutorialTemplateArchive, r'.*', mainFolder, False)
 zipFilesInDir("src/manual/",tutorialTemplateArchive, r'.*', mainFolder)
@@ -64,8 +64,8 @@ pendulumWrapperSolutionArchive.close()
 mainFolder = "gegelati-tutorial/"
 tutorialSolutionArchive = ZipFile("./docs/data/gegelati-tutorial-solution.zip", "w")
 zipFileAdd(tutorialSolutionArchive,"bin/", mainFolder)
-zipFileAdd(tutorialSolutionArchive,"dat/download_dat.sh", mainFolder)
 zipFilesInDir("./",tutorialSolutionArchive, r'[^\.]+.*', mainFolder, False) # exclude .gitgnore
+zipFilesInDir("./dat/",tutorialSolutionArchive, r'.*', mainFolder)
 zipFilesInDir("./lib/",tutorialSolutionArchive, r'.*', mainFolder)
 zipFilesInDir("src/",tutorialSolutionArchive, r'.*', mainFolder, False)
 zipFilesInDir("src/manual/",tutorialSolutionArchive, r'.*', mainFolder)
