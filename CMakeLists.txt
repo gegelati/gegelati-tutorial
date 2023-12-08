@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12.4)
+cmake_minimum_required(VERSION 3.19.0)
 
 # *******************************************
 # ************* CMake Content ***************
@@ -59,10 +59,9 @@ endif()
 # *********** LIBRARIES and Dat *************
 # *******************************************
 
-MESSAGE("Download dat content.")
-execute_process(COMMAND sh -c ${CMAKE_SOURCE_DIR}/dat/download_dat.sh
-				WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/dat/)
-
+set(DAT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dat)
+include(${DAT_DIR}/CMakeLists.txt)
+				
 set(LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
 # Add library (use include because gegelati doesn't support subdirectory yet)
