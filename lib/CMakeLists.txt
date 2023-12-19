@@ -8,9 +8,11 @@
 # - SDL2_image
 # - SDL2_ttf
 
-set(GEGELATI_VERSION "1.2.0")
-set(GEGELATI_ARCHIVE "gegelatilib-${GEGELATI_VERSION}.zip")
-set(GEGELATI_URL "https://github.com/gegelati/gegelati/releases/download/v${GEGELATI_VERSION}/${GEGELATI_ARCHIVE}")
+set(GEGELATI_VERSION "1.3.0")
+set(GEGELATI_MSVC_ARCHIVE "gegelatilib-msvc-${GEGELATI_VERSION}.zip")
+set(GEGELATI_MINGW_ARCHIVE "gegelatilib-mingw-${GEGELATI_VERSION}.zip")
+set(GEGELATI_MSVC_URL "https://github.com/gegelati/gegelati/releases/download/v${GEGELATI_VERSION}/${GEGELATI_MSVC_ARCHIVE}")
+set(GEGELATI_MINGW_URL "https://github.com/gegelati/gegelati/releases/download/v${GEGELATI_VERSION}/${GEGELATI_MINGW_ARCHIVE}")
 
 set(SDL2_VERSION "2.28.5")
 set(SDL2_MINGW_ARCHIVE "SDL2-devel-${SDL2_VERSION}-mingw.zip")
@@ -45,8 +47,12 @@ if(WIN32)
 	# if SDL lib folder exists
 	if(GEGELATI_ROOT_DIR MATCHES "$^")
 
-		if (NOT MSVC)
-			message(SEND_ERROR "Non-MSVC build on windows is not supported automatically. Please build the lib by yourself.")
+		if (MSVC)
+			set(GEGELATI_ARCHIVE ${GEGELATI_MSVC_ARCHIVE})
+			set(GEGELATI_URL ${GEGELATI_MSVC_URL})
+		else()	
+			set(GEGELATI_ARCHIVE ${GEGELATI_MINGW_ARCHIVE})
+			set(GEGELATI_URL ${GEGELATI_MINGW_URL})
 		endif()
 
 		message("Downloading GEGELATI library from ${GEGELATI_URL}")
