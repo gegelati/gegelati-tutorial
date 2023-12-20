@@ -8,8 +8,10 @@
 #define PENDULUM_H
 
 #define _USE_MATH_DEFINES // To get M_PI
-#include <math.h>
 #include <cmath>
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 /**
 * \brief Inverted pendulum class
