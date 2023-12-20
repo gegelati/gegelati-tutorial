@@ -10,9 +10,7 @@
 
 set(GEGELATI_VERSION "1.3.0")
 set(GEGELATI_MSVC_ARCHIVE "gegelatilib-msvc-${GEGELATI_VERSION}.zip")
-set(GEGELATI_MINGW_ARCHIVE "gegelatilib-mingw-${GEGELATI_VERSION}.zip")
 set(GEGELATI_MSVC_URL "https://github.com/gegelati/gegelati/releases/download/v${GEGELATI_VERSION}/${GEGELATI_MSVC_ARCHIVE}")
-set(GEGELATI_MINGW_URL "https://github.com/gegelati/gegelati/releases/download/v${GEGELATI_VERSION}/${GEGELATI_MINGW_ARCHIVE}")
 
 set(SDL2_VERSION "2.28.5")
 set(SDL2_MINGW_ARCHIVE "SDL2-devel-${SDL2_VERSION}-mingw.zip")
@@ -44,10 +42,24 @@ if(WIN32)
 	file(GLOB GEGELATI_ROOT_DIR "${LIBS_DIR}/gegelatilib-[\\.|0-9]*")
 	set(ENV{GEGELATI_DIR} ${GEGELATI_ROOT_DIR})
 
-	# if SDL lib folder exists
+	# if Gegelati lib folder doesn't exist
 	if(GEGELATI_ROOT_DIR MATCHES "$^")
 
-		if (NOT MSVC AND GEGELATI_BUILD)
+		if (MSVC)
+		  set(GEGELATI_ARCHIVE ${GEGELATI_MSVC_ARCHIVE})
+		  set(GEGELATI_URL ${GEGELATI_MSVC_URL})
+  
+		  message("Downloading GEGELATI library from ${GEGELATI_URL}")
+		  file(DOWNLOAD ${GEGELATI_URL} "${LIBS_DIR}/${GEGELATI_ARCHIVE}")
+  
+		  message("Extracting GEGELATI library")
+		  file(ARCHIVE_EXTRACT
+		  		INPUT "${LIBS_DIR}/${GEGELATI_ARCHIVE}"
+		  		DESTINATION ${LIBS_DIR})
+		  file(REMOVE ${LIBS_DIR}/${GEGELATI_ARCHIVE})
+
+		else()
+
 		  message("-- Building GEGELATI")
 		  # Setup git clone
 		  configure_file("${LIBS_DIR}/CMakeLists.txt.in" ${CMAKE_CURRENT_BINARY_DIR}/gegelati-download/CMakeLists.txt)
@@ -65,14 +77,14 @@ if(WIN32)
 		    message(FATAL_ERROR "Build step for gegelati failed: ${result}")
 		  endif()
 		  # Configure gegelati cmake
-		  execute_process(COMMAND ${CMAKE_COMMAND} ../gegelati-src -G "${CMAKE_GENERATOR}" -DCMAKE_BUILD_TYPE=Release -DSKIP_DOXYGEN_BUILD=ON -DBUILD_TESTING=OFF
+		  execute_process(COMMAND ${CMAKE_COMMAND} ../gegelati-src -G "${CMAKE_GENERATOR}" -DSKIP_DOXYGEN_BUILD=ON -DBUILD_TESTING=OFF
 		  RESULT_VARIABLE result
 		  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/gegelati-build )
 		  if(result)
 		  	message(FATAL_ERROR "Build step for gegelati failed: ${result}")
 		  endif()
 		  # Build gegelati 
-		  execute_process(COMMAND ${CMAKE_COMMAND} --build . --target install -j --config Release
+		  execute_process(COMMAND ${CMAKE_COMMAND} --build . --target install -j
 		  RESULT_VARIABLE result
 		  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/gegelati-build )
 		  if(result)
@@ -82,28 +94,7 @@ if(WIN32)
 		  file(GLOB SRC_GEGELATI_ROOT_DIR "${CMAKE_CURRENT_BINARY_DIR}/gegelati-build/gegelatilib-[\\.|0-9]*")
 		  get_filename_component(GEGELATI_DIR_NAME "${SRC_GEGELATI_ROOT_DIR}" NAME)
 		  file(COPY "${SRC_GEGELATI_ROOT_DIR}/" DESTINATION "${LIBS_DIR}/${GEGELATI_DIR_NAME}")
-		
-		else()
-		  if (MSVC)
-		  	  set(GEGELATI_ARCHIVE ${GEGELATI_MSVC_ARCHIVE})
-		  	  set(GEGELATI_URL ${GEGELATI_MSVC_URL})
-		  else()	
-		  	  set(GEGELATI_ARCHIVE ${GEGELATI_MINGW_ARCHIVE})
-		  	  set(GEGELATI_URL ${GEGELATI_MINGW_URL})
-		  	  message(WARNING "Pre-Build MinGW version of Gegelati does not work on all machines." 
-		  	  "In case your program compiles, but refuses to run when double clicking on it, or running it from"
-		  	  "windows terminal, remove the gegelatilib folder from the lib directory, and run this CMAKE with the"
-		  	  "-DGEGELATI_BUILD=ON option.")
-		  endif()
-  
-		  message("Downloading GEGELATI library from ${GEGELATI_URL}")
-		  file(DOWNLOAD ${GEGELATI_URL} "${LIBS_DIR}/${GEGELATI_ARCHIVE}")
-  
-		  message("Extracting GEGELATI library")
-		  file(ARCHIVE_EXTRACT
-		  		INPUT "${LIBS_DIR}/${GEGELATI_ARCHIVE}"
-		  		DESTINATION ${LIBS_DIR})
-		  file(REMOVE ${LIBS_DIR}/${GEGELATI_ARCHIVE})
+		  
 		endif()
 
 		file(GLOB GEGELATI_ROOT_DIR "${LIBS_DIR}/gegelatilib-[\\.|0-9]*")
