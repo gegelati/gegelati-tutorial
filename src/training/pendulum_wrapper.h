@@ -76,8 +76,12 @@ public:
 	 * the LearningEnvironment.
 	 * \param[in] mode LearningMode in which the Environment should be
 	 * reset for the next set of actions.
+	 * \param[in] iterationNumber the integer value to indicate the current
+	 * iteration number when parameter nbIterationsPerPolicyEvaluation > 1
+	 * \param[in] generationNumber the integer value to indicate the
+	 * current generation number
 	 */
-	virtual void reset(size_t, Learn::LearningMode) override;
+	virtual void reset(size_t seed, Learn::LearningMode mode, uint16_t iterationNumber = 0, uint64_t generationNumber = 0) override;
 
 	/**
 	 * \brief Execute an action on the LearningEnvironment.

@@ -30,7 +30,7 @@ std::vector<std::reference_wrapper<const Data::DataHandler>> PendulumWrapper::ge
 #endif // SOLUTION
 }
 
-void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode)
+void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iterationNumber, uint64_t generationNumber)
 {
 #ifdef SOLUTION
 	this->pendulum.setAngle(M_PI);
