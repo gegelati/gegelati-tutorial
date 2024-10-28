@@ -1,11 +1,11 @@
 # main links
 main:
   - title: "Publications"
-    url: "https://gegelati.github.io/publis/"
+    url: /publis/
   - title: "Projects"
-    url: "https://gegelati.github.io/projects/"
+    url: /projects/
   - title: "Tutorials"
-    url: /tutos/
+    url: /gegelati-tutorial/tutos/
   - title: "Source Code"
     url: "https://github.com/gegelati/gegelati"
   # - title: "Sample Posts"
