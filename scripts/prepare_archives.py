@@ -65,7 +65,7 @@ pendulumWrapperSolutionArchive.close()
 mainFolder = "gegelati-tutorial/"
 tutorialSolutionArchive = ZipFile("./docs/data/gegelati-tutorial-solution.zip", "w")
 zipFileAdd(tutorialSolutionArchive,"bin/", mainFolder)
-zipFilesInDir("./",tutorialSolutionArchive, r'[^\.]+.*', mainFolder, False) # exclude .gitgnore
+zipFilesInDir("./",tutorialSolutionArchive, r'^(?!.*(CMakeLists))[^\.]+.*', mainFolder, False) # exclude .gitgnore and CMakeLists files
 zipFilesInDir("./dat/",tutorialSolutionArchive, r'.*', mainFolder)
 zipFilesInDir("./lib/",tutorialSolutionArchive, r'.*', mainFolder)
 zipFilesInDir("src/",tutorialSolutionArchive, r'.*', mainFolder, False)
@@ -73,6 +73,7 @@ zipFilesInDir("src/manual/",tutorialSolutionArchive, r'.*', mainFolder)
 zipFilesInDir("src/training",tutorialSolutionArchive, r'^(?!.*(pendulum_wrapper))', mainFolder, False) # all files except pendulum_wrapper
 tutorialSolutionArchive.write("src/training/pendulum_wrapper_solution.cpp", mainFolder + "src/training/pendulum_wrapper.cpp" ) # overwrite empty_file
 tutorialSolutionArchive.write("src/training/pendulum_wrapper_solution.h", mainFolder + "src/training/pendulum_wrapper.h") # overwrite empty_file
+tutorialSolutionArchive.write("CMakeLists_empty.txt", mainFolder + "CMakeLists.txt") # overwrite empty_file
 tutorialSolutionArchive.close()
 
 # Make the main-inference.cpp file available
