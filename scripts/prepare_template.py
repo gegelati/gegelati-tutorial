@@ -82,13 +82,17 @@ cppSolutionOutputFile = open("./src/training/pendulum_wrapper_solution.cpp", "w"
 hInputFile = open("./src/training/pendulum_wrapper.h","r")
 hEmptyOutputFile = open("./src/training/pendulum_wrapper_empty.h", "w")
 hSolutionOutputFile = open("./src/training/pendulum_wrapper_solution.h", "w")
+txtInputCMakeListsFile = open("./CMakeLists.txt", "r")
+txtEmptyCMakeListsFile = open("./CMakeLists_empty.txt", "w")
+txtSolutionCMakeListsFile = open("./CMakeLists_solution.txt", "w")
 
-if(not cppInputFile or not cppEmptyOutputFile or not hInputFile or not hEmptyOutputFile):
+if(not cppInputFile or not cppEmptyOutputFile or not hInputFile or not hEmptyOutputFile or not txtEmptyCMakeListsFile or not txtInputCMakeListsFile or not txtSolutionCMakeListsFile):
 	exit
 
 ## Filter cpp files
 filterSolution(hInputFile, hEmptyOutputFile, hSolutionOutputFile)
 filterSolution(cppInputFile, cppEmptyOutputFile, cppSolutionOutputFile)
+filterSolution(txtInputCMakeListsFile, txtEmptyCMakeListsFile, txtSolutionCMakeListsFile)
 
 # Close files
 cppInputFile.close()
@@ -97,3 +101,6 @@ cppSolutionOutputFile.close()
 hInputFile.close()
 hEmptyOutputFile.close()
 hSolutionOutputFile.close()
+txtSolutionCMakeListsFile.close()
+txtInputCMakeListsFile.close()
+txtEmptyCMakeListsFile.close()

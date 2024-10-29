@@ -44,7 +44,7 @@ def zipFilesInDir(dirName, zipObj, regex, parentName="", withSubdirectories = Tr
 mainFolder = "gegelati-tutorial/"
 tutorialTemplateArchive = ZipFile("./docs/data/gegelati-tutorial.zip", "w")
 zipFileAdd(tutorialTemplateArchive,"bin/", mainFolder)
-zipFilesInDir("./",tutorialTemplateArchive, r'[^\.]+.*', mainFolder, False) # exclude .gitgnore
+zipFilesInDir("./",tutorialTemplateArchive, r'^(?!.*(CMakeLists))[^\.]+.*', mainFolder, False) # exclude .gitgnore and CMakeLists files
 zipFilesInDir("./dat/",tutorialTemplateArchive, r'.*', mainFolder)
 zipFilesInDir("./lib/",tutorialTemplateArchive, r'.*', mainFolder)
 zipFilesInDir("src/",tutorialTemplateArchive, r'.*', mainFolder, False)
@@ -52,6 +52,7 @@ zipFilesInDir("src/manual/",tutorialTemplateArchive, r'.*', mainFolder)
 zipFilesInDir("src/training",tutorialTemplateArchive, r'^(?!.*(pendulum_wrapper))', mainFolder, False) # all files except pendulum_wrapper
 tutorialTemplateArchive.write("src/training/pendulum_wrapper_empty.cpp", mainFolder + "src/training/pendulum_wrapper.cpp" ) # overwrite empty_file
 tutorialTemplateArchive.write("src/training/pendulum_wrapper_empty.h", mainFolder + "src/training/pendulum_wrapper.h") # overwrite empty_file
+tutorialTemplateArchive.write("CMakeLists_empty.txt", mainFolder + "CMakeLists.txt") # overwrite empty_file
 tutorialTemplateArchive.close()
 
 # Create the pendulum_wrapper_solution archive
