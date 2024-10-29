@@ -8,7 +8,7 @@
 # - SDL2_image
 # - SDL2_ttf
 
-set(GEGELATI_VERSION "1.3.1")
+set(GEGELATI_VERSION "1.4.0")
 set(GEGELATI_MSVC_ARCHIVE "gegelatilib-msvc-${GEGELATI_VERSION}.zip")
 set(GEGELATI_MSVC_URL "https://github.com/gegelati/gegelati/releases/download/v${GEGELATI_VERSION}/${GEGELATI_MSVC_ARCHIVE}")
 

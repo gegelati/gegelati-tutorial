@@ -22,7 +22,7 @@ While being fluent in C++ certainly is an asset to follow this tutorial, bits of
 
 ### C++ Environment:
 This tutorial requires a C++ development environment compatible with the C++17 standard.
-Compatibility of this tutorial was tested with MS Visual Studio Community Edition (MSVC) 2019, and GCC v9.
+Compatibility of this tutorial was tested with MS Visual Studio Community Edition (MSVC) 2022, and GCC v9.
 
 ### Bash environment
 Some scripts embedded in the given files of this tutorial require the availability of a bash environment.
@@ -354,7 +354,7 @@ Their utility will be covered in a more advanced tutorial.
 {% details Solution to #5 (Click to expand) %}
 ```cpp
 /* pendulum_wrapper.cpp */
-void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode)
+void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iterationNumber, uint64_t generationNumber)
 {
 	this->pendulum.setAngle(M_PI);
 	this->pendulum.setVelocity(0.0);
@@ -397,7 +397,7 @@ _C++ tip:_ The `double fmod(double, double)` method can be used to compute the m
 
 ```cpp
 /* pendulum_wrapper.cpp */
-void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode)
+void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iterationNumber, uint64_t generationNumber)
 {
 	this->pendulum.setAngle(M_PI);
 	this->pendulum.setVelocity(0.0);
@@ -462,11 +462,13 @@ An example of log is presented hereafter:
 Pendulum TPG training.
                       Train
       Gen   NbVert      Min      Avg      Max  T_mutat   T_eval  T_total
-        0      164 -7624.63 -1383.36  -980.33     0.00     1.51     1.51
-        1      167 -4848.23 -1263.68  -980.33     7.28     1.56    10.38
-        2      170 -6862.46 -1242.03  -844.01     2.63     1.53    14.55
-        3      170 -7707.18 -1181.00  -844.01     7.60     1.48    23.65
-        4      168
+        0      162 -6937.82 -1560.49  -844.54     0.00     1.48     1.50
+        1      167 -6912.39 -1316.13  -770.64    17.64     1.80    20.96
+        2      170 -6937.82 -1330.90  -651.14    17.63     2.04    40.69
+        3      167 -6990.10 -1455.24  -651.14    10.82     2.22    53.78
+        4      166 -6862.46 -1302.98  -651.14     8.17     2.40    64.37
+        5      169 -6990.10 -1326.34  -330.62     8.54     2.45    75.40
+        6      167 -6990.10 -1304.40  -194.47     5.67     2.62    83.74
 ```
 
 The generated logs contain a table that can be exported in the CSV format by giving a file path to the `LABasicLogger` constructor.
