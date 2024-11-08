@@ -71,7 +71,7 @@ The following commands should do the work to build the latest release:
 git clone -b master https://github.com/gegelati/gegelati.git
 cd gegelati/bin
 cmake ..
-cmake --build . --target install # On Linux
+sudo cmake --build . --target install # On Linux
 ```
 {% enddetails %}
 
