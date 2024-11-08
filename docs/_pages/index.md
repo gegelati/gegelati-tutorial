@@ -55,7 +55,7 @@ The installation process for different OSes is given below.
 {% details On Windows: (Click to expand) %}
 All library binaries will be downloaded automatically when running the CMake project.
 When using MSVC, all DLLs are copied automatically in the executable folders.
-When using other compilers, if the library are not found during the build process, please refer to the [`/tutorial-gegelati/lib/ReadMe.md`](../lib/ReadMe.md) file for solutions.
+When using other compilers, if the library are not found during the build process, please refer to the [`/tutorial-gegelati/lib/ReadMe.md`](https://github.com/gegelati/gegelati-tutorial/blob/master/lib/ReadMe.md) file for solutions.
 {% enddetails %}
 
 {% details On Linux: (Click to expand) %}
