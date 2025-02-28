@@ -16,20 +16,20 @@
 
 #include "renderer.h"
 
-typedef struct sfmlDisplay {
+struct sfmlDisplay {
     sf::RenderWindow* window;
     sf::Texture texturePendulum;
     sf::Texture textureArrow;
     sf::Font font;
-} sfmlDisplay;
+};
 
 static sfmlDisplay display;
 static std::chrono::high_resolution_clock::time_point previousFrameTime;
 
 void Renderer::renderInit() {
-    display.window = new sf::RenderWindow(sf::VideoMode(DISPLAY_W, DISPLAY_H), "Environment_Display");
+    display.window = new sf::RenderWindow(sf::VideoMode({DISPLAY_W, DISPLAY_H}), "Environment_Display");
 
-    if (!display.font.loadFromFile(PATH_TTF)) {
+    if (!display.font.openFromFile(PATH_TTF)) {
         std::cerr << "Failed to load font" << std::endl;
         exit(1);
     }
@@ -48,12 +48,11 @@ void Renderer::renderInit() {
 }
 
 void Renderer::displayText(const char* text, int posX, int posY) {
-    sf::Text sfText;
-    sfText.setFont(display.font);
+    sf::Text sfText(display.font);
     sfText.setString(text);
     sfText.setCharacterSize(20);
     sfText.setFillColor(sf::Color::Green);
-    sfText.setPosition(posX, posY);
+    sfText.setPosition({static_cast<float>(posX), static_cast<float>(posY)});
     display.window->draw(sfText);
 }
 
@@ -67,33 +66,31 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 
     // Position of the pendulum in the window
     sf::Sprite spritePendulum(display.texturePendulum);
-    spritePendulum.setPosition(DISPLAY_W / 2, DISPLAY_H / 2);
-    spritePendulum.setOrigin(25, 15);
+    spritePendulum.setPosition({DISPLAY_W / 2.f, DISPLAY_H / 2.f});
+    spritePendulum.setOrigin({25.f, 15.f});
 
     // Convert the angle to degree with the offset to match the python training
     double angle = 180.f - state * 180.f / ((float)M_PI);
-    spritePendulum.setRotation(angle);
+    spritePendulum.setRotation(sf::degrees(angle));
 
     // Display the pendulum
     display.window->draw(spritePendulum);
 
-    if (fabs(torque) > 0.0) {
+    if (std::fabs(torque) > 0.0) {
         double scale = std::sqrt(std::fabs(torque));
         // Position of the arrow in the window
-        const int arrowWidth = (int)(178 * scale);
-        const int arrowHeight = (int)(69 * scale);
+        const int arrowWidth = 178 * scale;
+        const int arrowHeight = 69 * scale;
 
         sf::Sprite spriteArrow(display.textureArrow);
-		
-        
+
         if (torque < 0.0) {
-            spriteArrow.setScale(scale, scale);
-			spriteArrow.setPosition((DISPLAY_W - arrowWidth) / 2, (int)(DISPLAY_H / 2 + 14 + scale * 50.0));
+            spriteArrow.setScale({static_cast<float>(scale), static_cast<float>(scale)});
+            spriteArrow.setPosition({static_cast<float>((DISPLAY_W - arrowWidth) / 2), static_cast<float>(DISPLAY_H / 2 + 14 + scale * 50.0)});
         } else {
-			spriteArrow.setScale(-scale, scale);
-			spriteArrow.setPosition((DISPLAY_W + arrowWidth) / 2, (int)(DISPLAY_H / 2 + 14 + scale * 50.0));
-		}
-		
+            spriteArrow.setScale({static_cast<float>(-scale), static_cast<float>(scale)});
+            spriteArrow.setPosition({static_cast<float>((DISPLAY_W + arrowWidth) / 2), static_cast<float>(DISPLAY_H / 2 + 14 + scale * 50.0)});
+        }
 
         // Display arrow
         display.window->draw(spriteArrow);
@@ -101,12 +98,12 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 
     // Print Generation text
     char generationString[100];
-    sprintf(generationString, "   gen: %04lld", generation);
+    std::snprintf(generationString, sizeof(generationString), "   gen: %04lld", generation);
     Renderer::displayText(generationString, 0, 0);
 
     // Print FrameNumber text
     char frameNumber[17];
-    sprintf(frameNumber, "frame: %4lld", frame);
+    std::snprintf(frameNumber, sizeof(frameNumber), "frame: %4lld", frame);
     Renderer::displayText(frameNumber, 0, 22);
 
     // Proceed to the actual display
@@ -123,50 +120,44 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 
     previousFrameTime = std::chrono::high_resolution_clock::now();
 
-    // Static action selected. 
+    // Static action selected.
     // Action is reset only when key is released.
-    // This is needed because repeated action are not grabbed at every frame 
+    // This is needed because repeated action are not grabbed at every frame
     // even when the key remains pressed.
     static int action = 0;
 
-    sf::Event event;
     // Grab all next events off the queue.
-    while (display.window->pollEvent(event)) {
-        switch (event.type) {
-        case sf::Event::KeyPressed:
-            switch (event.key.code) {
-            case sf::Keyboard::Q:
+    while (const auto event = display.window->pollEvent()) {
+        if (event->is<sf::Event::Closed>()) {
+            action = INT_MIN;
+        } else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) {
+            switch (keyPressed->code) {
+            case sf::Keyboard::Key::Q:
                 action = INT_MIN;
                 break;
-            case sf::Keyboard::S:
+            case sf::Keyboard::Key::S:
                 action = -3;
                 break;
-            case sf::Keyboard::D:
+            case sf::Keyboard::Key::D:
                 action = -2;
                 break;
-            case sf::Keyboard::F:
+            case sf::Keyboard::Key::F:
                 action = -1;
                 break;
-            case sf::Keyboard::J:
+            case sf::Keyboard::Key::J:
                 action = 1;
                 break;
-            case sf::Keyboard::K:
+            case sf::Keyboard::Key::K:
                 action = 2;
                 break;
-            case sf::Keyboard::L:
+            case sf::Keyboard::Key::L:
                 action = 3;
                 break;
             }
-            break;
-        case sf::Event::Closed:
-            action = INT_MIN;
-            break;
-        case sf::Event::KeyReleased:
+        } else if (event->is<sf::Event::KeyReleased>()) {
             action = 0;
-            break;
-        default:
-            break;
         }
+
         // Exit while loop on exit
         if (action == INT_MIN) {
             break;
@@ -191,14 +182,14 @@ void Renderer::replayThread(std::atomic<bool>& exit, std::atomic<bool>& doDispla
 
         // Was a replay requested?
         if (doDisplay) {
-            // copy the replay 
+            // copy the replay
             localReplay = replay;
             doDisplay = false;
         }
 
         if (!localReplay.empty()) {
-            angleDisplay = (double)std::get<1>(localReplay.front());
-            torqueDisplay = (double)std::get<2>(localReplay.front());
+            angleDisplay = std::get<1>(localReplay.front());
+            torqueDisplay = std::get<2>(localReplay.front());
             frame = std::get<0>(localReplay.front());
             localReplay.pop_front();
         }
@@ -216,7 +207,7 @@ void Renderer::replayThread(std::atomic<bool>& exit, std::atomic<bool>& doDispla
         }
     }
     Renderer::renderFinalize();
-    printf("\nProgram will terminate at the end of next generation.\n");
+    std::printf("\nProgram will terminate at the end of next generation.\n");
     std::cout.flush();
 }
 

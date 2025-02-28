@@ -82,7 +82,7 @@ file(GLOB
 # Sub project for manual control of the pendulum
 include_directories(${SFML_INCLUDE_DIR} "./src/")
 add_executable(manual-control ${pendulum_files} "./src/manual/main-manual.cpp")
-target_link_libraries(manual-control sfml-graphics sfml-window sfml-system)
+target_link_libraries(manual-control SFML::Graphics SFML::Window SFML::System)
 target_compile_definitions(manual-control PRIVATE ROOT_DIR="${CMAKE_SOURCE_DIR}")
 
 # Sub project for the training of the TPG
@@ -94,7 +94,7 @@ file(GLOB
 )
 include_directories(${GEGELATI_INCLUDE_DIRS} ${SFML_INCLUDE_DIR} "./src/")
 add_executable(tpg-training ${pendulum_files} ${training_files})
-target_link_libraries(tpg-training ${GEGELATI_LIBRARIES}  sfml-graphics sfml-window sfml-system)
+target_link_libraries(tpg-training ${GEGELATI_LIBRARIES} SFML::Graphics SFML::Window SFML::System)
 target_compile_definitions(tpg-training PRIVATE ROOT_DIR="${CMAKE_SOURCE_DIR}")
 
 #ifdef SOLUTION
@@ -109,6 +109,6 @@ file(GLOB
 )
 include_directories(${GEGELATI_INCLUDE_DIRS} ${SFML_INCLUDE_DIR} "./src/" "./src/training/")
 add_executable(tpg-inference ${pendulum_files} ${inference_files})
-target_link_libraries(tpg-inference ${GEGELATI_LIBRARIES} sfml-graphics sfml-window sfml-system)
+target_link_libraries(tpg-inference ${GEGELATI_LIBRARIES} SFML::Graphics SFML::Window SFML::System)
 target_compile_definitions(tpg-inference PRIVATE ROOT_DIR="${CMAKE_SOURCE_DIR}")
 #endif // SOLUTION
