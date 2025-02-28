@@ -4,16 +4,27 @@
 # This CMake setups the following libraries
 # 
 # - gegelati
-# - SMFL
+# - SFML
 
 set(GEGELATI_VERSION "1.4.0")
 set(GEGELATI_MSVC_ARCHIVE "gegelatilib-msvc-${GEGELATI_VERSION}.zip")
 set(GEGELATI_MSVC_URL "https://github.com/gegelati/gegelati/releases/download/v${GEGELATI_VERSION}/${GEGELATI_MSVC_ARCHIVE}")
 
 set(SFML_VERSION "3.0.0")
-set(SFML_MSVC_ARCHIVE "SFML-${SFML_VERSION}-windows-vc17-64-bit.zip")
+
+# Determine the Visual Studio version
+if (MSVC)
+    if (MSVC_VERSION GREATER_EQUAL 1920 AND MSVC_VERSION LESS 1930)
+        set(SFML_MSVC_ARCHIVE "SFML-${SFML_VERSION}-windows-vc16-64-bit.zip")
+    elseif (MSVC_VERSION GREATER_EQUAL 1930)
+        set(SFML_MSVC_ARCHIVE "SFML-${SFML_VERSION}-windows-vc17-64-bit.zip")
+    else()
+        message(FATAL_ERROR "Unsupported MSVC version")
+    endif()
+endif()
+
 set(SFML_MSVC_URL "https://www.sfml-dev.org/files/${SFML_MSVC_ARCHIVE}")
-set(SFML_MINGW_ARCHIVE "SFML-${SFML_VERSION}-windows-gcc-64-bit.zip")
+set(SFML_MINGW_ARCHIVE "SFML-${SFML_VERSION}-windows-gcc-14.2.0-mingw-64-bit.zip")
 set(SFML_MINGW_URL "https://www.sfml-dev.org/files/${SFML_MINGW_ARCHIVE}")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${LIBS_DIR}/cmake_modules/")
@@ -131,20 +142,20 @@ if(WIN32)
           file(ARCHIVE_EXTRACT
                   INPUT "${LIBS_DIR}/${SFML_ARCHIVE}"
                   DESTINATION ${LIBS_DIR})
-          file(REMOVE ${LIBS_DIR}/${SFML_ARCHIVE})
+          file(REMOVE "${LIBS_DIR}/${SFML_ARCHIVE}")
 
-        elseif (MINGW)
-          set(SFML_ARCHIVE ${SFML_MINGW_ARCHIVE})
-          set(SFML_URL ${SFML_MINGW_URL})
-
-          message("Downloading SFML library from ${SFML_URL}")
-          file(DOWNLOAD ${SFML_URL} "${LIBS_DIR}/${SFML_ARCHIVE}")
-
-          message("Extracting SFML library")
-          file(ARCHIVE_EXTRACT
-                  INPUT "${LIBS_DIR}/${SFML_ARCHIVE}"
-                  DESTINATION ${LIBS_DIR})
-          file(REMOVE ${LIBS_DIR}/${SFML_ARCHIVE})
+        else()
+          message("Cloning SFML repository")
+          execute_process(COMMAND git clone --branch ${SFML_VERSION} --depth 1 https://github.com/SFML/SFML.git ${CMAKE_CURRENT_BINARY_DIR}/SFML)
+          
+          message("Building SFML library")
+          file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/SFML-build)
+          execute_process(COMMAND ${CMAKE_COMMAND}  ${CMAKE_CURRENT_BINARY_DIR}/SFML -G "${CMAKE_GENERATOR}" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DSFML_BUILD_AUDIO=OFF -DSFML_BUILD_NETWORK=OFF -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/SFML-install
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/SFML-build)
+          execute_process(COMMAND ${CMAKE_COMMAND} --build . --target install -j 4
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/SFML-build)
+          
+          file(COPY ${CMAKE_CURRENT_BINARY_DIR}/SFML-install/ DESTINATION ${LIBS_DIR}/SFML-${SFML_VERSION})
         endif()
 
         file(GLOB SFML_ROOT_DIR "${LIBS_DIR}/SFML-[\\.|0-9]*")

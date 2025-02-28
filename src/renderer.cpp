@@ -57,11 +57,6 @@ void Renderer::displayText(const char* text, int posX, int posY) {
 }
 
 int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t generation, double timeDelta) {
-    static long int i = 0;
-    static double max_fps = 0.;
-    static double avg_fps = 0.;
-    static double min_fps = DBL_MAX;
-
     display.window->clear(sf::Color::White);
 
     // Position of the pendulum in the window
