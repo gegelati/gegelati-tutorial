@@ -47,6 +47,9 @@ int main(int argc, char** argv) {
 			std::atomic<uint64_t> generation = 0;
 			std::deque< std::tuple<uint64_t, double, double>> replay;
 			std::thread threadDisplay(Renderer::replayThread, std::ref(exitProgram), std::ref(doDisplay), std::ref(generation), pendulumLE.pendulum.TIME_DELTA, std::ref(replay));
+		#else 
+			std::atomic<bool> exitProgram = false;
+			std::cout << "No display version, send interrupt signal to process to exit.";
 		#endif
 		
 		while (exitProgram); // Wait for other thread to print key info.
