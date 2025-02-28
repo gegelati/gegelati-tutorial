@@ -16,6 +16,8 @@
 
 #include "pendulum_wrapper.h"
 
+#define DEACTIVATE_DISPLAY 0
+
 int main(int argc, char** argv) {
 	try { // Global exception catching.
 
@@ -38,12 +40,15 @@ int main(int argc, char** argv) {
 		Learn::LearningAgent la(pendulumLE, instructionSet, params);
 		la.init();
 
-		// Start display thread
-		std::atomic<bool> exitProgram = true; // (set to false by other thread after init) 
-		std::atomic<bool> doDisplay = false;
-		std::atomic<uint64_t> generation = 0;
-		std::deque< std::tuple<uint64_t, double, double>> replay;
-		std::thread threadDisplay(Renderer::replayThread, std::ref(exitProgram), std::ref(doDisplay), std::ref(generation), pendulumLE.pendulum.TIME_DELTA, std::ref(replay));
+		#if ( DEACTIVATE_DISPLAY == 0 )
+			// Start display thread
+			std::atomic<bool> exitProgram = true; // (set to false by other thread after init) 
+			std::atomic<bool> doDisplay = false;
+			std::atomic<uint64_t> generation = 0;
+			std::deque< std::tuple<uint64_t, double, double>> replay;
+			std::thread threadDisplay(Renderer::replayThread, std::ref(exitProgram), std::ref(doDisplay), std::ref(generation), pendulumLE.pendulum.TIME_DELTA, std::ref(replay));
+		#endif
+		
 		while (exitProgram); // Wait for other thread to print key info.
 
 		// Basic logger for the training process
@@ -52,22 +57,26 @@ int main(int argc, char** argv) {
 		// Train for params.nbGenerations generations
 		for (int i = 0; i < params.nbGenerations && !exitProgram; i++) {
 			la.trainOneGeneration(i);
-
-			// Get replay of best root actions on the pendulum
-			replay = createReplay(pendulumLE, la.getBestRoot().first, instructionSet, params);
-			generation = i;
-
-			// trigger display
-			doDisplay = true;
-			while (doDisplay && !exitProgram);
+			
+			#if ( DEACTIVATE_DISPLAY == 0 )
+				// Get replay of best root actions on the pendulum
+				replay = createReplay(pendulumLE, la.getBestRoot().first, instructionSet, params);
+				generation = i;
+	
+				// trigger display
+				doDisplay = true;
+				while (doDisplay && !exitProgram);
+			#endif
 		}
 
 		// Cleanup instruction set
 		deleteInstructions(instructionSet);
 
-		// Exit the display thread
-		std::cout << "Exiting program, press a key then [enter] to exit if nothing happens.";
-		threadDisplay.join();
+		#if ( DEACTIVATE_DISPLAY == 0 )
+			// Exit the display thread
+			std::cout << "Exiting program, press a key then [enter] to exit if nothing happens.";
+			threadDisplay.join();
+		#endif
 	}
 	catch (const std::exception& ex) {
 		std::cerr << ex.what() << std::endl;
