@@ -451,7 +451,8 @@ The program is structured as follows:
 9. Create a replay of all actions performed by the best fitting root of the TPG, and trigger a refresh of the display.
 10. Go back to step 7.
 
-**MacOS Users** Due to an issue with latest versions of the SDL2 library, the provided code will crash on MacOS. To avoid this issue, deactivate the display using the pre-processor variable at the beginning of the file as follows `#define DEACTIVATE_DISPLAY 1`. Vizualization of the training strategy remains possible using the code from [the second tutorial](/gegelati-tutorial/tutos/export-visualize-import).{: .notice--warning}
+**MacOS Users** Due to an issue with latest versions of the SDL2 library, the provided code will crash on MacOS. To avoid this issue, deactivate the display using the pre-processor variable at the beginning of the file as follows `#define DEACTIVATE_DISPLAY 1`. Vizualization of the training strategy remains possible using the code from [the second tutorial](/gegelati-tutorial/tutos/export-visualize-import).
+{: .notice--warning}
 
 ### Training in action
 Build and run the `tpg-training` target to observe the TPG training process in action.
