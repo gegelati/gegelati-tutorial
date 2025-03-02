@@ -75,7 +75,7 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
         double scale = std::sqrt(std::fabs(torque));
         // Position of the arrow in the window
         const int arrowWidth = 178 * scale;
-        const int arrowHeight = 69 * scale;
+        // unused: const int arrowHeight = 69 * scale;
 
         sf::Sprite spriteArrow(display.textureArrow);
 
@@ -147,6 +147,8 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
                 break;
             case sf::Keyboard::Key::L:
                 action = 3;
+                break;
+            default:
                 break;
             }
         } else if (event->is<sf::Event::KeyReleased>()) {
