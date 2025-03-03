@@ -9,7 +9,7 @@ std::deque<std::tuple<uint64_t, double, double>> createReplay(PendulumWrapper& p
 
 	// Compute all moves
 	pendulumLE.reset(0, Learn::LearningMode::VALIDATION);
-	for (auto action = 0; action < params.maxNbActionsPerEval; action++) {
+	for (uint64_t action = 0; action < params.maxNbActionsPerEval; action++) {
 		auto vertexList = tee.executeFromRoot(*root);
 		const auto actionID = ((const TPG::TPGAction*)vertexList.back())->getActionID();
 		const double angle = pendulumLE.pendulum.getAngle();
