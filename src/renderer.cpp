@@ -9,6 +9,7 @@
 #include <tuple>
 #include <algorithm>
 #include <chrono>
+#include <cinttypes>
 
 #ifndef M_PI
     #define M_PI 3.14159265358979323846
@@ -93,12 +94,12 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 
     // Print Generation text
     char generationString[100];
-    std::snprintf(generationString, sizeof(generationString), "   gen: %04lld", generation);
+    std::snprintf(generationString, sizeof(generationString), "   gen: %04" PRId64 , generation);
     Renderer::displayText(generationString, 0, 0);
 
     // Print FrameNumber text
     char frameNumber[17];
-    std::snprintf(frameNumber, sizeof(frameNumber), "frame: %4lld", frame);
+    std::snprintf(frameNumber, sizeof(frameNumber), "frame: %4" PRId64, frame);
     Renderer::displayText(frameNumber, 0, 22);
 
     // Proceed to the actual display
