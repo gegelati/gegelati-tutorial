@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
 		Log::LABasicLogger basicLogger(la);
 
 		// Train for params.nbGenerations generations
-		for (int i = 0; i < params.nbGenerations && !exitProgram; i++) {
+		for (uint64_t i = 0; i < params.nbGenerations && !exitProgram; i++) {
 			la.trainOneGeneration(i);
 			
 			#if ( DEACTIVATE_DISPLAY == 0 )
