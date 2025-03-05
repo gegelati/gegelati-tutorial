@@ -72,9 +72,10 @@ namespace Renderer {
 	* indicate that the replay has been created.
 	* \param[in] generation Integer value representing the current generation
 	* of the training process.
+	* \param[in] double Value used to control the framerate of the display.
 	* \param[in] replay deque used to transmit the replay to the secondary thread.
 	*/
-	void replayThread(std::atomic<bool>& exit, std::atomic<bool>& doDisplay, std::atomic<uint64_t>& generation, double delta, std::deque<std::tuple<uint64_t, double, double>>& replay);
+	void replayThread(std::atomic<bool>& exit, std::atomic<bool>& doDisplay, std::atomic<uint64_t>& generation, double& delta, std::deque<std::tuple<uint64_t, double, double>>& replay);
 
 	/**
 	 * \brief Close SDL and destroy opened textures.
