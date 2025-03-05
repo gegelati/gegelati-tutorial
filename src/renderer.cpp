@@ -231,7 +231,7 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 	return action;
 }
 
-void Renderer::replayThread(std::atomic<bool>& exit, std::atomic<bool>& doDisplay, std::atomic<uint64_t>& generation, double delta, std::deque<std::tuple<uint64_t, double, double>>& replay)
+void Renderer::replayThread(std::atomic<bool>& exit, std::atomic<bool>& doDisplay, std::atomic<uint64_t>& generation, double& delta, std::deque<std::tuple<uint64_t, double, double>>& replay)
 {
 	// Init Display
 	renderInit();

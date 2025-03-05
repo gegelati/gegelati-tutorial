@@ -18,67 +18,88 @@
 
 #define DEACTIVATE_DISPLAY 0
 
-int main(int argc, char** argv) {
-	try { // Global exception catching.
 
-		std::cout << "Pendulum TPG training." << std::endl;
+/**
+* Thread managing the training of the TPG.
+*
+* Code in this thread can generally be used as a template for the main function
+* of a program training a TPG with GEGELATI. In this tutorial, it is separated
+* to avoid mixing it with display functions, which are only portable when executed
+* in the main thread.
+*/
+void train_main(std::atomic<bool>& exitProgram, std::atomic<bool>& doDisplay, std::atomic<uint64_t>& generation, double& time_delta, std::deque<std::tuple<uint64_t, double, double>>& replay) {
 
-		// Create the instruction instructionSet for programs
-		Instructions::Set instructionSet;
-		fillInstructionSet(instructionSet);
+	// Create the instruction instructionSet for programs
+	Instructions::Set instructionSet;
+	fillInstructionSet(instructionSet);
 
-		// Set the parameters for the learning process.
-		// Controls mutations probability, program lengths, and graph size among 
-		// other things. Loads them from the file params.json
-		Learn::LearningParameters params;
-		File::ParametersParser::loadParametersFromJson(ROOT_DIR "/params.json", params);
+	// Set the parameters for the learning process.
+	// Controls mutations probability, program lengths, and graph size among 
+	// other things. Loads them from the file params.json
+	Learn::LearningParameters params;
+	File::ParametersParser::loadParametersFromJson(ROOT_DIR "/params.json", params);
 
-		// Setup the Learning Environment (LE)
-		PendulumWrapper pendulumLE;
+	// Setup the Learning Environment (LE)
+	PendulumWrapper pendulumLE;
 
-		// Instantiate and initialize the Learning Agent (LA)
-		Learn::LearningAgent la(pendulumLE, instructionSet, params);
-		la.init();
+	#if ( DEACTIVATE_DISPLAY == 0 )
+		// Forward the time_delta for display (DISPLAY SPECIFIC CODE)
+		time_delta = pendulumLE.pendulum.TIME_DELTA;
+	#endif
+
+	// Instantiate and initialize the Learning Agent (LA)
+	Learn::LearningAgent la(pendulumLE, instructionSet, params);
+	la.init();
+
+	// Basic logger for the training process
+	Log::LABasicLogger basicLogger(la);
+
+
+	// Train for params.nbGenerations generations
+	for (uint64_t i = 0; i < params.nbGenerations && !exitProgram; i++) {
+		la.trainOneGeneration(i);
 
 		#if ( DEACTIVATE_DISPLAY == 0 )
-			// Start display thread
-			std::atomic<bool> exitProgram = true; // (set to false by other thread after init) 
-			std::atomic<bool> doDisplay = false;
-			std::atomic<uint64_t> generation = 0;
-			std::deque< std::tuple<uint64_t, double, double>> replay;
-			std::thread threadDisplay(Renderer::replayThread, std::ref(exitProgram), std::ref(doDisplay), std::ref(generation), pendulumLE.pendulum.TIME_DELTA, std::ref(replay));
-		#else 
-			std::atomic<bool> exitProgram = false;
-			std::cout << "No display version, send interrupt signal to process to exit.";
+			// Get replay of best root actions on the pendulum for the display
+			replay = createReplay(pendulumLE, la.getBestRoot().first, instructionSet, params);
+			generation = i;
+
+			// trigger display
+			doDisplay = true;
+			while (doDisplay && !exitProgram);
 		#endif
-		
-		while (exitProgram); // Wait for other thread to print key info.
+	}
 
-		// Basic logger for the training process
-		Log::LABasicLogger basicLogger(la);
+	// Cleanup instruction set
+	deleteInstructions(instructionSet);
+}
 
-		// Train for params.nbGenerations generations
-		for (int i = 0; i < params.nbGenerations && !exitProgram; i++) {
-			la.trainOneGeneration(i);
-			
-			#if ( DEACTIVATE_DISPLAY == 0 )
-				// Get replay of best root actions on the pendulum
-				replay = createReplay(pendulumLE, la.getBestRoot().first, instructionSet, params);
-				generation = i;
-	
-				// trigger display
-				doDisplay = true;
-				while (doDisplay && !exitProgram);
-			#endif
-		}
+int main(int argc, char** argv) {
+	try { // Global exception catching.
+		std::cout << "Pendulum TPG training." << std::endl;
 
-		// Cleanup instruction set
-		deleteInstructions(instructionSet);
+		double time_delta;
+
+		std::atomic<bool> exitProgram = false;
+		std::atomic<bool> doDisplay = false;
+		std::atomic<uint64_t> generation = 0;
+		std::deque< std::tuple<uint64_t, double, double>> replay;
+		#if ( DEACTIVATE_DISPLAY == 0 )
+			// Start training in secondary thread
+			std::thread threadTraining(train_main, std::ref(exitProgram), std::ref(doDisplay), std::ref(generation), std::ref(time_delta), std::ref(replay));
+		#else 
+			std::cout << "No display version, send interrupt signal to process to exit." << std::endl;
+			// Start training in main thread
+			train_main(exitProgram, doDisplay, generation, time_delta, replay);
+		#endif
+
+		// Replay code
+		Renderer::replayThread(exitProgram, doDisplay, generation, time_delta, replay);
 
 		#if ( DEACTIVATE_DISPLAY == 0 )
 			// Exit the display thread
+			threadTraining.join();
 			std::cout << "Exiting program, press a key then [enter] to exit if nothing happens.";
-			threadDisplay.join();
 		#endif
 	}
 	catch (const std::exception& ex) {
