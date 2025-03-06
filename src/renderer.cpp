@@ -19,9 +19,9 @@
 
 struct sfmlDisplay {
     sf::RenderWindow* window;
-    sf::Texture texturePendulum;
-    sf::Texture textureArrow;
-    sf::Font font;
+    sf::Texture* texturePendulum;
+    sf::Texture* textureArrow;
+    sf::Font* font;
 };
 
 static sfmlDisplay display;
@@ -30,17 +30,17 @@ static std::chrono::high_resolution_clock::time_point previousFrameTime;
 void Renderer::renderInit() {
     display.window = new sf::RenderWindow(sf::VideoMode({DISPLAY_W, DISPLAY_H}), "Environment_Display");
 
-    if (!display.font.openFromFile(PATH_TTF)) {
+    if ((display.font = new sf::Font(PATH_TTF)) == nullptr) {
         std::cerr << "Failed to load font" << std::endl;
         exit(1);
     }
 
-    if (!display.texturePendulum.loadFromFile(PATH_PENDULUM)) {
+    if ((display.texturePendulum = new sf::Texture(PATH_PENDULUM)) == nullptr) {
         std::cerr << "Failed to load pendulum texture" << std::endl;
         exit(1);
     }
 
-    if (!display.textureArrow.loadFromFile(PATH_ARROW)) {
+    if ((display.textureArrow = new sf::Texture(PATH_ARROW)) == nullptr) {
         std::cerr << "Failed to load arrow texture" << std::endl;
         exit(1);
     }
@@ -49,7 +49,7 @@ void Renderer::renderInit() {
 }
 
 void Renderer::displayText(const char* text, int posX, int posY) {
-    sf::Text sfText(display.font);
+    sf::Text sfText(*display.font);
     sfText.setString(text);
     sfText.setCharacterSize(20);
     sfText.setFillColor(sf::Color::Green);
@@ -61,7 +61,7 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
     display.window->clear(sf::Color::White);
 
     // Position of the pendulum in the window
-    sf::Sprite spritePendulum(display.texturePendulum);
+    sf::Sprite spritePendulum(*display.texturePendulum);
     spritePendulum.setPosition({DISPLAY_W / 2.f, DISPLAY_H / 2.f});
     spritePendulum.setOrigin({25.f, 15.f});
 
@@ -78,7 +78,7 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
         const int arrowWidth = 178 * scale;
         // unused: const int arrowHeight = 69 * scale;
 
-        sf::Sprite spriteArrow(display.textureArrow);
+        sf::Sprite spriteArrow(*display.textureArrow);
 
         if (torque < 0.0) {
             spriteArrow.setScale({static_cast<float>(scale), static_cast<float>(scale)});
@@ -211,5 +211,8 @@ void Renderer::replayThread(std::atomic<bool>& exit, std::atomic<bool>& doDispla
 }
 
 void Renderer::renderFinalize() {
+    delete display.texturePendulum;
+    delete display.textureArrow;
+    delete display.font;
     delete display.window;
 }
