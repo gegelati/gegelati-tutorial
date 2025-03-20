@@ -22,7 +22,7 @@ While being fluent in C++ certainly is an asset to follow this tutorial, bits of
 
 ### C++ Environment:
 This tutorial requires a C++ development environment compatible with the C++17 standard.
-Compatibility of this tutorial was tested with MS Visual Studio Community Edition (MSVC) 2022, and GCC v9.
+Compatibility of this tutorial was tested with MS Visual Studio Community Edition (MSVC) 2022, and GCC v13.
 
 ### Bash environment
 Some scripts embedded in the given files of this tutorial require the availability of a bash environment.
@@ -35,7 +35,7 @@ CMake is a utility tool whose purpose is to ease the portability of complex C/C+
 To achieve this purpose, source code files and project dependencies are specified in a configuration file, called `CMakeLists.txt`, using a specific description language.
 When CMake is launched, it automatically generates a project for a specified IDE, where all dependencies to third-party libraries are configured.
 
-CMake version 3.12 or newer must be installed for this tutorial.
+CMake version 3.24 or newer must be installed for this tutorial.
 To check if the CMake tool is already available on your workstation simply type the following command:
 ```bash
 cmake --version
@@ -49,23 +49,31 @@ Reboot your system at the end of the installation.
 
 
 ### Third-Party Library
-Several third party libraries and tools need to be installed for this tutorial: <span style="font-variant: small-caps;">Gegelati</span>, `SDL2`, `SDL2_Image`, `SDL2_ttf`, and curl.
+Several third party libraries and tools need to be installed for this tutorial: <span style="font-variant: small-caps;">Gegelati</span>, `SFML 3.0`, and curl.
 The installation process for different OSes is given below.
 
 {% details On Windows: (Click to expand) %}
 All library binaries will be downloaded automatically when running the CMake project.
 When using MSVC, all DLLs are copied automatically in the executable folders.
-When using other compilers, if the library are not found during the build process, please refer to the [`/tutorial-gegelati/lib/ReadMe.md`](https://github.com/gegelati/gegelati-tutorial/blob/master/lib/ReadMe.md) file for solutions.
+When using other compilers, if the library are not found during the build process, they should be built automatically. If this fails, please refer to the [`/tutorial-gegelati/lib/ReadMe.md`](https://github.com/gegelati/gegelati-tutorial/blob/master/lib/ReadMe.md) file for solutions.
 {% enddetails %}
 
 {% details On Linux: (Click to expand) %}
-The SDL library (`SDL2`, `SDL2_Image`, `SDL2_ttf`, and curl) are available in most package repository.
+Curl is available in most package repository.
 For example, on Ubuntu, simply type the following command:
 ```bash
-sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev curl
+sudo apt install curl
 ```
 
-To install <span style="font-variant: small-caps;">Gegelati</span>, you must build it and install it on your machine.
+Unfortunately, `SFML 3.0` is not yet available in many package managers, as only `SFML 2.4` is. To build the lib yourself, simply use the following commands:
+```bash
+git clone -b master --depth=1 https://github.com/sfml/sfml
+mkdir sfml/build && cd sfml/build
+cmake .. -DBUILD_SHARED_LIBS=ON -DSFML_BUILD_AUDIO=OFF -DSFML_BUILD_NETWORK=OFF -DSFML_BUILD_DOC=OFF
+sudo cmake --build . --target install
+```
+
+To install <span style="font-variant: small-caps;">Gegelati</span>, you must also build it and install it on your machine.
 The following commands should do the work to build the latest release:
 ```bash
 git clone -b master https://github.com/gegelati/gegelati.git
@@ -76,10 +84,10 @@ sudo cmake --build . --target install # On Linux
 {% enddetails %}
 
 {% details On Mac OS: (Click to expand) %}
-The SDL library (`SDL2`, `SDL2_Image`, and `SDL2_ttf`) are available in [Homebrew](https://brew.sh/).
+The `SFML` library is available in [Homebrew](https://brew.sh/).
 Simply type the following command:
 ```bash
-brew install sdl2 sdl2_image sdl2_ttf
+brew install sfml
 ```
 
 To install <span style="font-variant: small-caps;">Gegelati</span>, you must build it and install it on your machine.
@@ -450,9 +458,6 @@ The program is structured as follows:
 8. Train one generation. This step, managed by the learning agent, includes the mutation of the TPG to reach the desired number of roots, the evaluation of all the TPG roots, and the decimation of worst fitting root.
 9. Create a replay of all actions performed by the best fitting root of the TPG, and trigger a refresh of the display.
 10. Go back to step 7.
-
-**MacOS Users** Due to an issue with latest versions of the SDL2 library, the provided code will crash on MacOS. To avoid this issue, deactivate the display using the pre-processor variable at the beginning of the file as follows `#define DEACTIVATE_DISPLAY 1`. Vizualization of the training strategy remains possible using the code from [the second tutorial](/gegelati-tutorial/tutos/export-visualize-import).
-{: .notice--warning}
 
 ### Training in action
 Build and run the `tpg-training` target to observe the TPG training process in action.
