@@ -85,6 +85,7 @@ brew install sdl2 sdl2_image sdl2_ttf
 To install <span style="font-variant: small-caps;">Gegelati</span>, you must build it and install it on your machine.
 The following commands should do the work to build the latest release:
 ```bash
+brew install doxygen
 git clone -b master https://github.com/gegelati/gegelati.git
 cd gegelati/bin
 cmake ..
