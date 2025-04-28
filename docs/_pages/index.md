@@ -67,6 +67,7 @@ sudo apt install curl
 
 Unfortunately, `SFML 3.0` is not yet available in many package managers, as only `SFML 2.4` is. To build the lib yourself, simply use the following commands:
 ```bash
+sudo apt install libxrandr-dev libxcursor-dev libxi-dev libudev-dev libflac-dev libvorbis-dev libgl1-mesa-dev libegl1-mesa-dev libdrm-dev libgbm-dev libfreetype-dev
 git clone -b master --depth=1 https://github.com/sfml/sfml
 mkdir sfml/build && cd sfml/build
 cmake .. -DBUILD_SHARED_LIBS=ON -DSFML_BUILD_AUDIO=OFF -DSFML_BUILD_NETWORK=OFF -DSFML_BUILD_DOC=OFF -DCMAKE_BUILD_TYPE=Release
