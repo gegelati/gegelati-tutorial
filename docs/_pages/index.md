@@ -69,16 +69,17 @@ Unfortunately, `SFML 3.0` is not yet available in many package managers, as only
 ```bash
 git clone -b master --depth=1 https://github.com/sfml/sfml
 mkdir sfml/build && cd sfml/build
-cmake .. -DBUILD_SHARED_LIBS=ON -DSFML_BUILD_AUDIO=OFF -DSFML_BUILD_NETWORK=OFF -DSFML_BUILD_DOC=OFF
+cmake .. -DBUILD_SHARED_LIBS=ON -DSFML_BUILD_AUDIO=OFF -DSFML_BUILD_NETWORK=OFF -DSFML_BUILD_DOC=OFF -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
 To install <span style="font-variant: small-caps;">Gegelati</span>, you must also build it and install it on your machine.
 The following commands should do the work to build the latest release:
 ```bash
+sudo apt install doxygen 
 git clone -b master https://github.com/gegelati/gegelati.git
 cd gegelati/bin
-cmake ..
+cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install # On Linux
 ```
 {% enddetails %}
