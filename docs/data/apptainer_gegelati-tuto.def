@@ -1,0 +1,24 @@
+Bootstrap: docker
+From: ubuntu:latest
+
+%post
+        apt update
+        # X11 support
+        apt install -y xorg
+        # Compiler
+        apt install -y build-essential cmake doxygen git # C compiler support
+        # Convenient
+        apt install -y curl unzip
+        # SFML
+        apt install -y libxrandr-dev libxcursor-dev libxi-dev libudev-dev libflac-dev libvorbis-dev libgl1-mesa-dev libegl1-mesa-dev libdrm-dev libgbm-dev libfreetype-dev # SFML>
+        git clone https://github.com/sfml/sfml
+        mkdir sfml/bin && cd sfml/bin
+        cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DSFML_BUILD_AUDIO=OFF -DSFML_BUILD_NETWORK=OFF -DSFML_BUILD_DOC=OFF
+        cmake --build . --target install
+        cd ../..
+        # Gegalati
+        git clone https://github.com/gegelati/gegelati
+        cd gegelati/bin
+        cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DSKIP_DOXYGEN_BUILD=ON
+        cmake --build . --target install
+        cd ../..

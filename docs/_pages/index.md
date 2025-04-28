@@ -85,6 +85,10 @@ sudo cmake --build . --target install # On Linux
 ```
 {% enddetails %}
 
+{% details On Linux with Apptainer: (Click to expand) %}
+If you wish to run the tutorial within a contained environment, the following apptainer container is for you. In contains all needed requirement to build and run the tuto: gcc, cmake, sfml, gegelati. [Apptainer definition file](./data/apptainer_gegelati-tuto.def).
+{% enddetails %}
+
 {% details On Mac OS: (Click to expand) %}
 The `SFML` library is available in [Homebrew](https://brew.sh/).
 Simply type the following command:
