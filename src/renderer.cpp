@@ -8,7 +8,8 @@
 #include <cstdio>
 #include <iostream>
 #include <tuple>
-#include <algorithm>  
+#include <algorithm>
+#include <cinttypes> 
 
 #include "renderer.h"
 
@@ -152,12 +153,12 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 
 	// Print Generation text
 	char generationString[100];
-	sprintf(generationString, "   gen: %04lld", generation);
+	sprintf(generationString, "   gen: %04" PRId64, generation);
 	Renderer::displayText(generationString, 0, 0);
 
 	// Print FrameNumber text
 	char frameNumber[17];
-	sprintf(frameNumber, "frame: %4lld", frame);
+	sprintf(frameNumber, "frame: %4" PRId64, frame);
 	Renderer::displayText(frameNumber, 0, 22);
 
 	// Proceed to the actual display
