@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
 
 			/// Do one inference with the TPG
 			auto trace = tee.executeFromRoot(*root);
-			uint64_t action = ((const TPG::TPGAction*)trace.back())->getActionID();
+			uint64_t action = ((const TPG::TPGAction*)trace.first.back())->getActionID();
 
 			// Apply the action on the learning environment.
 			pendulumLE.doAction(action);

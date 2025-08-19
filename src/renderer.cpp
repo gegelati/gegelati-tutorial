@@ -9,7 +9,7 @@
 #include <iostream>
 #include <tuple>
 #include <algorithm>
-#include <cinttypes> 
+#include <cinttypes>
 
 #include "renderer.h"
 
