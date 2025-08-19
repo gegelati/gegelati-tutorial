@@ -100,7 +100,7 @@ public:
 	 * execute.
 	 * \throw std::runtime_error if the actionID exceeds nbActions - 1.
 	 */
-	virtual void doAction(uint64_t actionID) override;
+	virtual void doAction(double actionID) override;
 
 	/**
 	 * \brief Returns the current score of the Environment.

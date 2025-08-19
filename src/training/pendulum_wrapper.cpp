@@ -41,7 +41,7 @@ void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iter
 #endif // SOLUTION
 }
 
-void PendulumWrapper::doAction(uint64_t actionID)
+void PendulumWrapper::doAction(double actionID)
 {
 #ifdef SOLUTION
 	// Retrieve the torque corresponding to the ID
