@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
 		// Reset pendulum state
 		pendulumLE.reset(0, Learn::LearningMode::TESTING);
 
-		for (auto frame = 0; frame < params.maxNbActionsPerEval && !exit; frame++) {
+		for (uint64_t frame = 0; frame < params.maxNbActionsPerEval && !exit; frame++) {
 
 			/// Do one inference with the TPG
 			auto trace = tee.executeFromRoot(*root);

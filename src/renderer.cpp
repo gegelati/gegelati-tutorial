@@ -100,7 +100,6 @@ void Renderer::renderInit() {
 void Renderer::displayText(const char* text, int posX, int posY) {
 	// Color of text
 	SDL_Color colorGreen = { 0, 255, 0, 255 };
-	SDL_Color colorWhite = { 255, 255, 255, 255 };
 
 	SDL_Surface* textSurf = TTF_RenderText_Blended(display.font, text,
 		colorGreen);
@@ -124,12 +123,7 @@ void Renderer::displayText(const char* text, int posX, int posY) {
 }
 
 int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t generation, double timeDelta) {
-	static long int i = 0;
-	static double max_fps = 0.;
-	static double avg_fps = 0.;
-	static double min_fps = DBL_MAX;
-
-	// Select the color for drawing. It is set to red here. 
+	// Select the color for drawing. It is set to red here.
 	SDL_SetRenderDrawColor(display.renderer, 255, 255, 255, 255);
 	// Clear the entire screen to our selected color.
 	SDL_RenderClear(display.renderer);
@@ -151,10 +145,9 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 		const int arrowHeight = (int)(69 * scale);
 
 		SDL_Rect destArrow = { (DISPLAY_W - arrowWidth) / 2, (int)(DISPLAY_H / 2 + 14 + scale * 50.0), arrowWidth , arrowHeight };
-		SDL_Point centerArrow = { arrowWidth / 2, arrowHeight / 2 };
 
 		// Display arrow
-		SDL_RenderCopyEx(display.renderer, display.textureArrow, NULL, &destArrow, NULL, NULL, (torque > 0.0) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+		SDL_RenderCopyEx(display.renderer, display.textureArrow, NULL, &destArrow, 0, NULL, (torque > 0.0) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 	}
 
 	// Print Generation text

@@ -33,14 +33,14 @@ int main(int argc, char** argv) {
 	// Simulation and display loop.
 	int frame = 0;
 	bool exit = false;
-	bool forward = false;
 	double torque = 0.0;
 	while(!exit) {
 		frame++;		
 
 		int action = Renderer::renderEnv(p.getAngle(), torque, frame, 0, p.TIME_DELTA);
 
-		if (exit = (action == INT_MIN)) {
+		exit = (action == INT_MIN);
+		if (exit) {
 			std::cout << "Exit simulation loop." << std::endl;
 			continue;
 		}
