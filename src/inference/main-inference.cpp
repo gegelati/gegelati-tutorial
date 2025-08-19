@@ -7,6 +7,7 @@
 #include <iostream>
 #include <iomanip>
 #include <thread>
+#include <limits.h>
 #include <gegelati.h>
 
 #include "pendulum.h"
