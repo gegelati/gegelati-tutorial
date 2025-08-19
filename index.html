@@ -1,0 +1,797 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<!-- Math support from: https://zjuwhw.github.io/2017/06/04/MathJax.html-->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    processEscapes: true
+  },
+  chtml: {
+	scale: 0.8
+  },
+  svg: {
+	scale: 0.8
+  }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>GEGELATI introductory tutorial - GEGELATI</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Your Name">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="GEGELATI">
+<meta property="og:title" content="GEGELATI introductory tutorial">
+<meta property="og:url" content="https://gegelati.github.io/">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://gegelati.github.io/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://gegelati.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="GEGELATI Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+<link rel="manifest" href="assets/images/site.webmanifest">
+<link rel="mask-icon" href="assets/images/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/gegelati-logo-full.svg" alt=" "></a>
+        
+        <a class="site-title" href="/">
+           
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/publis/">Publications</a>
+            </li><li class="masthead__menu-item">
+              <a href="/projects/">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/gegelati-tutorial/tutos/">Tutorials</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://github.com/gegelati/gegelati">Source Code</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="GEGELATI introductory tutorial">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://gegelati.github.io/" class="u-url" itemprop="url">GEGELATI introductory tutorial
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#0-setup-and-build-the-tutorial-project">0. Setup and build the tutorial project</a><ul><li><a href="#c-environment">C++ Environment:</a></li><li><a href="#bash-environment">Bash environment</a></li><li><a href="#cmake">CMake</a></li><li><a href="#third-party-library">Third-Party Library</a></li><li><a href="#tutorial-files">Tutorial files</a></li></ul></li><li><a href="#1-meet-the-pendulum">1. Meet the pendulum</a><ul><li><a href="#build-and-swing">Build and swing!</a></li><li><a href="#under-the-c-hood">Under the C++-hood</a></li></ul></li><li><a href="#2-interfacing-with-gegelati">2. Interfacing with GEGELATI</a><ul><li><a href="#pendulumwrapper-skeleton">PendulumWrapper skeleton.</a></li><li><a href="#pendulum-attributes">Pendulum attributes</a><ul><li><a href="#todo-1">TODO #1:</a></li><li><a href="#todo-2">TODO #2:</a></li></ul></li><li><a href="#data-access">Data access</a><ul><li><a href="#todo-3">TODO #3:</a></li></ul></li><li><a href="#actions-on-the-pendulum">Actions on the pendulum</a><ul><li><a href="#todo-4">TODO #4</a></li><li><a href="#todo-5">TODO #5</a></li></ul></li><li><a href="#reward-mechanism">Reward mechanism</a><ul><li><a href="#todo-6">TODO #6</a></li></ul></li></ul></li><li><a href="#3-train-your-first-tpg">3. Train your first TPG</a><ul><li><a href="#training-procedure">Training procedure</a></li><li><a href="#training-in-action">Training in action</a></li></ul></li><li><a href="#4-the-fun-is-only-beginning">4. The fun is only beginning.</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>The objective of this tutorial is to guide you through the training of your first Tangled Program Graph (TPG) with the <a href="https://github.com/gegelati/gegelati"><span style="font-variant: small-caps;">Gegelati</span></a> library.
+People following this tutorial are assumed to be already acquainted with basic structural and evolutionary concepts of TPGs.
+In case you’re not already familiar with these concepts, a basic introduction to these concepts and to <span style="font-variant: small-caps;">Gegelati</span> can be found in the <a href="https://youtu.be/t0Ta5Vo5h7s">linked 10-minute video</a>.</p>
+
+<p>The following topics are covered in this tutorial:</p>
+<ul>
+  <li>Configuration of a C++ project with <a href="https://github.com/gegelati/gegelati"><span style="font-variant: small-caps;">Gegelati</span></a>.</li>
+  <li>Manual interaction with a Reinforcement Learning (RL) environment.</li>
+  <li>Interfacing of a RL environment with <span style="font-variant: small-caps;">Gegelati</span>.</li>
+  <li>Training of a TPG.</li>
+</ul>
+
+<p>This tutorial does not require any particular prerequisites.
+While being fluent in C++ certainly is an asset to follow this tutorial, bits of that must be written during the tutorial are given in this assignment.</p>
+
+<h2 id="0-setup-and-build-the-tutorial-project">0. Setup and build the tutorial project</h2>
+
+<h3 id="c-environment">C++ Environment:</h3>
+<p>This tutorial requires a C++ development environment compatible with the C++17 standard.
+Compatibility of this tutorial was tested with <span style="font-variant: small-caps;">Gegelati</span> v2.0.0, MS Visual Studio Community Edition (MSVC) 2022, and GCC v13.</p>
+
+<h3 id="bash-environment">Bash environment</h3>
+<p>Some scripts embedded in the given files of this tutorial require the availability of a bash environment.
+While bash is natively supported in Linux and Mac OS, an installation is required on Windows.
+We advise you to use the all-in-one binaries maintained by the git community, and available <a href="https://git-scm.com/downloads">here!</a>.
+When installing the tool, make sure that the tool is added to the PATH environment variable.</p>
+
+<h3 id="cmake">CMake</h3>
+<p>CMake is a utility tool whose purpose is to ease the portability of complex C/C++ applications by generating projects for most popular IDEs (CLion, Visual Studio, Makefile, QT Creator, …), on major operating systems (Linux, Windows, Mac OS).
+To achieve this purpose, source code files and project dependencies are specified in a configuration file, called <code class="language-plaintext highlighter-rouge">CMakeLists.txt</code>, using a specific description language.
+When CMake is launched, it automatically generates a project for a specified IDE, where all dependencies to third-party libraries are configured.</p>
+
+<p>CMake version 3.12 or newer must be installed for this tutorial.
+To check if the CMake tool is already available on your workstation simply type the following command:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cmake <span class="nt">--version</span>
+</code></pre></div></div>
+<details><summary>In case CMake is not installed <strong>click here</strong> to display installation advice.</summary>
+<p>The latest version of CMake can be downloaded at the following URL: https://cmake.org/download/.
+For a simple installation, choose the binary version for windows.
+During the installation process, select the “ADD TO PATH FOR ALL USERS” option.
+Reboot your system at the end of the installation.</p>
+</details>
+
+<h3 id="third-party-library">Third-Party Library</h3>
+<p>Several third party libraries and tools need to be installed for this tutorial: <span style="font-variant: small-caps;">Gegelati</span>, <code class="language-plaintext highlighter-rouge">SDL2</code>, <code class="language-plaintext highlighter-rouge">SDL2_Image</code>, <code class="language-plaintext highlighter-rouge">SDL2_ttf</code>, and curl.
+The installation process for different OSes is given below.</p>
+
+<details><summary>On Windows: (Click to expand)</summary>
+<p>All library binaries will be downloaded automatically when running the CMake project.
+When using MSVC, all DLLs are copied automatically in the executable folders.
+When using other compilers, if the library are not found during the build process, please refer to the <a href="https://github.com/gegelati/gegelati-tutorial/blob/master/lib/ReadMe.md"><code class="language-plaintext highlighter-rouge">/tutorial-gegelati/lib/ReadMe.md</code></a> file for solutions.</p>
+</details>
+
+<details><summary>On Linux: (Click to expand)</summary>
+<p>The SDL library (<code class="language-plaintext highlighter-rouge">SDL2</code>, <code class="language-plaintext highlighter-rouge">SDL2_Image</code>, <code class="language-plaintext highlighter-rouge">SDL2_ttf</code>, and curl) are available in most package repository.
+For example, on Ubuntu, simply type the following command:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev curl
+</code></pre></div></div>
+
+<p>To install <span style="font-variant: small-caps;">Gegelati</span>, you must build it and install it on your machine.
+The following commands should do the work to build the latest release:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone <span class="nt">-b</span> master https://github.com/gegelati/gegelati.git
+<span class="nb">cd </span>gegelati/bin
+cmake ..
+<span class="nb">sudo </span>cmake <span class="nt">--build</span> <span class="nb">.</span> <span class="nt">--target</span> <span class="nb">install</span> <span class="c"># On Linux</span>
+</code></pre></div></div>
+</details>
+
+<details><summary>On Mac OS: (Click to expand)</summary>
+<p>The SDL library (<code class="language-plaintext highlighter-rouge">SDL2</code>, <code class="language-plaintext highlighter-rouge">SDL2_Image</code>, and <code class="language-plaintext highlighter-rouge">SDL2_ttf</code>) are available in <a href="https://brew.sh/">Homebrew</a>.
+Simply type the following command:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>sdl2 sdl2_image sdl2_ttf
+</code></pre></div></div>
+
+<p>To install <span style="font-variant: small-caps;">Gegelati</span>, you must build it and install it on your machine.
+The following commands should do the work to build the latest release:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>doxygen
+git clone <span class="nt">-b</span> master https://github.com/gegelati/gegelati.git
+<span class="nb">cd </span>gegelati/bin
+cmake ..
+cmake <span class="nt">--build</span> <span class="nb">.</span> <span class="nt">--target</span> <span class="nb">install</span> <span class="c"># On Mac OS</span>
+</code></pre></div></div>
+</details>
+
+<h3 id="tutorial-files">Tutorial files</h3>
+<p>To download the source files needed to follow this tutorial, simply download the following archive: <a href="./data/gegelati-tutorial.zip">gegelati-tutorial.zip</a>.
+Unzip these file in your favorite folder.
+In the remainder of this tutorial, the parent folder where the files were unzipped will be referred as the <code class="language-plaintext highlighter-rouge">/gegelati-tutorial</code> folder.</p>
+
+<p>To create the C++ project for your default build chain (Makefile on linux and Mac OS, MSVC -when installed- on windows), simply type the following commands in a bash terminal:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>gegelati-tutorial/bin
+cmake ..
+</code></pre></div></div>
+<p>To select another IDE, use the <code class="language-plaintext highlighter-rouge">cmake -G "&lt;MY_FAVORITE_IDE&gt;" ..</code> command instead.
+The list of available IDEs can be obtained by typing <code class="language-plaintext highlighter-rouge">cmake -G</code>.</p>
+
+<p>Alternatively, some IDEs, like Clion, natively support CMake projects.
+In this case, simply open a new project in the <code class="language-plaintext highlighter-rouge">/gegelati-tutorial</code> folder.</p>
+
+<p>In all cases, make sure that no error appears during the generation of the CMake project.</p>
+
+<p>The generated C++ project contains 2 targets : <code class="language-plaintext highlighter-rouge">manual-control</code>, and <code class="language-plaintext highlighter-rouge">tpg-training</code>. Please note that at this point, only the <code class="language-plaintext highlighter-rouge">manual-control</code> target can be built successfully. In order to build the <code class="language-plaintext highlighter-rouge">tpg-training</code> target, additional code will be added in Section 2, when interfacing <span style="font-variant: small-caps;">Gegelati</span> with the learning environment.</p>
+
+<h2 id="1-meet-the-pendulum">1. Meet the pendulum</h2>
+<p>The learning environment used in this tutorial is an inverted pendulum.</p>
+
+<div align="center"><img src="./img/pendulum_g6_200x200.gif" width="200" /></div>
+
+<p>The pendulum itself is a physical simulation of a weight attached to a pivot with a rigid cord, and subject to both gravity and friction.
+In this learning environment, it is possible to apply a clockwise or a counter clockwise torque to the pendulum to influence its swinging.</p>
+
+<p>As illustrated in the previous GIF, the objective of a learning agent trained within this learning environment is to stabilize the pendulum in the upward position.
+It is important to note that the maximum torque that can be applied to the pendulum is not strong enough to bring the pendulum to the upward position.
+Hence, the only way to bring the pendulum to this position is to progressively gain some momentum with accelerated swings.</p>
+
+<h3 id="build-and-swing">Build and swing!</h3>
+<p>To better appreciate the difficulty of this task, the first learning agent trained in this tutorial relies on a well known machine learning technique: your brain!</p>
+
+<p>To build the first executable of this tutorial, open the project generated with CMake; then build the <code class="language-plaintext highlighter-rouge">manual-control</code> target and run the produced executable. 
+In case of an error, make sure you are only building the right target, as other targets cannot be built successfully at this point in the tutorial.</p>
+
+<p>Once the build is complete, run the executable.
+Using the keyboard, you can try to manually balance the pendulum with 7 different actions:</p>
+<ul>
+  <li>[S], [D], [F]: Apply a clockwise torque to the pendulum. The strength of the torque applied to the pendulum decreases from left to right.</li>
+  <li>[J], [K], [L]: Apply a counter-clockwise torque to the pendulum. The strength of the torque applied to the pendulum increases from left to right.</li>
+  <li>No key: No torque is applied to the pendulum. Only gravity and friction will do their work.</li>
+</ul>
+
+<p>Good luck holding the pendulum in the upward position for more than a few seconds.</p>
+
+<h3 id="under-the-c-hood">Under the C++-hood</h3>
+<p>The simulation parameters of the pendulum can be changed when instantiating the corresponding C++ class.
+The default parameter values were carefully chosen to give human beings a chance at stabilizing the pendulum.
+Feel free to try other configurations by parameterizing the construction of the pendulum, in the <code class="language-plaintext highlighter-rouge">/gegelati-tutorial/src/manual/main-manual.cpp</code></p>
+
+<details><summary><code class="language-plaintext highlighter-rouge">Pendulum</code> constructor documentation (Click to expand)</summary>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+* \brief Default constructor for a pendulum.
+*
+* \param[in] a the initial angular position of the pendulum. Default value
+* is M_PI, that is downard position.
+* \param[in] c the initial angular velocity of the pendulum. Default value
+* is 0.0.
+* \param[in] maxSpeed Maximum speed of the pendulum
+* \param[in] maxTorque maximum torque applicable to the pendulum.
+* \param[in] timeDelta Simulation step duration.
+* \param[in] gravity Universal constant
+* \param[in] mass Weight of the pendulum.
+* \param[in] length Length of the pendulum.
+* \param[in] friction Friction slowing down the pendulum proportionally to
+* its velovity.
+*/</span>
+<span class="n">Pendulum</span><span class="p">(</span><span class="kt">double</span> <span class="n">a</span> <span class="o">=</span> <span class="n">M_PI</span><span class="p">,</span> <span class="kt">double</span> <span class="n">v</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kt">double</span> <span class="n">maxSpeed</span> <span class="o">=</span> <span class="mf">16.0</span><span class="p">,</span>
+  <span class="kt">double</span> <span class="n">maxTorque</span> <span class="o">=</span> <span class="mf">1.8</span><span class="p">,</span> <span class="kt">double</span> <span class="n">timeDelta</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="kt">double</span> <span class="n">gravity</span> <span class="o">=</span> <span class="mf">9.81</span><span class="p">,</span>
+  <span class="kt">double</span> <span class="n">mass</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span> <span class="kt">double</span> <span class="n">length</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="kt">double</span> <span class="n">friction</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">);</span>
+</code></pre></div></div>
+
+</details>
+
+<h2 id="2-interfacing-with-gegelati">2. Interfacing with GEGELATI</h2>
+
+<p>To train a Tangled Program Graph with <span style="font-variant: small-caps;">Gegelati</span>, the library needs to interact with the learning environment.
+To achieve this purpose, the learning environment must be presented to the library using a standardized API.
+In the case of <span style="font-variant: small-caps;">Gegelati</span>, this interfacing is done by specializing the <code class="language-plaintext highlighter-rouge">Learn::LearningEnvironment</code> abstract class.</p>
+
+<!--
+|          LearningEnvironment       |
+|:-----------------------------------|
+|+getNbActions(): int                |
+|+getDataSources(): std::vector<>    |
+|+reset(): void                      |
+|+doAction(double): void             |
+|+getScore(): double                 |
+|+isTerminal(): bool                 |
+-->
+
+<p>The following steps will guide you through the creation of a <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> class, inheriting from the <code class="language-plaintext highlighter-rouge">Learn::LearningEnvironment</code> class and interfacing the <code class="language-plaintext highlighter-rouge">Pendulum</code> class with <span style="font-variant: small-caps;">Gegelati</span>.</p>
+
+<h3 id="pendulumwrapper-skeleton"><code class="language-plaintext highlighter-rouge">PendulumWrapper</code> skeleton.</h3>
+<p>The <code class="language-plaintext highlighter-rouge">pendulum_wrapper.h</code> and <code class="language-plaintext highlighter-rouge">pendulum_wrapper.cpp</code> files already contain the skeleton of the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> class, which you’ll complete throughout the next steps.
+To make the class compilable, this code already defines empty methods overriding all the pure virtual methods from the <code class="language-plaintext highlighter-rouge">Learn::LearningEnvironment</code>.
+Comments in the header file explain the purpose of each method.</p>
+
+<h3 id="pendulum-attributes"><code class="language-plaintext highlighter-rouge">Pendulum</code> attributes</h3>
+<p>A first specific attribute of the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> class is already declared: the <code class="language-plaintext highlighter-rouge">actions</code> vector.</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* From pendulum_wrapper.h */</span>
+<span class="c1">/// Array containing the actions available for the TPG.</span>
+<span class="c1">/// These actions are expressed as real numbers in [-1, 1], and will be multiplied</span>
+<span class="c1">/// by the MAX_TORQUE of the Pendulum to apply the corresponding action.</span>
+<span class="k">static</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">actions</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h4 id="todo-1">TODO #1:</h4>
+<p>Your first task is to update the definition of this vector in the <code class="language-plaintext highlighter-rouge">pendulum_wrapper.cpp</code> file, so that the 7 actions available to you in the manual version are also the one made available to the TPG.
+It should be noted that the size of this <code class="language-plaintext highlighter-rouge">vector</code> is automatically used in the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> constructor to initialize the <code class="language-plaintext highlighter-rouge">LearningEnvironment</code> parent class with the number of actions available.
+A single line of code needs to me modified in this task.</p>
+
+<details><summary>Solution to #1</summary>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">PendulumWrapper</span><span class="o">::</span><span class="n">actions</span><span class="p">{</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.66</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.33</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.33</span><span class="p">,</span> <span class="mf">0.66</span><span class="p">,</span> <span class="mf">1.0</span> <span class="p">};</span>
+</code></pre></div></div>
+</details>
+
+<h4 id="todo-2">TODO #2:</h4>
+<p>Add an instance of the <code class="language-plaintext highlighter-rouge">Pendulum</code> class to the attributes of the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> class.
+Don’t forget to include the <code class="language-plaintext highlighter-rouge">pendulum.h</code> file and update the constructor of the class to initialize the <code class="language-plaintext highlighter-rouge">Pendulum</code> instance, keeping default parameters for now.</p>
+
+<details><summary>Solution to #2</summary>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.h: After other includes */</span>
+<span class="cp">#include</span> <span class="cpf">&lt;pendulum.h&gt;</span><span class="cp">
+</span></code></pre></div></div>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.h: After actions declaration */</span>
+  <span class="c1">/// Pendulum interfaced with the GEGELATI Lib  </span>
+  <span class="n">Pendulum</span> <span class="n">pendulum</span><span class="p">;</span>
+</code></pre></div></div>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.cpp*/</span>
+<span class="n">PendulumWrapper</span><span class="o">::</span><span class="n">PendulumWrapper</span><span class="p">()</span> <span class="o">:</span> <span class="n">LearningEnvironment</span><span class="p">(</span><span class="n">actions</span><span class="p">.</span><span class="n">size</span><span class="p">()),</span> <span class="n">pendulum</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</details>
+
+<h3 id="data-access">Data access</h3>
+<p>In this step, you will expose the angle and velocity attributes of the pendulum so that they can be observed by the <span style="font-variant: small-caps;">Gegelati</span> library.</p>
+
+<p>During the training process, the <span style="font-variant: small-caps;">Gegelati</span> library accesses the data from the environment using the <code class="language-plaintext highlighter-rouge">getDataSources()</code> method.
+This method returns the observable state of the environment as a vector of references to <code class="language-plaintext highlighter-rouge">Data::DataHandler</code>.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">Data::DataHandler</code> interface class provides a set of services that simplifies the training of TPGs.
+In particular, in addition to methods for accessing the data, the <code class="language-plaintext highlighter-rouge">Data::DataHandler</code> supports methods for dynamically checking what the addressing space of a data source is, or which data types can be provided by a data source.
+It is also possible for a <code class="language-plaintext highlighter-rouge">Data::DataHandler</code> to give access to data with a data type differing from the native type used for storing the data.</p>
+
+<p>For example, with a <code class="language-plaintext highlighter-rouge">Primitive2DArray&lt;char&gt;(10,10)</code> data handler storing a 2D array of <code class="language-plaintext highlighter-rouge">char[10][10]</code>, individual elements of the array can be accessed using the native data type <code class="language-plaintext highlighter-rouge">char</code>; but it is also possible to access a 3-by-2 subregion of data by requesting an access to data with type <code class="language-plaintext highlighter-rouge">char[3][2]</code>.
+For more details on these features, please refer to the doxygen documentation built and delivered with the <span style="font-variant: small-caps;">Gegelati</span> library.</p>
+
+<p>In the case of the pendulum, we will use the <code class="language-plaintext highlighter-rouge">Data::PointerWrapper&lt;T&gt;</code> specialization of the <code class="language-plaintext highlighter-rouge">Data::DataHandler</code> class, which acts as an interface between a native pointer (<code class="language-plaintext highlighter-rouge">T *</code>) and <span style="font-variant: small-caps;">Gegelati</span>.
+Only the following 2 methods of this class needs to be used in this tutorial:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ *  \brief Constructor for the PointerWrapper class.
+ *
+ * \param[in] ptr the pointer managed by the PointerWrapper.
+ */</span>
+<span class="n">PointerWrapper</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">ptr</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">);</span>
+
+<span class="cm">/**
+ * \brief Set the pointer of the PointerWrapper.
+ *
+ * \param[in] ptr the new pointer managed by the PointerWrapper.
+ *
+ */</span>
+<span class="kt">void</span> <span class="nf">setPointer</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">ptr</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="todo-3">TODO #3:</h4>
+<p>Instantiate two instances of the <code class="language-plaintext highlighter-rouge">Data::PointerWrapper&lt;T&gt;</code> class as attributes of the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code>.
+In the constructor of the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code>, make these two <code class="language-plaintext highlighter-rouge">Data::PointerWrapper</code> point to the <code class="language-plaintext highlighter-rouge">angle</code> and <code class="language-plaintext highlighter-rouge">velocity</code> attributes of the <code class="language-plaintext highlighter-rouge">pendulum</code>.
+Then, update the <code class="language-plaintext highlighter-rouge">getDataSources()</code> method to return a vector referring to these two <code class="language-plaintext highlighter-rouge">Data::PointerWrapper</code>.
+This task requires less than 10 lines of C++ code.</p>
+
+<p><em>C++ tip:</em> Pushing a variable <code class="language-plaintext highlighter-rouge">T var</code> to a <code class="language-plaintext highlighter-rouge">std::vector&lt;std::references_wrapper&lt;T&gt;&gt; vect</code> is done with a simple call to <code class="language-plaintext highlighter-rouge">vect.push_back(var)</code>.</p>
+
+<details><summary>Solution to #3 (Click to expand)</summary>
+<p>This solution is based on a vector of <code class="language-plaintext highlighter-rouge">Data::PointerWrapper&lt;double&gt;</code>.
+Alternative solutions based on two <code class="language-plaintext highlighter-rouge">Data::PointerWrapper&lt;double&gt;</code> are perfectly viable.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.h : After pendulum declaration */</span>
+<span class="c1">/// DataHandler wrappers</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Data</span><span class="o">::</span><span class="n">PointerWrapper</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span> <span class="n">data</span><span class="p">;</span>
+</code></pre></div></div>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.cpp */</span>
+<span class="n">PendulumWrapper</span><span class="o">::</span><span class="n">PendulumWrapper</span><span class="p">()</span> <span class="o">:</span> <span class="n">LearningEnvironment</span><span class="p">(</span><span class="n">actions</span><span class="p">.</span><span class="n">size</span><span class="p">()),</span> <span class="n">pendulum</span><span class="p">(),</span> <span class="n">data</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">data</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="n">setPointer</span><span class="p">(</span><span class="o">&amp;</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">getAngle</span><span class="p">());</span>
+	<span class="n">data</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">setPointer</span><span class="p">(</span><span class="o">&amp;</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">getVelocity</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">reference_wrapper</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">Data</span><span class="o">::</span><span class="n">DataHandler</span><span class="o">&gt;&gt;</span> <span class="n">PendulumWrapper</span><span class="o">::</span><span class="n">getDataSources</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">reference_wrapper</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">Data</span><span class="o">::</span><span class="n">DataHandler</span><span class="o">&gt;&gt;</span> <span class="n">result</span><span class="p">;</span>
+	<span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+	<span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+	<span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</details>
+
+<h3 id="actions-on-the-pendulum">Actions on the pendulum</h3>
+<p>After exposing the pendulum attributes to the learning agent, this step will give it the ability to act on the pendulum.</p>
+
+<p>The number of discrete actions that can be taken by the learning agent is given by the <code class="language-plaintext highlighter-rouge">getNbActions()</code> method from the learning environment.
+The value returned by this method is already set when calling the constructor of the <code class="language-plaintext highlighter-rouge">LearningEnvironment</code> parent class of the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code>.</p>
+
+<p>To execute an action, the learning agent calls the <code class="language-plaintext highlighter-rouge">doAction(double)</code> method of the learning environment with an argument corresponding to the action to execute.
+The argument of the <code class="language-plaintext highlighter-rouge">doAction</code> method is a double to enable support for continuous action space. Nevertheless, in this tutorial, integer values corresponding to the selected action index will be used when calling the <code class="language-plaintext highlighter-rouge">doAction</code> method.</p>
+
+<h4 id="todo-4">TODO #4</h4>
+<p>Implement the <code class="language-plaintext highlighter-rouge">PendulumWrapper::doAction(double)</code> method using the actions defined in the <code class="language-plaintext highlighter-rouge">actions</code> attribute.
+To apply a torque to the pendulum, the <code class="language-plaintext highlighter-rouge">Pendulum::applyTorque(double)</code> method must be used.</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+* \brief Apply the given torque to the pendulum and advance the simulation.
+*
+* \param[in] torque the torque applied to the pendulum. If the given value
+* is not within the [-MAX_TORQUE, MAX_TORQUE] interval, it will be
+* saturated to the closest bound.
+*/</span>
+<span class="kt">void</span> <span class="nf">applyTorque</span><span class="p">(</span><span class="kt">double</span> <span class="n">torque</span><span class="p">);</span>
+</code></pre></div></div>
+<p>Two lines of C++ code are sufficient for this task.</p>
+
+<details><summary>Solution to #4 (Click to expand)</summary>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.cpp */</span>
+<span class="kt">void</span> <span class="n">PendulumWrapper</span><span class="o">::</span><span class="n">doAction</span><span class="p">(</span><span class="kt">double</span> <span class="n">actionID</span><span class="p">)</span>
+<span class="p">{</span>
+  	<span class="c1">// Retrieve the torque corresponding to the ID</span>
+  	<span class="kt">double</span> <span class="n">torque</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">actions</span><span class="p">[</span><span class="n">actionID</span><span class="p">]</span> <span class="o">*</span> <span class="n">pendulum</span><span class="p">.</span><span class="n">MAX_TORQUE</span><span class="p">;</span>
+
+  	<span class="c1">// Apply it to the pendulum</span>
+  	<span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">applyTorque</span><span class="p">(</span><span class="n">torque</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</details>
+
+<h4 id="todo-5">TODO #5</h4>
+<p>To train the TPG, the reinforcement learning process requires making many attempts to stabilize it in the upward position.
+Between each attempt, the initial position of the pendulum is reset using the <code class="language-plaintext highlighter-rouge">reset()</code> method.
+Implement this method so that the pendulum managed by the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> always starts in a downward static state.
+Two lines of code are needed for this task.</p>
+
+<p>At this point, the arguments of the <code class="language-plaintext highlighter-rouge">reset</code> methods can be ignored.
+Their utility will be covered in a more advanced tutorial.</p>
+
+<details><summary>Solution to #5 (Click to expand)</summary>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.cpp */</span>
+<span class="kt">void</span> <span class="n">PendulumWrapper</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">seed</span><span class="p">,</span> <span class="n">Learn</span><span class="o">::</span><span class="n">LearningMode</span> <span class="n">mode</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">iterationNumber</span><span class="p">,</span> <span class="kt">uint64_t</span> <span class="n">generationNumber</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">setAngle</span><span class="p">(</span><span class="n">M_PI</span><span class="p">);</span>
+	<span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">setVelocity</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</details>
+
+<h3 id="reward-mechanism">Reward mechanism</h3>
+<p>In this last step, you are going to implement the reward mechanism used by <span style="font-variant: small-caps;">Gegelati</span> to identify the best strategies for controlling the pendulum.</p>
+
+<p>The objective of this learning environment is to steady the pendulum in the upward position.
+While it is easy to measure the distance of the pendulum to the upward position at each simulation step, appreciating the steadiness of the pendulum in this position can only be achieved over time.
+Hence, the computation of the reward will be accumulated in a <code class="language-plaintext highlighter-rouge">double</code> attribute of the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code>.
+At each simulation step $i$, this reward will be updated as follows:</p>
+
+<div align="center">
+$$ reward_{0} = 0 $$
+$$ reward_{i} = reward_{i-1} - (0.1 \cdot \theta^2 + 0.01 \cdot \omega^2 + 0.001\cdot \tau^2) $$
+</div>
+
+<p>where $\theta$ is the angular distance to the upward position, $\omega$ is the velocity of the pendulum, and $\tau$ the torque applied to the pendulum.
+Intuitively, the purpose of this equation is to minimize the angular distance to the upward position as a primary criteria, but also the velocity of the pendulum when reaching this position, and the torque applied to the pendulum to reach and stay in this position.</p>
+
+<h4 id="todo-6">TODO #6</h4>
+<p>Implement the rewarding mechanism in the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> class by:</p>
+<ul>
+  <li>Adding an <code class="language-plaintext highlighter-rouge">accumulatedReward</code> attribute.</li>
+  <li>Updating this reward after each action in the <code class="language-plaintext highlighter-rouge">doAction(double)</code> method.</li>
+  <li>Returning this reward in the <code class="language-plaintext highlighter-rouge">getScore()</code> method.</li>
+  <li>Resetting this reward in the <code class="language-plaintext highlighter-rouge">reset(int, LearningMode)</code> method.
+Less than 10 new lines of code are needed for this task.</li>
+</ul>
+
+<p><em>C++ tip:</em> The <code class="language-plaintext highlighter-rouge">double fmod(double, double)</code> method can be used to compute the modulo of two <code class="language-plaintext highlighter-rouge">double</code> numbers.</p>
+
+<details><summary>Solution to #6 (Click to expand)</summary>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.h : After the PointerWrapper */</span>
+	<span class="kt">double</span> <span class="n">accumulatedReward</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.cpp */</span>
+<span class="kt">void</span> <span class="n">PendulumWrapper</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">seed</span><span class="p">,</span> <span class="n">Learn</span><span class="o">::</span><span class="n">LearningMode</span> <span class="n">mode</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">iterationNumber</span><span class="p">,</span> <span class="kt">uint64_t</span> <span class="n">generationNumber</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">setAngle</span><span class="p">(</span><span class="n">M_PI</span><span class="p">);</span>
+	<span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">setVelocity</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+
+	<span class="k">this</span><span class="o">-&gt;</span><span class="n">accumulatedReward</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PendulumWrapper</span><span class="o">::</span><span class="n">doAction</span><span class="p">(</span><span class="kt">double</span> <span class="n">actionID</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="c1">// Retrieve the torque corresponding to the ID</span>
+	<span class="kt">double</span> <span class="n">torque</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">actions</span><span class="p">[</span><span class="n">actionID</span><span class="p">]</span> <span class="o">*</span> <span class="n">pendulum</span><span class="p">.</span><span class="n">MAX_TORQUE</span><span class="p">;</span>
+
+	<span class="c1">// Apply it to the pendulum</span>
+	<span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">applyTorque</span><span class="p">(</span><span class="n">torque</span><span class="p">);</span>
+
+	<span class="c1">// Get the angle value between -M_PI and M_PI (0 being the upward position)</span>
+	<span class="kt">double</span> <span class="n">angle</span> <span class="o">=</span> <span class="n">fmod</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">getAngle</span><span class="p">()</span> <span class="o">+</span> <span class="n">M_PI</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">M_PI</span><span class="p">)</span> <span class="o">-</span> <span class="n">M_PI</span><span class="p">;</span>
+
+	<span class="c1">// Compute a reward based on the angle to the upward position, the velocity and the torque.</span>
+	<span class="c1">// All three values should be minimized.</span>
+	<span class="kt">double</span> <span class="n">reward</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="mf">0.1f</span><span class="o">*</span><span class="p">(</span><span class="n">angle</span> <span class="o">*</span> <span class="n">angle</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01f</span> <span class="o">*</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">getVelocity</span><span class="p">()</span> <span class="o">*</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">getVelocity</span><span class="p">())</span> <span class="o">+</span> <span class="mf">0.001f</span> <span class="o">*</span> <span class="p">(</span><span class="n">torque</span> <span class="o">*</span> <span class="n">torque</span><span class="p">));</span>
+
+	<span class="c1">// Accumulate the reward</span>
+	<span class="n">accumulatedReward</span> <span class="o">+=</span> <span class="n">reward</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">double</span> <span class="n">PendulumWrapper</span><span class="o">::</span><span class="n">getScore</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="k">const</span>
+<span class="p">{</span>
+	<span class="k">return</span> <span class="n">accumulatedReward</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</details>
+
+<p>The <code class="language-plaintext highlighter-rouge">pendulum_wrapper.h</code> and <code class="language-plaintext highlighter-rouge">pendulum_wrapper.cpp</code> files resulting from this tutorial can be downloaded at the following link: <a href="./data/pendulum_wrapper_solution.zip">pendulum_wrapper_solution.zip</a>.</p>
+
+<h2 id="3-train-your-first-tpg">3. Train your first TPG</h2>
+<p>The code needed to interface the pendulum with <span style="font-variant: small-caps;">Gegelati</span> is now complete.
+This section will (finally) let you train a TPG with the pendulum learning environment.</p>
+
+<h3 id="training-procedure">Training procedure</h3>
+<p>The <code class="language-plaintext highlighter-rouge">main-training.cpp</code> file contains the entry point of the executable built with the <code class="language-plaintext highlighter-rouge">tpg-training</code> target.
+The program is structured as follows:</p>
+<ol>
+  <li>Initialize the instruction set used in programs of the TPG.</li>
+  <li>Load the training meta-parameters from the <code class="language-plaintext highlighter-rouge">gegelati-tutorial/params.json</code> file.</li>
+  <li>Instantiate the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> learning environment.</li>
+  <li>Instantiate the <code class="language-plaintext highlighter-rouge">Learn::LearningAgent</code> class. This utility class will manage most aspects of the training process of the TPG, including its initialization, mutations, and evaluation of the fitness of its roots within the learning environment.</li>
+  <li>Initialize a display window. This display will be used throughout the training to show the behavior of the TPG root with the best score after each generation.</li>
+  <li>Instantiate a logger for keeping track of the training statistics throughout the training.</li>
+  <li>Iterate the genetic evolution process until the maximum number of generation is reached, or until the program is exited.</li>
+  <li>Train one generation. This step, managed by the learning agent, includes the mutation of the TPG to reach the desired number of roots, the evaluation of all the TPG roots, and the decimation of worst fitting root.</li>
+  <li>Create a replay of all actions performed by the best fitting root of the TPG, and trigger a refresh of the display.</li>
+  <li>Go back to step 7.</li>
+</ol>
+
+<p class="notice--warning"><strong>MacOS Users</strong> Due to an issue with latest versions of the SDL2 library, the provided code will crash on MacOS. To avoid this issue, deactivate the display using the pre-processor variable at the beginning of the file as follows <code class="language-plaintext highlighter-rouge">#define DEACTIVATE_DISPLAY 1</code>. Vizualization of the training strategy remains possible using the code from <a href="/gegelati-tutorial/tutos/export-visualize-import">the second tutorial</a>.</p>
+
+<h3 id="training-in-action">Training in action</h3>
+<p>Build and run the <code class="language-plaintext highlighter-rouge">tpg-training</code> target to observe the TPG training process in action.
+For a faster training, it is strongly advised to build the project in Release mode.</p>
+
+<p>The first output of the training process are the logs generated in the console.
+An example of log is presented hereafter:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Pendulum TPG training.
+                                           Train
+      Gen   NbVert   NbActR  NbTeamR      Min      Avg      Max  T_mutat   T_eval  T_decim  T_total
+        0      157        0      150 <span class="nt">-1994</span>.49 <span class="nt">-1253</span>.84 <span class="nt">-1073</span>.07     0.00     0.92     0.00     0.97
+        1      166        0      150 <span class="nt">-7214</span>.09 <span class="nt">-1327</span>.43  <span class="nt">-977</span>.91    14.23     1.11     0.00    16.35
+        2      164        0      150 <span class="nt">-6222</span>.31 <span class="nt">-1194</span>.81  <span class="nt">-936</span>.95     4.10     1.53     0.00    22.02
+        3      167        0      150 <span class="nt">-6862</span>.46 <span class="nt">-1180</span>.28  <span class="nt">-936</span>.95     5.62     1.62     0.00    29.29
+        4      166        0      151 <span class="nt">-1995</span>.37 <span class="nt">-1105</span>.47  <span class="nt">-936</span>.95     7.60     1.63     0.00    38.56
+        5      168        0      150 <span class="nt">-6990</span>.10 <span class="nt">-1162</span>.87  <span class="nt">-802</span>.01     4.07     1.60     0.00    44.27
+        6      164        0      150 <span class="nt">-6990</span>.10 <span class="nt">-1290</span>.24  <span class="nt">-802</span>.01     5.95     1.52     0.00    51.78
+</code></pre></div></div>
+
+<p>The generated logs contain a table that can be exported in the CSV format by giving a file path to the <code class="language-plaintext highlighter-rouge">LABasicLogger</code> constructor.
+This table contains the following columns:</p>
+<ul>
+  <li><em>Gen</em>: Number of generation since the start of the training process.</li>
+  <li><em>NbVert</em>: Number of vertices (teams + actions) in the TPG before the fitness of the roots is evaluated.</li>
+  <li><em>Train.Min/Avg/Max</em>: Minimum, average, and maximum scores obtained during the evaluation process of all roots of the TPG.</li>
+  <li><em>T_mutat</em>: Time taken in seconds to apply the mutations to the TPG.</li>
+  <li><em>T_eval</em>: Time taken  in seconds to evaluate all roots of the TPG.</li>
+  <li><em>T_total</em>: Time  in seconds since the beginning of the training process.</li>
+</ul>
+
+<p>A few insights on these logs:</p>
+<ul>
+  <li>It may happen that the maximum score observed at generation $n+1$ is lower than the score observed at a previous generation $n$.
+This phenomenon occurs when the best root vertex observed at generation $n$ becomes an internal team of the TPG during the mutation process creating new roots for the next generation.
+While this may seem weird to see the score decrease, the genetic material that had lead to a better result is not lost.
+If the new roots introduced in the graph do a poor job, they will be decimated rapidly, and the best root will once again become a root.
+It may also happen that the former best root remains an internal vertex of the TPG, but is copied during the mutation process, thus becoming a slightly altered root once again.
+In any case, the vertex which, as a root, has provided the best reward since the beginning of the training is still the one returned by the learning agent when requesting the best root with the <code class="language-plaintext highlighter-rouge">Learn::LearningAgent::getBestRoot()</code> method.</li>
+  <li>In this learning environment, the time taken for mutating the graph is quite long, especially compared to the time taken for evaluating the roots.
+The reason behind this abnormally long mutation times lies in a specific mechanism ensuring the originality of programs produced during the mutation process.
+Each time a new program is created, it is compared to randomly selected pre-existing programs.
+If the new program does not produce original outputs compared to other programs, it will be mutated over and over until its output becomes original.
+While producing an original output is simple in learning environment with large observable space, this is a lot trickier to achieve in a learning environment with only 2 observable variables.
+This is why the mutation time is long with this example.</li>
+</ul>
+
+<p>The second output of the training process is the display of the pendulum.
+While the score presented in the logs are not easily interpretable, this display makes it possible to appreciate how well the trained TPGs are doing.</p>
+
+<p>With default pendulum parameters and meta-parameters, the learning agent should be able to stabilize the pendulum in less than 25 generations.
+During the first generations, the learning agent usually learns how to swing the pendulum closer to the upward position.
+Then it learns how to slow down the pendulum when it approaches the upward position.
+Finally, it finds a way to stabilize the pendulum.</p>
+
+<h2 id="4-the-fun-is-only-beginning">4. The fun is only beginning.</h2>
+<p>In this tutorial, you have learned:</p>
+<ul>
+  <li>How to setup a project with <span style="font-variant: small-caps;">Gegelati</span>.</li>
+  <li>Create a custom learning environment.</li>
+  <li>Train TPG in the learning environment.</li>
+  <li>Understand the basic logs generated during the training.</li>
+</ul>
+
+<p>While this tutorial illustrates the basic concepts of TPG training, <span style="font-variant: small-caps;">Gegelati</span> offers many features to play with TPGs.
+The following tutorials guide you through these features, starting from the result of this tutorial.
+These tutorial can be followed in any order, so feel free to explore them based on your personal interests and objectives.</p>
+<ul>
+  <li><em>[Partially Available]</em> <a href="/gegelati-tutorial/tutos/export-visualize-import">Export, visualize and import TPG graphs in the DOT format.</a></li>
+  <li><em>[Available Soon]</em> Accelerate training with early termination, random initial states and testing.</li>
+  <li><em>[Available Soon]</em> Play with training meta-parameters.</li>
+  <li><em>[Available Soon]</em> Explore TPG statistics throughout the training.</li>
+  <li><em>[Available Soon]</em> Accelerate TPG training with deterministic multi-core support.</li>
+  <li><em>[Available Soon]</em> Generate standalone C code for ultra-fast inference.</li>
+</ul>
+
+<p>Several other open-source applications are available in the GitHub repository of <span style="font-variant: small-caps;">Gegelati</span>.
+Feel free to explore them to get a better understanding of the wonderful abilities of TPGs.</p>
+<ul>
+  <li><a href="https://github.com/gegelati/gegelati-apps"><span style="font-variant: small-caps;">Gegelati</span>-apps</a>: MNIST, Tic-Tac-Toe, Nim Game</li>
+  <li><a href="https://github.com/gegelati/ale-wrapper">ALE-wrapper</a>: Wrapper for the 50+ games of the Arcade Learning Environment.</li>
+  <li><a href="https://github.com/gegelati/armlearn-wrapper">ArmLearn-wrapper</a>: Robotic arm control with 6 servo-motors.</li>
+  <li><a href="https://github.com/gegelati/gym-gegelati">Gym-<span style="font-variant: small-caps;">Gegelati</span></a>: Wrapper for OpenAI’s Gym reinforcement learning dataset.</li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 GEGELATI. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

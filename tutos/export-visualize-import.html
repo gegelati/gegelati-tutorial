@@ -1,0 +1,561 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<!-- Math support from: https://zjuwhw.github.io/2017/06/04/MathJax.html-->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    processEscapes: true
+  },
+  chtml: {
+	scale: 0.8
+  },
+  svg: {
+	scale: 0.8
+  }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Export, visualize and import TPG graphs in the DOT format - GEGELATI</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Your Name">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="GEGELATI">
+<meta property="og:title" content="Export, visualize and import TPG graphs in the DOT format">
+<meta property="og:url" content="https://gegelati.github.io/tutos/export-visualize-import">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://gegelati.github.io/tutos/export-visualize-import">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://gegelati.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="GEGELATI Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+<link rel="manifest" href="assets/images/site.webmanifest">
+<link rel="mask-icon" href="assets/images/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/gegelati-logo-full.svg" alt=" "></a>
+        
+        <a class="site-title" href="/">
+           
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/publis/">Publications</a>
+            </li><li class="masthead__menu-item">
+              <a href="/projects/">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/gegelati-tutorial/tutos/">Tutorials</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://github.com/gegelati/gegelati">Source Code</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Export, visualize and import TPG graphs in the DOT format">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://gegelati.github.io/tutos/export-visualize-import" class="u-url" itemprop="url">Export, visualize and import TPG graphs in the DOT format
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#0-export-tpgs-into-dot-files">0. Export TPGs into DOT files.</a><ul><li><a href="#the-dot-format">The DOT format</a></li><li><a href="#export-tpgs-throughout-training">Export TPGs throughout training</a><ul><li><a href="#todo-1">TODO 1:</a></li></ul></li><li><a href="#export-the-cleaned-best-tpg">Export the cleaned best TPG</a><ul><li><a href="#todo-2">TODO #2:</a></li></ul></li></ul></li><li><a href="#1-visualization-of-tpg-graphs">1. Visualization of TPG graphs.</a><ul><li><a href="#tpg-graphical-semantics">TPG graphical semantics</a></li><li><a href="#in-training-tpgs-and-emergent-behavior">In-training TPGs and emergent behavior</a><ul><li><a href="#todo-3">TODO #3:</a></li></ul></li></ul></li><li><a href="#2-standalone-inference-from-imported-dot-file">2. Standalone inference from imported DOT file.</a><ul><li><a href="#creation-of-a-new-executable-in-the-cmake-project">Creation of a new executable in the CMake project.</a><ul><li><a href="#todo-4">TODO #4</a></li></ul></li><li><a href="#importing-tpg-for-inference">Importing TPG for inference.</a><ul><li><a href="#todo-5">TODO #5</a></li></ul></li></ul></li><li><a href="#conclusion">Conclusion</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>The objective of this tutorial is to experiment with the DOT file format supported in <span style="font-variant: small-caps;">Gegelati</span> to export trained Tangled Program Graphs (TPGs), to visualize their topology, and to import them back in a program.</p>
+
+<p>The following topics are covered in this tutorial:</p>
+<ul>
+  <li>Use of the <code class="language-plaintext highlighter-rouge">File::TPGGraphDotExporter</code> class to serialize pre-trained TPGs into DOT files.</li>
+  <li>Visualization of TPG structure evolution throughout the training process using a DOT viewer.</li>
+  <li>Creation of an inference-only executable using TPG graphs imported with the <code class="language-plaintext highlighter-rouge">File::TPGGraphDotImporter</code> class.</li>
+</ul>
+
+<p>The starting point of this tutorial is the C++ project obtained at the end of the <em><a href="/gegelati-tutorial">GEGELATI introductory tutorial</a></em>. While completing the introductory tutorial is strongly advised, a copy of the project resulting from this tutorial can be downloaded at the following link: <a href="/gegelati-tutorial/data/gegelati-tutorial-solution.zip">pendulum_wrapper_solution.zip</a>.</p>
+
+<h2 id="0-export-tpgs-into-dot-files">0. Export TPGs into DOT files.</h2>
+
+<h3 id="the-dot-format">The DOT format</h3>
+<p>DOT is a popular description language that makes it possible to describe graphs with a few lines of code.
+With a simple declarative syntax, labeled directed or undirected graphs with homogeneous or heterogeneous types of vertices can be described.
+In it simplest form, the DOT syntax (mostly) focuses on the description of the topology of graphs, leaving out graphical and layout concerns.
+These graphical and layouting concerns are handled automatically by dedicated visualization tools, such as the open-source <a href="https://graphviz.org/">GraphViz</a> tool.</p>
+
+<p>A simple example of graph described with the DOT language is presented in the following excerpt:</p>
+
+<div class="language-dot highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">digraph</span> <span class="nv">mygraph</span> <span class="p">{</span>
+  <span class="nv">root</span> <span class="o">-&gt;</span> <span class="nv">A</span><span class="p">;</span>
+  <span class="nv">root</span> <span class="o">-&gt;</span> <span class="nv">B</span> <span class="o">-&gt;</span> <span class="nv">C</span><span class="p">;</span>
+  <span class="nv">A</span> <span class="o">-&gt;</span> <span class="nv">A</span><span class="p">;</span>
+  <span class="nv">B</span> <span class="o">-&gt;</span> <span class="nv">A</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The visualization of this graph with <code class="language-plaintext highlighter-rouge">xdot</code> produces the following output:</p>
+
+<div align="center"><img src="../assets/images/dotgraph.svg" /></div>
+
+<p>In <span style="font-variant: small-caps;">Gegelati</span>, the DOT language is used as the serialization file format for exporting, visualizing and importing TPGs.
+The general structure used for storing TPGs is as follows:</p>
+
+<div class="language-dot highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* Header */</span>
+<span class="k">digraph</span><span class="p">{</span>
+	<span class="k">graph</span><span class="o">[</span><span class="n">pad</span> <span class="p">=</span> <span class="s2">"0.212, 0.055"</span> <span class="n">bgcolor</span> <span class="p">=</span> <span class="nv">lightgray</span><span class="o">]</span>  
+	<span class="k">node</span><span class="o">[</span><span class="n">shape</span><span class="p">=</span><span class="nv">circle</span> <span class="n">style</span> <span class="p">=</span> <span class="nv">filled</span> <span class="n">label</span> <span class="p">=</span> <span class="s2">""</span><span class="o">]</span>
+
+    <span class="cm">/* Team vertex */</span>
+    <span class="nv">T0</span> <span class="o">[</span><span class="n">fillcolor</span><span class="p">=</span><span class="s2">"#1199bb"</span><span class="o">]</span>
+
+    <span class="cm">/* Program */</span>
+    <span class="nv">P0</span> <span class="o">[</span><span class="n">fillcolor</span><span class="p">=</span><span class="s2">"#cccccc"</span> <span class="n">shape</span><span class="p">=</span><span class="nv">point</span><span class="o">]</span> <span class="c1">//-7|7|0|-4|9|</span>
+
+    <span class="cm">/* Program P0 instructions (invisible) */</span>
+    <span class="nv">I0</span> <span class="o">[</span><span class="n">shape</span><span class="p">=</span><span class="nv">box</span> <span class="n">style</span><span class="p">=</span><span class="nv">invis</span> <span class="n">label</span><span class="p">=</span><span class="s2">"2|5&amp;2|1#0|4&amp;#92;n1|3&amp;0|7#0|5&amp;#92;n"</span><span class="o">]</span>
+    <span class="nv">P0</span> <span class="o">-&gt;</span> <span class="nv">I0</span><span class="o">[</span><span class="n">style</span><span class="p">=</span><span class="nv">invis</span><span class="o">]</span>
+
+    <span class="cm">/* Action vertex */</span>
+    <span class="nv">A0</span> <span class="o">[</span><span class="n">fillcolor</span><span class="p">=</span><span class="s2">"#ff3366"</span> <span class="n">shape</span><span class="p">=</span><span class="nv">box</span> <span class="n">margin</span><span class="p">=</span><span class="mf">0.03</span> <span class="n">width</span><span class="p">=</span><span class="mi">0</span> <span class="n">height</span><span class="p">=</span><span class="mi">0</span> <span class="n">label</span><span class="p">=</span><span class="s2">"0"</span><span class="o">]</span>
+
+    <span class="cm">/* TPG Edge */</span>
+    <span class="nv">T0</span> <span class="o">-&gt;</span> <span class="nv">P0</span> <span class="o">-&gt;</span> <span class="nv">A0</span>
+
+    <span class="cm">/* Root list */</span>
+    <span class="p">{</span> <span class="n">rank</span><span class="p">=</span> <span class="nv">same</span> <span class="nv">T0</span> <span class="p">}</span>
+<span class="p">}</span>    
+</code></pre></div></div>
+
+<h3 id="export-tpgs-throughout-training">Export TPGs throughout training</h3>
+
+<p>To export TPGs in the DOT format, <span style="font-variant: small-caps;">Gegelati</span> provides the <code class="language-plaintext highlighter-rouge">File::TPGGraphDotExporter</code> class.
+Each instance of the <code class="language-plaintext highlighter-rouge">TPGGraphDotExporter</code> class is associated, on construction to a <code class="language-plaintext highlighter-rouge">TPG::TPGGraph</code>.
+The constructor of the exporter class is declared as follows:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * \brief Constructor for the exporter.
+ *
+ * \param[in] filePath initial path to the file where the dot content
+ *            will be written.
+ * \param[in] graph const reference to the graph whose content will
+ *            be exported in dot.
+ * \throws std::runtime_error in case no file could be opened at the
+ *         given filePath.
+ */</span>
+<span class="n">TPGGraphDotExporter</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filePath</span><span class="p">,</span> <span class="k">const</span> <span class="n">TPG</span><span class="o">::</span><span class="n">TPGGraph</span> <span class="o">&amp;</span><span class="n">graph</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>While the path of the file where the TPG graph is written can be modified, using the <code class="language-plaintext highlighter-rouge">TPGGraphDotExporter::setNewFilePath(char*)</code> method, the TPG associated to the exporter on construction can not be changed.
+The reason for this constraint is that for a TPG that was already exported, following exports of the TPGs, even after mutations, will keep identical names for teams, programs and actions present in both TPGs, and will create new names for new graphs elements.
+Thanks to this features, it is easier to keep track of surviving teams throughout the evolution process.</p>
+
+<h4 id="todo-1">TODO 1:</h4>
+<p>To print the trained TPG after each generation of the training process, edit the <code class="language-plaintext highlighter-rouge">/gegelati-tutorial/src/training/main-training.cpp</code> file as follows:</p>
+<ul>
+  <li>Instantiate an instance of the <code class="language-plaintext highlighter-rouge">TPGGraphDotExporter</code> before entering the iterative training process. To retrieve a pointer to the trained TPG, use the following method of the learning agent: <code class="language-plaintext highlighter-rouge">Learn::LearningAgent::getTPGGraph()</code>.</li>
+  <li>Use the instantiated exporter within the iterative training process to export a new dot file after each generation.</li>
+  <li>Print all generated files in the <code class="language-plaintext highlighter-rouge">/gegelati-tutorial/dat/</code> folder. You can use the <code class="language-plaintext highlighter-rouge">ROOT_DIR</code> macro within the c++ code to target the <code class="language-plaintext highlighter-rouge">/gegelati-tutorial</code> folder automatically.
+To trigger the printing of a file, use the <code class="language-plaintext highlighter-rouge">TPGGraphDotExporter::print()</code> method.</li>
+</ul>
+
+<details><summary>Solution to #1 (Click to expand)</summary>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* main-training.cpp */</span>
+<span class="c1">// Create an exporter for all graphs</span>
+<span class="n">File</span><span class="o">::</span><span class="n">TPGGraphDotExporter</span> <span class="nf">dotExporter</span><span class="p">(</span><span class="n">ROOT_DIR</span> <span class="s">"/dat/tpg_0000.dot"</span><span class="p">,</span> <span class="o">*</span><span class="n">la</span><span class="p">.</span><span class="n">getTPGGraph</span><span class="p">());</span>
+
+<span class="c1">// Train for params.nbGenerations generations</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">params</span><span class="p">.</span><span class="n">nbGenerations</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">exitProgram</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">la</span><span class="p">.</span><span class="n">trainOneGeneration</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+
+  <span class="c1">// Export dot</span>
+  <span class="kt">char</span> <span class="n">buff</span><span class="p">[</span><span class="mi">150</span><span class="p">];</span>
+  <span class="n">sprintf</span><span class="p">(</span><span class="n">buff</span><span class="p">,</span> <span class="n">ROOT_DIR</span> <span class="s">"/dat/tpg_%04d.dot"</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+  <span class="n">dotExporter</span><span class="p">.</span><span class="n">setNewFilePath</span><span class="p">(</span><span class="n">buff</span><span class="p">);</span>
+  <span class="n">dotExporter</span><span class="p">.</span><span class="n">print</span><span class="p">();</span>    
+
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+</details>
+
+<h3 id="export-the-cleaned-best-tpg">Export the cleaned best TPG</h3>
+<p>During the training process, the pseudo-random nature of the graph and program mutations causes the apparition of useless elements.</p>
+
+<p><strong>Training roots:</strong>
+At the end of the training process, the TPG needs to be exported for further utilization, for example for inferring the pre-trained TPG, as will be done later in this tutorial.
+The TPGs exported in the previous step contained all roots present in the TPG at a given generation, which is useful to better understand the training process, but also to pause a training process and restart it later.</p>
+
+<p>When exporting the TPG resulting from the training, only the graph stemming from the root team providing the best results needs to be exported.
+To keep only the TPG stemming from the best root, the <code class="language-plaintext highlighter-rouge">Learn::LearningAgent::keepBestPolicy()</code> method should be used.</p>
+
+<p><strong>Hitchhiker programs:</strong>
+In TPG graphs, so-called “hitchhiker” programs may appear.
+A hitchhiker program is a program that belongs to a team with a valuable behavior without contributing to this useful behavior itself.
+A team has a valuable behavior if it helps the TPG to which it belongs to obtain better rewards.
+A hitchhiker program is a program that belongs to a valuable team, but that never produces a winning bid when programs of this team are executed.
+Because the team has a valuable behavior, it will survive with many generations, with all its programs, including the useless hitchhiker program.</p>
+
+<p>To identify these hitchhiker programs, the execution of TPG graphs must be instrumented in order to keep track of how many times each team was visited, and how many times each program produced a winning bid.
+This instrumentation of the TPG graph is achieved by specifying a specialized TPG factory when instantiating the learning agent.
+This can be achieved as follows:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Learn</span><span class="o">::</span><span class="n">LearningAgent</span> <span class="nf">la</span><span class="p">(</span><span class="n">pendulumLE</span><span class="p">,</span> <span class="n">instructionSet</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">TPG</span><span class="o">::</span><span class="n">TPGInstrumentedFactory</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>After the training process, hitchhiker programs can be cleaned from the TPG using a helper method from this factory, as follows:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Clean unused vertices and teams</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">TPG</span><span class="o">::</span><span class="n">TPGGraph</span><span class="o">&gt;</span> <span class="n">tpg</span> <span class="o">=</span> <span class="n">la</span><span class="p">.</span><span class="n">getTPGGraph</span><span class="p">();</span>
+<span class="n">TPG</span><span class="o">::</span><span class="n">TPGInstrumentedFactory</span><span class="p">().</span><span class="n">clearUnusedTPGGraphElements</span><span class="p">(</span><span class="o">*</span><span class="n">tpg</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><strong>Introns</strong>:
+In Programs, it is very common to observe so-called “intron” instructions that do not directly contribute to the data path leading to the result returned by the program.
+While these instructions are automatically detected and skipped during program execution, they may still be valuable during the training process, as they act as dormant genes that may be activated again during future mutations.</p>
+
+<p>When exporting a TPG graph, these introns only pollute the exported graph, and should thus be removed using the <code class="language-plaintext highlighter-rouge">TPG::TPGGraph::clearProgramIntrons()</code> method.</p>
+
+<h4 id="todo-2">TODO #2:</h4>
+<p>Update the instatiation of the <code class="language-plaintext highlighter-rouge">Learn::LearningAgent</code> to use the <code class="language-plaintext highlighter-rouge">TPG::TPGInstrumentedFactory</code>.
+Then, after the end of the iterative training process:</p>
+<ul>
+  <li>Keep only the best root in the trained TPG.</li>
+  <li>Remove all its hitchhiker programs.</li>
+  <li>Clear all introns.</li>
+  <li>Export the resulting TPG in a dedicated DOT file.</li>
+</ul>
+
+<details><summary>Solution to #2 (Click to expand)</summary>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* main-training.cpp: After the for loop. */</span>
+
+<span class="c1">// Clean unused vertices and teams</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">TPG</span><span class="o">::</span><span class="n">TPGGraph</span><span class="o">&gt;</span> <span class="n">tpg</span> <span class="o">=</span> <span class="n">la</span><span class="p">.</span><span class="n">getTPGGraph</span><span class="p">();</span>
+<span class="n">TPG</span><span class="o">::</span><span class="n">TPGInstrumentedFactory</span><span class="p">().</span><span class="n">clearUnusedTPGGraphElements</span><span class="p">(</span><span class="o">*</span><span class="n">tpg</span><span class="p">);</span>
+
+<span class="c1">// Keep only the best root</span>
+<span class="n">la</span><span class="p">.</span><span class="n">keepBestPolicy</span><span class="p">();</span>
+
+<span class="c1">// Clean introns</span>
+<span class="n">tpg</span><span class="o">-&gt;</span><span class="n">clearProgramIntrons</span><span class="p">();</span>
+
+<span class="c1">// Print the resulting TPG</span>
+<span class="n">dotExporter</span><span class="p">.</span><span class="n">setNewFilePath</span><span class="p">(</span><span class="n">ROOT_DIR</span> <span class="s">"/dat/best_tpg.dot"</span><span class="p">);</span>
+<span class="n">dotExporter</span><span class="p">.</span><span class="n">print</span><span class="p">();</span>
+</code></pre></div></div>
+</details>
+
+<h2 id="1-visualization-of-tpg-graphs">1. Visualization of TPG graphs.</h2>
+<p>To visualize TPGs described with DOT, a dedicated tool can be installed on your computer, such as graphviz.
+Alternatively, several website propose online viewers for graphs described with the DOT language.
+For example, <a href="https://edotor.net/">Edotor</a>, <a href="https://dreampuf.github.io/GraphvizOnline/">GraphvizOnline</a>, or <a href="http://magjac.com/graphviz-visual-editor/">GraphViz Visual Editor</a> can be used to follow this tutorial.</p>
+
+<h3 id="tpg-graphical-semantics">TPG graphical semantics</h3>
+<p>An excerpt of the visual representation of a TPG produced by GraphViz is presented hereafter:</p>
+<div align="center"><img src="../assets/images/tpg00.png" width="400" /></div>
+
+<p>The large colored circles in the graph represents the teams of the TPG.
+At the top of the image, the two darker teams are root teams of the TPG.
+Lighter teams are internal teams of the TPG, referenced in the graph stemming from at least one root of the TPG.
+The red rectangles represent the actions of the TPG.
+The integer numbers in the action rectangles represent the numbers associated to the discrete actions available in the learning environment.
+Finally, arrows linking teams to other teams of actions are separated in two halves: the first one linking the team to a program, represented with a tiny circle, and the second one linking the program to its destination team or action.
+In case several edges starting from different teams share a common program and destination, a single arrow exists between the program and its destination.</p>
+
+<h3 id="in-training-tpgs-and-emergent-behavior">In-training TPGs and emergent behavior</h3>
+
+<p>The training meta-parameters used in this tutorial, specified in <code class="language-plaintext highlighter-rouge">gegelati-tutorial/params.json</code>, specify that the trained TPG should contain 150 roots at each generation, 80% of which are removed during the decimation process.
+Hence, the DOT graph exported after each generation contain 30 root teams, which make them quite large when visualized.</p>
+
+<p>The first observable feature of TPGs during the training process are their maximum depth from root to actions.
+When the learning agent and the trained TPG are first initialized, the number of created root is equal to the number of actions available the TPG.
+Each of this root is connected to two actions, such that each action is itself connected to two roots.
+Hence, at initialization, the depth of the TPG is 1 between roots and actions.</p>
+
+<p>During the any iteration of the natural selection training process, additional roots are added to the TPGs to reach the desired 150 roots.
+These roots are obtained by cloning and mutating existing teams from the TPG.
+During this mutation process, program of mutated team can change their destination among surviving teams from the previous generation, but can never point towards another root introduced at the same generation.
+Hence, the maximum depth of the TPG can increase, at most, by one at each generation.
+This is why, when observing the TPG resulting from the first generation, the graph should contain
+30 roots with a maximum depth of 2 between roots and actions.</p>
+
+<p>In practice, the maximum depth of the TPG remains relatively stable, unless one of the root teams discovers a new valuable strategy.
+Indeed, in the absence of a reward breakthrough most newly introduced team, which may be responsible for an increase of the TPG depth, won’t survive any generation.
+Thanks to this property, the depth of the TPG graphs automatically reflects the complexity of the strategy deployed for maximizing their rewards.
+Hence, when visualizing the TPGs obtained during the first generation, you will most likely not notice a big change in the maximum depth of the TPG.</p>
+
+<p>When a root team with a valuable behavior appears, it will survive for many generations, thus increasing its chance of being itself referenced by a new root team bringing further improvement of the TPG reward.
+When becoming an internal (i.e. non-root) team of the TPG, a team is protected from decimation, which further increases its life-span, and its chance of being referenced during future mutations.
+This natural self preservation of valuable behavior is called the emergent hierarchal structure of TPGs.</p>
+
+<h4 id="todo-3">TODO #3:</h4>
+<p>Visualize the TPG obtained during throughout the training process, and the structure of the best TPG exported when exiting the training process.</p>
+
+<h2 id="2-standalone-inference-from-imported-dot-file">2. Standalone inference from imported DOT file.</h2>
+<p>Once a pre-trained TPG is exported, an import feature is indispensable to enable using this TPG for inference purposes.
+In this step, you will create an inference executable base on a TPG exported in the DOT format.</p>
+
+<h3 id="creation-of-a-new-executable-in-the-cmake-project">Creation of a new executable in the CMake project.</h3>
+<h4 id="todo-4">TODO #4</h4>
+<ol>
+  <li>Download the <code class="language-plaintext highlighter-rouge">main-inference.cpp</code> file and place it in the <code class="language-plaintext highlighter-rouge">gegelati-tutorial/src/inference/</code> folder: <a href="/gegelati-tutorial/data/main-inference.cpp">Download Link</a>.</li>
+  <li>Update the CMake configuration file to add a new target to the project. To do that, add the following lines at the end of the <code class="language-plaintext highlighter-rouge">gegelati-tutorial/CMakeLists.txt</code> file:
+    <div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Sub project for inference</span>
+<span class="nb">file</span><span class="p">(</span>GLOB
+ inference_files
+ ./src/inference/*.cpp
+ ./src/inference/*.h
+ ./src/training/instructions.*
+ ./src/training/pendulum_wrapper.*
+ params.json
+<span class="p">)</span>
+<span class="nb">include_directories</span><span class="p">(</span><span class="si">${</span><span class="nv">GEGELATI_INCLUDE_DIRS</span><span class="si">}</span> <span class="si">${</span><span class="nv">SDL2_INCLUDE_DIR</span><span class="si">}</span> <span class="si">${</span><span class="nv">SDL2IMAGE_INCLUDE_DIR</span><span class="si">}</span> <span class="si">${</span><span class="nv">SDL2TTF_INCLUDE_DIR</span><span class="si">}</span> <span class="s2">"./src/"</span> <span class="s2">"./src/training/"</span><span class="p">)</span>
+<span class="nb">add_executable</span><span class="p">(</span>tpg-inference <span class="si">${</span><span class="nv">pendulum_files</span><span class="si">}</span> <span class="si">${</span><span class="nv">inference_files</span><span class="si">}</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span>tpg-inference <span class="si">${</span><span class="nv">GEGELATI_LIBRARIES</span><span class="si">}</span> <span class="si">${</span><span class="nv">SDL2_LIBRARY</span><span class="si">}</span> <span class="si">${</span><span class="nv">SDL2IMAGE_LIBRARY</span><span class="si">}</span> <span class="si">${</span><span class="nv">SDL2TTF_LIBRARY</span><span class="si">}</span><span class="p">)</span>
+<span class="nb">target_compile_definitions</span><span class="p">(</span>tpg-inference PRIVATE ROOT_DIR=<span class="s2">"</span><span class="si">${</span><span class="nv">CMAKE_SOURCE_DIR</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Re-generate the project for your favorite IDE using appropriate CMake commands.</li>
+</ol>
+
+<h3 id="importing-tpg-for-inference">Importing TPG for inference.</h3>
+<p>Open the <code class="language-plaintext highlighter-rouge">gegelati-tutorial/src/inference/main-inference.cpp</code> file which is pre-filled with the code needed to load and infer a TPG from a dot file.
+The program is structured as follows:</p>
+<ol>
+  <li>Initialize the instruction set of the programs, with the same instructions as the ones used during training.</li>
+  <li>Initialize the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> learning environment and the associated learning agent. While the learning agent is not strictly needed for inference purposes, as it provides a simple API to initialize the execution environment, which is easier to use it in this example. Also note that this learning agent can be reused as a basis to restart the training of a previously saved TPG.</li>
+  <li>Load the TPG from a file using the <code class="language-plaintext highlighter-rouge">File::TPGGraphDotImporter</code> class with the following lines.
+    <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Load the TPG from the file</span>
+<span class="n">File</span><span class="o">::</span><span class="n">TPGGraphDotImporter</span> <span class="nf">importer</span><span class="p">(</span><span class="n">ROOT_DIR</span> <span class="s">"/dat/best_tpg.dot"</span><span class="p">,</span> <span class="n">la</span><span class="p">.</span><span class="n">getEnvironment</span><span class="p">(),</span> <span class="o">*</span><span class="n">la</span><span class="p">.</span><span class="n">getTPGGraph</span><span class="p">());</span>
+<span class="n">importer</span><span class="p">.</span><span class="n">importGraph</span><span class="p">();</span>
+</code></pre></div>    </div>
+    <p>It is important to note that the importer does not create its own TPG, but fills and replace the one created by the learning agent.</p>
+  </li>
+  <li>Instantiate the <code class="language-plaintext highlighter-rouge">TPG::TPGExecutionEngine</code> which will manage the inference of the loaded TPG graph.</li>
+  <li>Initialize the display.</li>
+  <li>In an infinite loop, simulate and display the <code class="language-plaintext highlighter-rouge">params.maxNbActionsPerEval</code> actions of the TPG on the pendulum.</li>
+  <li>Each inference of the TPG is handled by the <code class="language-plaintext highlighter-rouge">TPG::TPGExecutionEngine</code>, which starts an execution of the TPG from a specified TPG vertex, with the current state of the pendulum learning environment. This executions produces a <code class="language-plaintext highlighter-rouge">trace</code>, which corresponds to the list of actors visited during one execution of the TPG. The last vertex visited in the <code class="language-plaintext highlighter-rouge">trace</code> is the action selected by the TPG.</li>
+  <li>After each inference, the selected action is applied to the environment, and the display is updated.</li>
+  <li>Necessary cleanups are executed after the simulation loop.</li>
+</ol>
+
+<h4 id="todo-5">TODO #5</h4>
+<p>Build and run the best TPG saved from a previous training.
+Check that the result is identical to the score obtained during the training.
+This score is automatically printed in the console after <code class="language-plaintext highlighter-rouge">params.maxNbActionsPerEval</code> actions are performed, and before restarting the simulation.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>In this tutorial, you have seen how to and visualize TPGs during the training process, and also how to import them back for inference.
+The code presented in this tutorial can serve as a basis for many purposes, and notably to restart the training of a TPG saved during the training process.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 GEGELATI. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
