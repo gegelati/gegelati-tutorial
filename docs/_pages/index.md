@@ -22,7 +22,7 @@ While being fluent in C++ certainly is an asset to follow this tutorial, bits of
 
 ### C++ Environment:
 This tutorial requires a C++ development environment compatible with the C++17 standard.
-Compatibility of this tutorial was tested with MS Visual Studio Community Edition (MSVC) 2022, and GCC v9.
+Compatibility of this tutorial was tested with <span style="font-variant: small-caps;">Gegelati</span> v2.0.0, MS Visual Studio Community Edition (MSVC) 2022, and GCC v13.
 
 ### Bash environment
 Some scripts embedded in the given files of this tutorial require the availability of a bash environment.
@@ -182,7 +182,7 @@ In the case of <span style="font-variant: small-caps;">Gegelati</span>, this int
 |+getNbActions(): int                |
 |+getDataSources(): std::vector<>    |
 |+reset(): void                      |
-|+doAction(int): void                |
+|+doAction(double): void             |
 |+getScore(): double                 |
 |+isTerminal(): bool                 |
 -->
@@ -312,10 +312,11 @@ After exposing the pendulum attributes to the learning agent, this step will giv
 The number of discrete actions that can be taken by the learning agent is given by the `getNbActions()` method from the learning environment.
 The value returned by this method is already set when calling the constructor of the `LearningEnvironment` parent class of the `PendulumWrapper`.
 
-To execute an action, the learning agent calls the `doAction(int)` method of the learning environment with an argument corresponding to the action to execute.
+To execute an action, the learning agent calls the `doAction(double)` method of the learning environment with an argument corresponding to the action to execute.
+The argument of the `doAction` method is a double to enable support for continuous action space. Nevertheless, in this tutorial, integer values corresponding to the selected action index will be used when calling the `doAction` method.
 
 #### TODO #4
-Implement the `PendulumWrapper::doAction(int)` method using the actions defined in the `actions` attribute.
+Implement the `PendulumWrapper::doAction(double)` method using the actions defined in the `actions` attribute.
 To apply a torque to the pendulum, the `Pendulum::applyTorque(double)` method must be used.
 ```cpp
 /**
@@ -332,7 +333,7 @@ Two lines of C++ code are sufficient for this task.
 {% details Solution to #4 (Click to expand) %}
 ```cpp
 /* pendulum_wrapper.cpp */
-void PendulumWrapper::doAction(uint64_t actionID)
+void PendulumWrapper::doAction(double actionID)
 {
   	// Retrieve the torque corresponding to the ID
   	double torque = this->actions[actionID] * pendulum.MAX_TORQUE;
@@ -382,7 +383,7 @@ Intuitively, the purpose of this equation is to minimize the angular distance to
 #### TODO #6
 Implement the rewarding mechanism in the `PendulumWrapper` class by:
 * Adding an `accumulatedReward` attribute.
-* Updating this reward after each action in the `doAction(int)` method.
+* Updating this reward after each action in the `doAction(double)` method.
 * Returning this reward in the `getScore()` method.
 * Resetting this reward in the `reset(int, LearningMode)` method.
 Less than 10 new lines of code are needed for this task.
@@ -406,7 +407,7 @@ void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iter
 	this->accumulatedReward = 0.0;
 }
 
-void PendulumWrapper::doAction(uint64_t actionID)
+void PendulumWrapper::doAction(double actionID)
 {
 	// Retrieve the torque corresponding to the ID
 	double torque = this->actions[actionID] * pendulum.MAX_TORQUE;
@@ -464,15 +465,15 @@ An example of log is presented hereafter:
 
 ```bash
 Pendulum TPG training.
-                      Train
-      Gen   NbVert      Min      Avg      Max  T_mutat   T_eval  T_total
-        0      162 -6937.82 -1560.49  -844.54     0.00     1.48     1.50
-        1      167 -6912.39 -1316.13  -770.64    17.64     1.80    20.96
-        2      170 -6937.82 -1330.90  -651.14    17.63     2.04    40.69
-        3      167 -6990.10 -1455.24  -651.14    10.82     2.22    53.78
-        4      166 -6862.46 -1302.98  -651.14     8.17     2.40    64.37
-        5      169 -6990.10 -1326.34  -330.62     8.54     2.45    75.40
-        6      167 -6990.10 -1304.40  -194.47     5.67     2.62    83.74
+                                           Train
+      Gen   NbVert   NbActR  NbTeamR      Min      Avg      Max  T_mutat   T_eval  T_decim  T_total
+        0      157        0      150 -1994.49 -1253.84 -1073.07     0.00     0.92     0.00     0.97
+        1      166        0      150 -7214.09 -1327.43  -977.91    14.23     1.11     0.00    16.35
+        2      164        0      150 -6222.31 -1194.81  -936.95     4.10     1.53     0.00    22.02
+        3      167        0      150 -6862.46 -1180.28  -936.95     5.62     1.62     0.00    29.29
+        4      166        0      151 -1995.37 -1105.47  -936.95     7.60     1.63     0.00    38.56
+        5      168        0      150 -6990.10 -1162.87  -802.01     4.07     1.60     0.00    44.27
+        6      164        0      150 -6990.10 -1290.24  -802.01     5.95     1.52     0.00    51.78
 ```
 
 The generated logs contain a table that can be exported in the CSV format by giving a file path to the `LABasicLogger` constructor.
