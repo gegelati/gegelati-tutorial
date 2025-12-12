@@ -8,71 +8,53 @@ import re
 
 # Function filtering the solution out of the input file.
 # also filters double empty lines that may result from filtering.
-def filterSolution(inputFile, outputEmptyFile, outputSolutionFile):
-    
+def filterSolution(inputFile, outputFile, keepSolution, pattern):
+    # rewind input file
+    inputFile.seek(0)
+
     # Scan lines
     isSolution = False
     isTemplate = False
-    emptyEmptyLine = False
-    emptySolutionLine = False
+    emptyLine = False
     for line in inputFile:
         # Check if the line is the #define
-        if(re.match(r'.*#define SOLUTION.*\n', line)):
+        if(re.match(rf'.*#define SOLUTION.*\n', line)):
             continue # skip the line
 
         # Check if the line starts a solution block
-        if(re.match(r'.*#ifdef SOLUTION.*\n', line)):
+        if(re.match(rf'.*#ifdef {pattern}\s*\n', line)):
             isSolution = True
             continue # skip the line
-        
+
         # Check if the line start a template block
         if(isSolution and re.match(r'.*#else.*\n', line)):
             isSolution = False
             isTemplate = True
             continue # skip the line
 
-        # Check if the line start a template block
-        if((isSolution or isTemplate ) and re.match(r'.*#endif // SOLUTION.*\n', line)):
+        # Check if the line ends a block
+        if((isSolution or isTemplate ) and re.match(rf'.*#endif // {pattern}\s*\n', line)):
             isSolution = False
             isTemplate = False
             continue # skip the line
 
-        printEmptyLine = False
-        printSolutionLine = False
+        printLine = False
+        if keepSolution:
+            if isSolution or (not isSolution and not isTemplate):
+                printLine = True
+        else:
+            if isTemplate or (not isSolution and not isTemplate):
+                printLine = True
 
-        if(isTemplate):
-            printEmptyLine=True
-        
-        if(isSolution):
-            printSolutionLine = True
-
-        if(not isSolution and not isTemplate):
-            printEmptyLine=True
-            printSolutionLine = True
-
-        # Print line in empty file
-        if(printEmptyLine):
+        if printLine:
             if(re.match(r'\s*\n', line)):
-                if(emptyEmptyLine):
+                if emptyLine:
                     continue # skipLine
                 else:
-                    emptyEmptyLine=True
+                    emptyLine = True
             else:
-                emptyEmptyLine=False
-
-            outputEmptyFile.write(line)
-
-        # Print line in solution file
-        if(printSolutionLine):
-            if(re.match(r'\s*\n', line)):
-                if(emptySolutionLine):
-                    continue # skipLine
-                else:
-                    emptySolutionLine=True
-            else:
-                emptySolutionLine=False
-
-            outputSolutionFile.write(line)
+                emptyLine = False
+            outputFile.write(line)
 
 
 # Open the files
@@ -87,12 +69,20 @@ txtEmptyCMakeListsFile = open("./CMakeLists_empty.txt", "w")
 txtSolutionCMakeListsFile = open("./CMakeLists_solution.txt", "w")
 
 if(not cppInputFile or not cppEmptyOutputFile or not hInputFile or not hEmptyOutputFile or not txtEmptyCMakeListsFile or not txtInputCMakeListsFile or not txtSolutionCMakeListsFile):
-	exit
+    exit
 
-## Filter cpp files
-filterSolution(hInputFile, hEmptyOutputFile, hSolutionOutputFile)
-filterSolution(cppInputFile, cppEmptyOutputFile, cppSolutionOutputFile)
-filterSolution(txtInputCMakeListsFile, txtEmptyCMakeListsFile, txtSolutionCMakeListsFile)
+
+## Filter header file
+filterSolution(hInputFile, hEmptyOutputFile, False, "SOLUTION.*")
+filterSolution(hInputFile, hSolutionOutputFile, True, "SOLUTION.*")
+
+## Filter cpp file
+filterSolution(cppInputFile, cppEmptyOutputFile, False, "SOLUTION.*")
+filterSolution(cppInputFile, cppSolutionOutputFile, True, "SOLUTION.*")
+
+## Filter CMakeLists file
+filterSolution(txtInputCMakeListsFile, txtEmptyCMakeListsFile, False, "SOLUTION.*")
+filterSolution(txtInputCMakeListsFile, txtSolutionCMakeListsFile, True, "SOLUTION.*")
 
 # Close files
 cppInputFile.close()
