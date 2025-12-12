@@ -18,6 +18,21 @@ PendulumWrapper::PendulumWrapper() : LearningEnvironment(actions.size())
 }
 #endif // SOLUTION
 
+#ifdef SOLUTION_PARALLEL
+PendulumWrapper::PendulumWrapper(const PendulumWrapper& other) : LearningEnvironment(other), pendulum(), data(other.data)
+{
+	// Set pointers of the copy to its own pendulum.
+	data.at(0).setPointer(&this->pendulum.getAngle());
+	data.at(1).setPointer(&this->pendulum.getVelocity());
+}
+#endif // SOLUTION_PARALLEL
+
+#ifdef SOLUTION_PARALLEL
+Learn::LearningEnvironment* PendulumWrapper::clone(void) const{
+	return new PendulumWrapper(*this);
+}
+#endif // SOLUTION_PARALLEL
+
 std::vector<std::reference_wrapper<const Data::DataHandler>> PendulumWrapper::getDataSources()
 {
 #ifdef SOLUTION
@@ -77,3 +92,10 @@ bool PendulumWrapper::isTerminal(void) const
 {
 	return false;
 }
+
+#ifdef SOLUTION_PARALLEL
+bool PendulumWrapper::isCopyable(void) const
+{
+	return true;
+}
+#endif // SOLUTION_PARALLEL

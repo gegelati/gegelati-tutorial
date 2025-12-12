@@ -48,7 +48,11 @@ void train_main(std::atomic<bool>& exitProgram, std::atomic<bool>& doDisplay, st
 	#endif
 
 	// Instantiate and initialize the Learning Agent (LA)
+	#ifdef SOLUTION_PARALLEL
+	Learn::ParallelLearningAgent la(pendulumLE, instructionSet, params);
+	#else
 	Learn::LearningAgent la(pendulumLE, instructionSet, params);
+	#endif // SOLUTION_PARALLEL
 	la.init();
 
 	// Basic logger for the training process
