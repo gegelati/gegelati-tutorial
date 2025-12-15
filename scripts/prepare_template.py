@@ -4,6 +4,7 @@
 # License: CeCILL-C
 
 import re
+import io
 
 
 # Function filtering the solution out of the input file.
@@ -58,32 +59,55 @@ def filterSolution(inputFile, outputFile, keepSolution, pattern):
 
 
 # Files to filter
+# Each entry: [inputPath, [(outputPath, patternToRemove, patternToKeep), ...]]
 files = [
-    ["./src/training/pendulum_wrapper.cpp", "./src/training/pendulum_wrapper_empty.cpp", "./src/training/pendulum_wrapper_solution.cpp"],
-    ["./src/training/pendulum_wrapper.h", "./src/training/pendulum_wrapper_empty.h", "./src/training/pendulum_wrapper_solution.h"],
-    ["./CMakeLists.txt", "./CMakeLists_empty.txt", "./CMakeLists_solution.txt"]
+    ["./src/training/pendulum_wrapper.cpp", [
+        ["./src/training/pendulum_wrapper_empty.cpp", "SOLUTION.*", ""],
+        ["./src/training/pendulum_wrapper_solution.cpp", "SOLUTION_PARALLEL", "SOLUTION.*"],
+        ["./src/training/pendulum_wrapper_parallel.cpp", "", "SOLUTION.*"],
+    ]],
+    ["./src/training/pendulum_wrapper.h", [
+        ["./src/training/pendulum_wrapper_empty.h", "SOLUTION.*", ""],
+        ["./src/training/pendulum_wrapper_solution.h", "SOLUTION_PARALLEL", "SOLUTION.*"],
+        ["./src/training/pendulum_wrapper_parallel.h", "", "SOLUTION.*"],
+    ]],
+    ["./CMakeLists.txt", [
+        ["./CMakeLists_empty.txt", "SOLUTION.*", ""],
+        ["./CMakeLists_solution.txt", "", "SOLUTION.*"],
+    ]],
+    ["./src/training/main-training.cpp", [
+     ["./src/training/main-training_empty.cpp", "SOLUTION.*", ""],
+     ["./src/training/main-training_parallel.cpp", "", "SOLUTION.*"],
+    ]],
 ]
 
 # Prepare files
 for fileSet in files:
     inputFilePath = fileSet[0]
-    emptyOutputFilePath = fileSet[1]
-    solutionOutputFilePath = fileSet[2]
+    outputs = fileSet[1]
 
-    # Open the files
     inputFile = open(inputFilePath, "r")
-    emptyOutputFile = open(emptyOutputFilePath, "w")
-    solutionOutputFile = open(solutionOutputFilePath, "w")
+    if not inputFile:
+        continue
 
-    if(not inputFile or not emptyOutputFile or not solutionOutputFile):
-        exit
+    for out in outputs:
+        outputPath, patternRemove, patternKeep = out
+        outputFile = open(outputPath, "w")
+        if patternRemove and not patternKeep:
+            filterSolution(inputFile, outputFile, False, patternRemove)
+        elif patternKeep and not patternRemove:
+            filterSolution(inputFile, outputFile, True, patternKeep)
+        elif patternKeep and patternRemove:
+            # Remove first into an in-memory buffer, then keep from that buffer
+            temp = io.StringIO()
+            filterSolution(inputFile, temp, False, patternRemove)
+            filterSolution(temp, outputFile, True, patternKeep)
+            temp.close()
+        else:
+            # No pattern provided: copy file as-is
+            inputFile.seek(0)
+            for line in inputFile:
+                outputFile.write(line)
+        outputFile.close()
 
-    # Filter empty version
-    filterSolution(inputFile, emptyOutputFile, False, "SOLUTION.*")
-    # Filter solution version
-    filterSolution(inputFile, solutionOutputFile, True, "SOLUTION.*")
-
-    # Close files
     inputFile.close()
-    emptyOutputFile.close()
-    solutionOutputFile.close()
