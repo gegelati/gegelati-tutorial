@@ -76,5 +76,16 @@ tutorialSolutionArchive.write("src/training/pendulum_wrapper_solution.h", mainFo
 tutorialSolutionArchive.write("CMakeLists_empty.txt", mainFolder + "CMakeLists.txt") # overwrite empty_file
 tutorialSolutionArchive.close()
 
-# Make the main-inference.cpp file available
+# Create the gegelati-tutorial-parallel-solution archive by copying the solution archive
+mainFolder = "gegelati-tutorial/"
+# copy the solution archive as a base
+shutil.copy2("./docs/data/gegelati-tutorial-solution.zip", "./docs/data/gegelati-tutorial-parallel-solution.zip")
+# open the copied archive in append mode and overwrite only the differing entries
+tutorialParallelSolutionArchive = ZipFile("./docs/data/gegelati-tutorial-parallel-solution.zip", "a")
+tutorialParallelSolutionArchive.write("src/training/pendulum_wrapper_parallel.cpp", mainFolder + "src/training/pendulum_wrapper.cpp")
+tutorialParallelSolutionArchive.write("src/training/pendulum_wrapper_parallel.h", mainFolder + "src/training/pendulum_wrapper.h")
+tutorialParallelSolutionArchive.write("src/training/main-training_parallel.cpp", mainFolder + "src/training/main-training.cpp")
+tutorialParallelSolutionArchive.close()
+
+# Make the main-inference.cpp file available for download
 shutil.copy2("./src/inference/main-inference.cpp", "./docs/data/")
