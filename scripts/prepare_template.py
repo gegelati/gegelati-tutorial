@@ -57,40 +57,33 @@ def filterSolution(inputFile, outputFile, keepSolution, pattern):
             outputFile.write(line)
 
 
-# Open the files
-cppInputFile = open("./src/training/pendulum_wrapper.cpp","r")
-cppEmptyOutputFile = open("./src/training/pendulum_wrapper_empty.cpp", "w")
-cppSolutionOutputFile = open("./src/training/pendulum_wrapper_solution.cpp", "w")
-hInputFile = open("./src/training/pendulum_wrapper.h","r")
-hEmptyOutputFile = open("./src/training/pendulum_wrapper_empty.h", "w")
-hSolutionOutputFile = open("./src/training/pendulum_wrapper_solution.h", "w")
-txtInputCMakeListsFile = open("./CMakeLists.txt", "r")
-txtEmptyCMakeListsFile = open("./CMakeLists_empty.txt", "w")
-txtSolutionCMakeListsFile = open("./CMakeLists_solution.txt", "w")
+# Files to filter
+files = [
+    ["./src/training/pendulum_wrapper.cpp", "./src/training/pendulum_wrapper_empty.cpp", "./src/training/pendulum_wrapper_solution.cpp"],
+    ["./src/training/pendulum_wrapper.h", "./src/training/pendulum_wrapper_empty.h", "./src/training/pendulum_wrapper_solution.h"],
+    ["./CMakeLists.txt", "./CMakeLists_empty.txt", "./CMakeLists_solution.txt"]
+]
 
-if(not cppInputFile or not cppEmptyOutputFile or not hInputFile or not hEmptyOutputFile or not txtEmptyCMakeListsFile or not txtInputCMakeListsFile or not txtSolutionCMakeListsFile):
-    exit
+# Prepare files
+for fileSet in files:
+    inputFilePath = fileSet[0]
+    emptyOutputFilePath = fileSet[1]
+    solutionOutputFilePath = fileSet[2]
 
+    # Open the files
+    inputFile = open(inputFilePath, "r")
+    emptyOutputFile = open(emptyOutputFilePath, "w")
+    solutionOutputFile = open(solutionOutputFilePath, "w")
 
-## Filter header file
-filterSolution(hInputFile, hEmptyOutputFile, False, "SOLUTION.*")
-filterSolution(hInputFile, hSolutionOutputFile, True, "SOLUTION.*")
+    if(not inputFile or not emptyOutputFile or not solutionOutputFile):
+        exit
 
-## Filter cpp file
-filterSolution(cppInputFile, cppEmptyOutputFile, False, "SOLUTION.*")
-filterSolution(cppInputFile, cppSolutionOutputFile, True, "SOLUTION.*")
+    # Filter empty version
+    filterSolution(inputFile, emptyOutputFile, False, "SOLUTION.*")
+    # Filter solution version
+    filterSolution(inputFile, solutionOutputFile, True, "SOLUTION.*")
 
-## Filter CMakeLists file
-filterSolution(txtInputCMakeListsFile, txtEmptyCMakeListsFile, False, "SOLUTION.*")
-filterSolution(txtInputCMakeListsFile, txtSolutionCMakeListsFile, True, "SOLUTION.*")
-
-# Close files
-cppInputFile.close()
-cppEmptyOutputFile.close()
-cppSolutionOutputFile.close()
-hInputFile.close()
-hEmptyOutputFile.close()
-hSolutionOutputFile.close()
-txtSolutionCMakeListsFile.close()
-txtInputCMakeListsFile.close()
-txtEmptyCMakeListsFile.close()
+    # Close files
+    inputFile.close()
+    emptyOutputFile.close()
+    solutionOutputFile.close()
