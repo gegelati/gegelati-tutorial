@@ -84,6 +84,20 @@ jobs:
         if: matrix.compiler == 'msvc' && runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
 
+      - name: Install Libraries (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
+
+      - name: Build Gegelati (Linux/MacOS)
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
+        run: |
+          git clone -b master https://github.com/gegelati/gegelati.git lib/gegelati
+          cd lib/gegelati/bin
+          cmake .. -DBUILD_TESTING=OFF -DSKIP_DOXYGEN_BUILD=ON -DCMAKE_BUILD_TYPE=Release
+          sudo cmake --build . --target install --parallel $(nproc)
+        shell: bash
+
       - name: Configure CMake project
         run: |
           mkdir -p tutorial/build
