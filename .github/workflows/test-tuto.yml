@@ -107,7 +107,13 @@ jobs:
           CXX: ${{ matrix.compiler == 'gcc' && 'g++' || matrix.compiler == 'clang' && 'clang++' || '' }}
         shell: bash
 
-      - name: Build project
+      - name: Build manual-control target
         run: |
-          cmake --build build --config Release
+          cmake --build build --config Release --target manual-control -- -j$(nproc)
+        shell: bash
+
+      - name: Build tpg-training target
+        if: matrix.archive != 'gegelati-tutorial.zip'
+        run: |
+          cmake --build build --config Release --target tpg-training -- -j$(nproc)
         shell: bash
