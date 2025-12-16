@@ -101,7 +101,7 @@ jobs:
       - name: Configure CMake project
         run: |
           mkdir -p tutorial/build
-          cmake -S tutorial/gegelati-tutorial -B build
+          cmake -S tutorial/gegelati-tutorial -B build -DTESTING=ON
         env:
           CC: ${{ matrix.compiler == 'gcc' && 'gcc' || matrix.compiler == 'clang' && 'clang' || '' }}
           CXX: ${{ matrix.compiler == 'gcc' && 'g++' || matrix.compiler == 'clang' && 'clang++' || '' }}

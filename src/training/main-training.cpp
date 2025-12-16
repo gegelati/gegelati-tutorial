@@ -16,7 +16,9 @@
 
 #include "pendulum_wrapper.h"
 
+#ifndef DEACTIVATE_DISPLAY
 #define DEACTIVATE_DISPLAY 0
+#endif
 
 
 /**
