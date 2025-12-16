@@ -91,14 +91,13 @@ int main(int argc, char** argv) {
 		#if ( DEACTIVATE_DISPLAY == 0 )
 			// Start training in secondary thread
 			std::thread threadTraining(train_main, std::ref(exitProgram), std::ref(doDisplay), std::ref(generation), std::ref(time_delta), std::ref(replay));
+			// Replay code
+			Renderer::replayThread(exitProgram, doDisplay, generation, time_delta, replay);
 		#else 
 			std::cout << "No display version, send interrupt signal to process to exit." << std::endl;
 			// Start training in main thread
 			train_main(exitProgram, doDisplay, generation, time_delta, replay);
 		#endif
-
-		// Replay code
-		Renderer::replayThread(exitProgram, doDisplay, generation, time_delta, replay);
 
 		#if ( DEACTIVATE_DISPLAY == 0 )
 			// Exit the display thread
