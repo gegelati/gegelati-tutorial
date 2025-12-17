@@ -48,8 +48,16 @@ std::vector<std::reference_wrapper<const Data::DataHandler>> PendulumWrapper::ge
 void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iterationNumber, uint64_t generationNumber)
 {
 #ifdef SOLUTION_PARALLEL
-	// Seed the RNG
-	this->rng.setSeed(seed);
+	// In TRAINING mode, randomize the initial state
+	if (mode == Learn::LearningMode::TRAINING) {
+		// Seed the RNG differently for each iteration
+		this->rng.setSeed(seed + iterationNumber);
+	}
+	else {
+		// In VALIDATION and TESTING modes, use fixed seeds for reproducibility
+		this->rng.setSeed(iterationNumber);
+	}	
+
 	// Randomize the initial angle between [pi - 0.5, pi + 0.5]
 	double initialAngle = M_PI + this->rng.getDouble(-0.5, 0.5);
 	this->pendulum.setAngle(initialAngle);
