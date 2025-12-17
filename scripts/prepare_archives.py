@@ -61,7 +61,7 @@ def replace_file_in_zip(zip_path, file_to_add, arcname):
 mainFolder = "gegelati-tutorial/"
 tutorialTemplateArchive = ZipFile("./docs/data/gegelati-tutorial.zip", "w")
 zipFileAdd(tutorialTemplateArchive,"bin/", mainFolder)
-zipFilesInDir("./",tutorialTemplateArchive, r'^(?!.*(CMakeLists))[^\.]+.*', mainFolder, False) # exclude .gitgnore and CMakeLists files
+zipFilesInDir("./",tutorialTemplateArchive, r'^(?!.*(CMakeLists|params))[^\.]+.*', mainFolder, False) # exclude .gitgnore and CMakeLists files
 zipFilesInDir("./dat/",tutorialTemplateArchive, r'.*', mainFolder)
 zipFilesInDir("./lib/",tutorialTemplateArchive, r'.*', mainFolder)
 zipFilesInDir("src/",tutorialTemplateArchive, r'.*', mainFolder, False)
