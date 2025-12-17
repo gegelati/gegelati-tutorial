@@ -41,6 +41,11 @@ public:
 	double accumulatedReward;
 #endif // SOLUTION
 
+#ifdef SOLUTION_PARALLEL
+	/// Random Number Generator for the environment
+	Mutator::RNG rng;
+#endif // SOLUTION_PARALLEL
+
 	/// Default constructor for the PendulumWrapper
 	PendulumWrapper();
 

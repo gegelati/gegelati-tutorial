@@ -47,10 +47,21 @@ std::vector<std::reference_wrapper<const Data::DataHandler>> PendulumWrapper::ge
 
 void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iterationNumber, uint64_t generationNumber)
 {
+#ifdef SOLUTION_PARALLEL
+	// Seed the RNG
+	this->rng.setSeed(seed);
+	// Randomize the initial angle between [pi - 0.5, pi + 0.5]
+	double initialAngle = M_PI + this->rng.getDouble(-0.5, 0.5);
+	this->pendulum.setAngle(initialAngle);
+	// Randomize the initial velocity between [-1.0, 1.0]
+	double initialVelocity = this->rng.getDouble(-1.0, 1.0);
+	this->pendulum.setVelocity(initialVelocity);
+#else
 #ifdef SOLUTION
 	this->pendulum.setAngle(M_PI);
 	this->pendulum.setVelocity(0.0);
 #endif // SOLUTION
+#endif // SOLUTION_PARALLEL
 #ifdef SOLUTION
 	this->accumulatedReward = 0.0;
 #endif // SOLUTION
