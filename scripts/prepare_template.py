@@ -94,6 +94,10 @@ files = [
      ["./src/training/main-training_empty.cpp", ["SOLUTION.*"], []],
      ["./src/training/main-training_parallel.cpp", [], ["SOLUTION.*"]],
     ]],
+    ["./params.json", [
+     ["./params_empty.json", ["SOLUTION.*"], []],
+     ["./params_parallel.json", [], ["SOLUTION_PARALLEL"]],
+    ]],
 ]
 
 # Prepare files

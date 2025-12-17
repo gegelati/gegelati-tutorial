@@ -71,6 +71,7 @@ tutorialTemplateArchive.write("src/training/pendulum_wrapper_empty.cpp", mainFol
 tutorialTemplateArchive.write("src/training/pendulum_wrapper_empty.h", mainFolder + "src/training/pendulum_wrapper.h") # overwrite empty_file
 tutorialTemplateArchive.write("src/training/main-training_empty.cpp", mainFolder + "src/training/main-training.cpp") # overwrite empty_file
 tutorialTemplateArchive.write("CMakeLists_empty.txt", mainFolder + "CMakeLists.txt") # overwrite empty_file
+tutorialTemplateArchive.write("params_empty.json", mainFolder + "params.json") # overwrite empty_file
 tutorialTemplateArchive.close()
 
 # Create the pendulum_wrapper_solution archive
@@ -92,6 +93,7 @@ shutil.copy2("./docs/data/gegelati-tutorial-solution.zip", "./docs/data/gegelati
 replace_file_in_zip("./docs/data/gegelati-tutorial-parallel-solution.zip", "src/training/pendulum_wrapper_parallel.cpp", mainFolder + "src/training/pendulum_wrapper.cpp")
 replace_file_in_zip("./docs/data/gegelati-tutorial-parallel-solution.zip", "src/training/pendulum_wrapper_parallel.h", mainFolder + "src/training/pendulum_wrapper.h")
 replace_file_in_zip("./docs/data/gegelati-tutorial-parallel-solution.zip", "src/training/main-training_parallel.cpp", mainFolder + "src/training/main-training.cpp")
+replace_file_in_zip("./docs/data/gegelati-tutorial-parallel-solution.zip", "params_parallel.json", mainFolder + "params.json")
 
 # Make the main-inference.cpp file available for download
 shutil.copy2("./src/inference/main-inference.cpp", "./docs/data/")
