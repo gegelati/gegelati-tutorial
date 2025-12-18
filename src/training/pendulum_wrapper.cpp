@@ -47,7 +47,7 @@ std::vector<std::reference_wrapper<const Data::DataHandler>> PendulumWrapper::ge
 
 void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iterationNumber, uint64_t generationNumber)
 {
-#ifdef SOLUTION_PARALLEL
+#ifdef SOLUTION_STRENGTHENING
 	// In TRAINING mode, randomize the initial state
 	if (mode == Learn::LearningMode::TRAINING) {
 		// Seed the RNG differently for each iteration
@@ -69,7 +69,7 @@ void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iter
 	this->pendulum.setAngle(M_PI);
 	this->pendulum.setVelocity(0.0);
 #endif // SOLUTION
-#endif // SOLUTION_PARALLEL
+#endif // SOLUTION_STRENGTHENING
 #ifdef SOLUTION
 	this->accumulatedReward = 0.0;
 #endif // SOLUTION
