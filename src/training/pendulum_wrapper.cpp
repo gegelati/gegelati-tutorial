@@ -58,8 +58,8 @@ void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iter
 		this->rng.setSeed(iterationNumber);
 	}	
 
-	// Randomize the initial angle between [pi - 0.5, pi + 0.5]
-	double initialAngle = M_PI + this->rng.getDouble(-0.5, 0.5);
+	// Randomize the initial angle between [- pi, pi]
+	double initialAngle = this->rng.getDouble(-M_PI, M_PI);
 	this->pendulum.setAngle(initialAngle);
 	// Randomize the initial velocity between [-1.0, 1.0]
 	double initialVelocity = this->rng.getDouble(-1.0, 1.0);
