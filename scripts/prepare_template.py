@@ -82,16 +82,18 @@ files = [
     ["./src/training/pendulum_wrapper.cpp", [
         ["./src/training/pendulum_wrapper_empty.cpp", ["SOLUTION","SOLUTION_.*"], []],
         ["./src/training/pendulum_wrapper_solution.cpp", ["SOLUTION_.*"], ["SOLUTION"]],
+        ["./src/training/pendulum_wrapper_strengthening.cpp", ["SOLUTION_PARALLEL"], ["SOLUTION(_STRENGTHENING)*"]],
         ["./src/training/pendulum_wrapper_parallel.cpp", [], ["SOLUTION_(PARALLEL|STRENGTHENING)", "SOLUTION"]],
     ]],
     ["./src/training/pendulum_wrapper.h", [
         ["./src/training/pendulum_wrapper_empty.h", ["SOLUTION.*"], []],
         ["./src/training/pendulum_wrapper_solution.h", ["SOLUTION_.*"], ["SOLUTION.*"]],
+        ["./src/training/pendulum_wrapper_strengthening.h", ["SOLUTION_PARALLEL"], ["SOLUTION(_STRENGTHENING)*"]],
         ["./src/training/pendulum_wrapper_parallel.h", [], ["SOLUTION_(PARALLEL|STRENGTHENING)", "SOLUTION"]],
     ]],
     ["./CMakeLists.txt", [
         ["./CMakeLists_empty.txt", ["SOLUTION.*"], []],
-        ["./CMakeLists_solution.txt", [], ["SOLUTION"]],
+        ["./CMakeLists_inference.txt", [], ["SOLUTION_INFERENCE"]],
     ]],
     ["./src/training/main-training.cpp", [
      ["./src/training/main-training_empty.cpp", ["SOLUTION.*"], []],
@@ -99,6 +101,7 @@ files = [
     ]],
     ["./params.json", [
      ["./params_empty.json", ["SOLUTION.*"], []],
+     ["./params_strengthening.json", ["SOLUTION_PARALLEL"], ["SOLUTION_STRENGTHENING"]],
      ["./params_parallel.json", [], ["SOLUTION_(PARALLEL|STRENGTHENING)"]],
     ]],
 ]

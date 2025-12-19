@@ -87,6 +87,13 @@ shutil.copy2("./docs/data/gegelati-tutorial.zip", "./docs/data/gegelati-tutorial
 replace_file_in_zip("./docs/data/gegelati-tutorial-solution.zip", "src/training/pendulum_wrapper_solution.cpp", mainFolder + "src/training/pendulum_wrapper.cpp")
 replace_file_in_zip("./docs/data/gegelati-tutorial-solution.zip", "src/training/pendulum_wrapper_solution.h", mainFolder + "src/training/pendulum_wrapper.h")
 
+# Create the gegelati-tutorial-strengthening-solution archive by copying the solution archive
+mainFolder = "gegelati-tutorial/"
+shutil.copy2("./docs/data/gegelati-tutorial-solution.zip", "./docs/data/gegelati-tutorial-strengthening-solution.zip")
+replace_file_in_zip("./docs/data/gegelati-tutorial-strengthening-solution.zip", "src/training/pendulum_wrapper_strengthening.cpp", mainFolder + "src/training/pendulum_wrapper.cpp")
+replace_file_in_zip("./docs/data/gegelati-tutorial-strengthening-solution.zip", "src/training/pendulum_wrapper_strengthening.h", mainFolder + "src/training/pendulum_wrapper.h")
+replace_file_in_zip("./docs/data/gegelati-tutorial-strengthening-solution.zip", "params_strengthening.json", mainFolder + "params.json")
+
 # Create the gegelati-tutorial-parallel-solution archive by copying the solution archive
 mainFolder = "gegelati-tutorial/"
 shutil.copy2("./docs/data/gegelati-tutorial-solution.zip", "./docs/data/gegelati-tutorial-parallel-solution.zip")

@@ -8,11 +8,11 @@
 	// Boolean used to activate an evaluation of the surviving roots in validation
 	// mode after the training at each generation.
 	// "doValidation" : false, // Default value
-	// #ifdef SOLUTION_PARALLEL
+	// #ifdef SOLUTION_STRENGTHENING
 	"doValidation": true,
-	// #else // SOLUTION_PARALLEL
+	// #else // SOLUTION_STRENGTHENING
 	"doValidation": false,
-	// #endif // SOLUTION_PARALLEL
+	// #endif // SOLUTION_STRENGTHENING
 	// Maximum number of actions performed on the learning environment during the
 	// each evaluation of a root.
 	// "maxNbActionsPerEval" : 1000, // Default value

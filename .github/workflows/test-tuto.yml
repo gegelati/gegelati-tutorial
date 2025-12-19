@@ -26,6 +26,7 @@ jobs:
           path: |
             docs/data/gegelati-tutorial.zip
             docs/data/gegelati-tutorial-solution.zip
+            docs/data/gegelati-tutorial-strengthening-solution.zip
             docs/data/gegelati-tutorial-parallel-solution.zip
 
   test_archives:
@@ -37,6 +38,7 @@ jobs:
         archive:
           - gegelati-tutorial.zip
           - gegelati-tutorial-solution.zip
+          - gegelati-tutorial-strengthening-solution.zip
           - gegelati-tutorial-parallel-solution.zip
         os: [ubuntu-latest] ##, windows-latest, macos-latest]
         compiler: [gcc] ##, clang, msvc]
