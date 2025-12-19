@@ -98,11 +98,11 @@
 	"nbIterationsPerJob": 1,
 	// Number of evaluation of each root per generation.
 	// "nbIterationsPerPolicyEvaluation" : 5, // Default value
-	//#ifdef SOLUTION_PARALLEL
+	//#ifdef SOLUTION_STRENGTHENING
 	"nbIterationsPerPolicyEvaluation": 5,
 	//#else
 	"nbIterationsPerPolicyEvaluation": 1,
-	//#endif // SOLUTION_PARALLEL
+	//#endif // SOLUTION_STRENGTHENING
 	// Number of Constant available in each Program.
 	// "nbProgramConstant" : 0, // Default value
 	"nbProgramConstant": 0,

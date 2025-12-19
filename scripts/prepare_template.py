@@ -19,38 +19,41 @@ def filterSolution(inputFile, outputFile, keepSolution, patterns):
         tempOutput = io.StringIO()
         currentInput.seek(0)
 
-        # Scan lines
-        isSolution = False
-        isTemplate = False
+        # Stack to track active blocks
+        blockStack = []
+        inElseBlock = False  # Flag to track if we are in an `#else` block
         emptyLine = False
+
         for line in currentInput:
             # Check if the line is the #define
             if re.match(rf'.*#define SOLUTION.*\n', line):
                 continue  # skip the line
 
             # Check if the line starts a solution block
-            if re.match(rf'.*#ifdef {pattern}\s*\n', line):
-                isSolution = True
+            matchIfdef = re.match(rf'.*#ifdef ({pattern})\s*\n', line)
+            if matchIfdef:
+                blockStack.append(matchIfdef.group(1))  # Push the matched pattern onto the stack
+                inElseBlock = False  # Reset the `else` flag
                 continue  # skip the line
 
             # Check if the line starts a template block
-            if isSolution and re.match(r'.*#else.*\n', line):
-                isSolution = False
-                isTemplate = True
+            if blockStack and re.match(r'.*#else.*\n', line):
+                inElseBlock = True  # Mark that we are in the `else` section
                 continue  # skip the line
 
             # Check if the line ends a block
-            if (isSolution or isTemplate) and re.match(rf'.*#endif // {pattern}\s*\n', line):
-                isSolution = False
-                isTemplate = False
+            matchEndif = re.match(rf'.*#endif // ({pattern})\s*\n', line)
+            if blockStack and matchEndif and blockStack[-1] == matchEndif.group(1):
+                blockStack.pop()  # Pop the matched block
+                inElseBlock = False  # Reset the `else` flag
                 continue  # skip the line
 
             printLine = False
             if keepSolution:
-                if isSolution or (not isSolution and not isTemplate):
+                if not blockStack or not inElseBlock:
                     printLine = True
             else:
-                if isTemplate or (not isSolution and not isTemplate):
+                if not blockStack or inElseBlock:
                     printLine = True
 
             if printLine:
@@ -77,26 +80,26 @@ def filterSolution(inputFile, outputFile, keepSolution, patterns):
 # Each entry: [inputPath, [(outputPath, patternsToRemove, patternsToKeep), ...]]
 files = [
     ["./src/training/pendulum_wrapper.cpp", [
-        ["./src/training/pendulum_wrapper_empty.cpp", ["SOLUTION","SOLUTION_PARALLEL"], []],
-        ["./src/training/pendulum_wrapper_solution.cpp", ["SOLUTION_PARALLEL"], ["SOLUTION"]],
-        ["./src/training/pendulum_wrapper_parallel.cpp", [], ["SOLUTION_PARALLEL", "SOLUTION"]],
+        ["./src/training/pendulum_wrapper_empty.cpp", ["SOLUTION","SOLUTION_.*"], []],
+        ["./src/training/pendulum_wrapper_solution.cpp", ["SOLUTION_.*"], ["SOLUTION"]],
+        ["./src/training/pendulum_wrapper_parallel.cpp", [], ["SOLUTION_(PARALLEL|STRENGTHENING)", "SOLUTION"]],
     ]],
     ["./src/training/pendulum_wrapper.h", [
         ["./src/training/pendulum_wrapper_empty.h", ["SOLUTION.*"], []],
-        ["./src/training/pendulum_wrapper_solution.h", ["SOLUTION_PARALLEL"], ["SOLUTION.*"]],
-        ["./src/training/pendulum_wrapper_parallel.h", [], ["SOLUTION.*"]],
+        ["./src/training/pendulum_wrapper_solution.h", ["SOLUTION_.*"], ["SOLUTION.*"]],
+        ["./src/training/pendulum_wrapper_parallel.h", [], ["SOLUTION_(PARALLEL|STRENGTHENING)", "SOLUTION"]],
     ]],
     ["./CMakeLists.txt", [
         ["./CMakeLists_empty.txt", ["SOLUTION.*"], []],
-        ["./CMakeLists_solution.txt", [], ["SOLUTION.*"]],
+        ["./CMakeLists_solution.txt", [], ["SOLUTION"]],
     ]],
     ["./src/training/main-training.cpp", [
      ["./src/training/main-training_empty.cpp", ["SOLUTION.*"], []],
-     ["./src/training/main-training_parallel.cpp", [], ["SOLUTION.*"]],
+     ["./src/training/main-training_parallel.cpp", [], ["SOLUTION_PARALLEL"]],
     ]],
     ["./params.json", [
      ["./params_empty.json", ["SOLUTION.*"], []],
-     ["./params_parallel.json", [], ["SOLUTION_PARALLEL"]],
+     ["./params_parallel.json", [], ["SOLUTION_(PARALLEL|STRENGTHENING)"]],
     ]],
 ]
 
