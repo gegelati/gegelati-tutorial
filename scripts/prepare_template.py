@@ -102,7 +102,6 @@ files = [
     ["./params.json", [
      ["./params_empty.json", ["SOLUTION.*"], []],
      ["./params_strengthening.json", ["SOLUTION_PARALLEL"], ["SOLUTION_STRENGTHENING"]],
-     ["./params_parallel.json", [], ["SOLUTION_(PARALLEL|STRENGTHENING)"]],
     ]],
 ]
 

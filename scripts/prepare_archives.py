@@ -96,11 +96,10 @@ replace_file_in_zip("./docs/data/gegelati-tutorial-strengthening-solution.zip", 
 
 # Create the gegelati-tutorial-parallel-solution archive by copying the solution archive
 mainFolder = "gegelati-tutorial/"
-shutil.copy2("./docs/data/gegelati-tutorial-solution.zip", "./docs/data/gegelati-tutorial-parallel-solution.zip")
+shutil.copy2("./docs/data/gegelati-tutorial-strengthening-solution.zip", "./docs/data/gegelati-tutorial-parallel-solution.zip")
 replace_file_in_zip("./docs/data/gegelati-tutorial-parallel-solution.zip", "src/training/pendulum_wrapper_parallel.cpp", mainFolder + "src/training/pendulum_wrapper.cpp")
 replace_file_in_zip("./docs/data/gegelati-tutorial-parallel-solution.zip", "src/training/pendulum_wrapper_parallel.h", mainFolder + "src/training/pendulum_wrapper.h")
 replace_file_in_zip("./docs/data/gegelati-tutorial-parallel-solution.zip", "src/training/main-training_parallel.cpp", mainFolder + "src/training/main-training.cpp")
-replace_file_in_zip("./docs/data/gegelati-tutorial-parallel-solution.zip", "params_parallel.json", mainFolder + "params.json")
 
 # Make the main-inference.cpp file available for download
 shutil.copy2("./src/inference/main-inference.cpp", "./docs/data/")
