@@ -10,7 +10,7 @@
 	// "doValidation" : false, // Default value
 	// #ifdef SOLUTION_PARALLEL
 	"doValidation": true,
-	// #else
+	// #else // SOLUTION_PARALLEL
 	"doValidation": false,
 	// #endif // SOLUTION_PARALLEL
 	// Maximum number of actions performed on the learning environment during the
@@ -100,7 +100,7 @@
 	// "nbIterationsPerPolicyEvaluation" : 5, // Default value
 	//#ifdef SOLUTION_STRENGTHENING
 	"nbIterationsPerPolicyEvaluation": 5,
-	//#else
+	//#else // SOLUTION_STRENGTHENING
 	"nbIterationsPerPolicyEvaluation": 1,
 	//#endif // SOLUTION_STRENGTHENING
 	// Number of Constant available in each Program.

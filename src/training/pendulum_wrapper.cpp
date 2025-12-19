@@ -2,7 +2,7 @@
 
 #ifdef SOLUTION
 const std::vector<double> PendulumWrapper::actions{ -1.0, -0.66, -0.33, 0.0, 0.33, 0.66, 1.0 };
-#else
+#else // SOLUTION
 const std::vector<double> PendulumWrapper::actions{ 0.0 };
 #endif // SOLUTION
 
@@ -12,7 +12,7 @@ PendulumWrapper::PendulumWrapper() : LearningEnvironment(actions.size()), pendul
 	data.at(0).setPointer(&this->pendulum.getAngle());
 	data.at(1).setPointer(&this->pendulum.getVelocity());
 }
-#else
+#else // SOLUTION
 PendulumWrapper::PendulumWrapper() : LearningEnvironment(actions.size())
 {
 }
@@ -40,7 +40,7 @@ std::vector<std::reference_wrapper<const Data::DataHandler>> PendulumWrapper::ge
 	result.push_back(this->data.at(0));
 	result.push_back(this->data.at(1));
 	return result;
-#else
+#else // SOLUTION
 	return std::vector<std::reference_wrapper<const Data::DataHandler>>();
 #endif // SOLUTION
 }
@@ -64,7 +64,7 @@ void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iter
 	// Randomize the initial velocity between [-1.0, 1.0]
 	double initialVelocity = this->rng.getDouble(-1.0, 1.0);
 	this->pendulum.setVelocity(initialVelocity);
-#else
+#else // SOLUTION_STRENGTHENING
 #ifdef SOLUTION
 	this->pendulum.setAngle(M_PI);
 	this->pendulum.setVelocity(0.0);
@@ -102,7 +102,7 @@ double PendulumWrapper::getScore(void) const
 {
 #ifdef SOLUTION
 	return accumulatedReward;
-#else
+#else // SOLUTION
 	return 0.0;
 #endif // SOLUTION
 }

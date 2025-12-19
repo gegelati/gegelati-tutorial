@@ -37,7 +37,7 @@ def filterSolution(inputFile, outputFile, keepSolution, patterns):
                 continue  # skip the line
 
             # Check if the line starts a template block
-            if blockStack and re.match(r'.*#else.*\n', line):
+            if blockStack and re.match(rf'.*#else // ({pattern})\s*\n', line):
                 inElseBlock = True  # Mark that we are in the `else` section
                 continue  # skip the line
 
