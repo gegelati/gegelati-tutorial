@@ -49,13 +49,15 @@ namespace Renderer {
 	 * \param[in] torque the torque currently applied to the pendulum.
 	 * \param[in] frame the frame number to display in the top left corner.
 	 * \param[in] generation the generation number to display in the top left corner.
+	 * \param[in] syncReset Flag to indicate whether the training is synced
+	 *                      with the replay.
 	 * \return An int value is returned to the controller loop depending
 	 * on the action made by the user:
 	 * - [-3, 3]: 6 actions available to apply a torque to the pendulum.
 	 * - INT_MIN: Exit request.
 	 * \param[in] timeDelta time in second between two frames.
 	 */
-	int renderEnv(double state, double torque, uint64_t frame, uint64_t generation, double timeDelta);
+	int renderEnv(double state, double torque, uint64_t frame, uint64_t generation, double timeDelta, bool syncReset);
 
 	/**
 	* \brief Separate control loop for displaying replays in parallel to training.
