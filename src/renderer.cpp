@@ -161,12 +161,12 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 	Renderer::displayText(frameNumber, 0, 22);
 
 	// Print Sync status
-	char syncString[30];
+	char syncString[32];
 	if (syncReset) {
 		sprintf(syncString, "[W] Training waits on display.");
 	}
 	else {
-		sprintf(syncString, "[W] Display resets on training");
+		sprintf(syncString, "[W] Display resets on training.");
 	}
 	Renderer::displayText(syncString, DISPLAY_W - 320, 0);
 
