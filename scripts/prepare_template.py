@@ -31,7 +31,7 @@ def filterSolution(inputFile, outputFile, keepSolution, patterns):
 
             # Check if the line starts a solution block
             matchIfdef = re.match(rf'.*#ifdef ({pattern})\s*\n', line)
-            if matchIfdef:
+            if matchIfdef and not inElseBlock:
                 blockStack.append(matchIfdef.group(1))  # Push the matched pattern onto the stack
                 inElseBlock = False  # Reset the `else` flag
                 continue  # skip the line
