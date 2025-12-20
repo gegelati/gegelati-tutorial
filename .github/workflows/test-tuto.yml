@@ -40,17 +40,17 @@ jobs:
           - gegelati-tutorial-solution.zip
           - gegelati-tutorial-strengthening-solution.zip
           - gegelati-tutorial-parallel-solution.zip
-        os: [ubuntu-latest] ##, windows-latest, macos-latest]
-        compiler: [gcc] ##, clang, msvc]
-        ## exclude:
+        os: [ubuntu-latest, windows-latest] ##, windows-latest, macos-latest]
+        compiler: [gcc, msvc] ##, clang, msvc]
+        exclude:
           # Exclude MSVC on non-Windows
-          ## - os: ubuntu-latest
-          ##   compiler: msvc
+          - os: ubuntu-latest
+            compiler: msvc
           ## - os: macos-latest
-          ##   compiler: msvc
+          ##  compiler: msvc
           # Exclude GCC and Clang on Windows (unless you want to setup MinGW/LLVM)
-          ## - os: windows-latest
-          ##   compiler: gcc
+          - os: windows-latest
+            compiler: gcc
           ## - os: windows-latest
           ##   compiler: clang
 
