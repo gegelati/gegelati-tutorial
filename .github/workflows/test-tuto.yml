@@ -111,13 +111,13 @@ jobs:
 
       - name: Build manual-control target
         run: |
-          cmake --build build --config Release --target manual-control -- -j$(nproc)
+          cmake --build build --config Release --target manual-control --parallel $(nproc)
         shell: bash
 
       - name: Build and run tpg-training target
         if: matrix.archive != 'gegelati-tutorial.zip'
         run: |
           sed -i 's/"nbGenerations": [0-9]*/"nbGenerations": 4/' tutorial/gegelati-tutorial/params.json
-          cmake --build build --config Release --target tpg-training -- -j$(nproc)
+          cmake --build build --config Release --target tpg-training --parallel$(nproc)
           ./build/Release/tpg-training
         shell: bash
