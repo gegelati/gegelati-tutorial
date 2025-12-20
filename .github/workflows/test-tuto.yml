@@ -118,6 +118,6 @@ jobs:
         if: matrix.archive != 'gegelati-tutorial.zip'
         run: |
           sed -i 's/"nbGenerations": [0-9]*/"nbGenerations": 4/' tutorial/gegelati-tutorial/params.json
-          cmake --build build --config Release --target tpg-training --parallel$(nproc)
-          ./build/Release/tpg-training
+          cmake --build build --config Release --target tpg-training --parallel $(nproc)
+          cd build && ./Release/tpg-training # cd needed for windows dll 
         shell: bash
