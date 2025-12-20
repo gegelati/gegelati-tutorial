@@ -166,7 +166,7 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 		sprintf(syncString, "[W] Training waits on display.");
 	}
 	else {
-		sprintf(syncString, "[W] Display resets on training.");
+		sprintf(syncString, "");
 	}
 	Renderer::displayText(syncString, DISPLAY_W - 320, 0);
 
