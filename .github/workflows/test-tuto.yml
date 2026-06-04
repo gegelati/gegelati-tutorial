@@ -1,0 +1,123 @@
+name: Build Archives (CI Only)
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build_archives:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Prepare template files
+        run: |
+          python ./scripts/prepare_template.py
+
+      - name: Prepare archives
+        run: |
+          python ./scripts/prepare_archives.py
+
+      - name: Upload archives as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tutorial-archives
+          path: |
+            docs/data/gegelati-tutorial.zip
+            docs/data/gegelati-tutorial-solution.zip
+            docs/data/gegelati-tutorial-strengthening-solution.zip
+            docs/data/gegelati-tutorial-parallel-solution.zip
+
+  test_archives:
+    needs: build_archives
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        archive:
+          - gegelati-tutorial.zip
+          - gegelati-tutorial-solution.zip
+          - gegelati-tutorial-strengthening-solution.zip
+          - gegelati-tutorial-parallel-solution.zip
+        os: [ubuntu-latest, windows-latest] ##, windows-latest, macos-latest]
+        compiler: [gcc, msvc] ##, clang, msvc]
+        exclude:
+          # Exclude MSVC on non-Windows
+          - os: ubuntu-latest
+            compiler: msvc
+          ## - os: macos-latest
+          ##  compiler: msvc
+          # Exclude GCC and Clang on Windows (unless you want to setup MinGW/LLVM)
+          - os: windows-latest
+            compiler: gcc
+          ## - os: windows-latest
+          ##   compiler: clang
+
+    name: Test ${{ matrix.archive }} on ${{ matrix.os }} with ${{ matrix.compiler }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download archives artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: tutorial-archives
+          path: archives
+
+      - name: Unzip archive
+        run: |
+          unzip -q archives/${{ matrix.archive }} -d tutorial
+        shell: bash
+
+      - name: Set up compiler
+        if: matrix.compiler == 'gcc'
+        uses: egor-tensin/setup-gcc@v1
+        with:
+          version: latest
+        # GCC is default on Linux, but this ensures it's available
+
+      - name: Set up Clang
+        if: matrix.compiler == 'clang'
+        uses: egor-tensin/setup-clang@v1
+        with:
+          version: latest
+
+      - name: Set up MSVC
+        if: matrix.compiler == 'msvc' && runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Install Libraries (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
+
+      - name: Build Gegelati (Linux/MacOS)
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
+        run: |
+          git clone -b master https://github.com/gegelati/gegelati.git lib/gegelati
+          cd lib/gegelati/bin
+          cmake .. -DBUILD_TESTING=OFF -DSKIP_DOXYGEN_BUILD=ON -DCMAKE_BUILD_TYPE=Release
+          sudo cmake --build . --target install --parallel $(nproc)
+        shell: bash
+
+      - name: Configure CMake project
+        run: |
+          mkdir -p tutorial/build
+          cmake -S tutorial/gegelati-tutorial -B build -DTESTING=ON
+        env:
+          CC: ${{ matrix.compiler == 'gcc' && 'gcc' || matrix.compiler == 'clang' && 'clang' || '' }}
+          CXX: ${{ matrix.compiler == 'gcc' && 'g++' || matrix.compiler == 'clang' && 'clang++' || '' }}
+        shell: bash
+
+      - name: Build manual-control target
+        run: |
+          cmake --build build --config Release --target manual-control --parallel $(nproc)
+        shell: bash
+
+      - name: Build and run tpg-training target
+        if: matrix.archive != 'gegelati-tutorial.zip'
+        run: |
+          sed -i 's/"nbGenerations": [0-9]*/"nbGenerations": 4/' tutorial/gegelati-tutorial/params.json
+          cmake --build build --config Release --target tpg-training --parallel $(nproc)
+          cd build && ./Release/tpg-training # cd needed for windows dll 
+        shell: bash

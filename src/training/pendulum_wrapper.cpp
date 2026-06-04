@@ -2,7 +2,7 @@
 
 #ifdef SOLUTION
 const std::vector<double> PendulumWrapper::actions{ -1.0, -0.66, -0.33, 0.0, 0.33, 0.66, 1.0 };
-#else
+#else // SOLUTION
 const std::vector<double> PendulumWrapper::actions{ 0.0 };
 #endif // SOLUTION
 
@@ -12,11 +12,26 @@ PendulumWrapper::PendulumWrapper() : LearningEnvironment(actions.size()), pendul
 	data.at(0).setPointer(&this->pendulum.getAngle());
 	data.at(1).setPointer(&this->pendulum.getVelocity());
 }
-#else
+#else // SOLUTION
 PendulumWrapper::PendulumWrapper() : LearningEnvironment(actions.size())
 {
 }
 #endif // SOLUTION
+
+#ifdef SOLUTION_PARALLEL
+PendulumWrapper::PendulumWrapper(const PendulumWrapper& other) : LearningEnvironment(other), pendulum(), data(other.data)
+{
+	// Set pointers of the copy to its own pendulum.
+	data.at(0).setPointer(&this->pendulum.getAngle());
+	data.at(1).setPointer(&this->pendulum.getVelocity());
+}
+#endif // SOLUTION_PARALLEL
+
+#ifdef SOLUTION_PARALLEL
+Learn::LearningEnvironment* PendulumWrapper::clone(void) const{
+	return new PendulumWrapper(*this);
+}
+#endif // SOLUTION_PARALLEL
 
 std::vector<std::reference_wrapper<const Data::DataHandler>> PendulumWrapper::getDataSources()
 {
@@ -25,17 +40,36 @@ std::vector<std::reference_wrapper<const Data::DataHandler>> PendulumWrapper::ge
 	result.push_back(this->data.at(0));
 	result.push_back(this->data.at(1));
 	return result;
-#else
+#else // SOLUTION
 	return std::vector<std::reference_wrapper<const Data::DataHandler>>();
 #endif // SOLUTION
 }
 
 void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iterationNumber, uint64_t generationNumber)
 {
+#ifdef SOLUTION_STRENGTHENING
+	// In TRAINING mode, randomize the initial state
+	if (mode == Learn::LearningMode::TRAINING) {
+		// Seed the RNG differently for each iteration
+		this->rng.setSeed(seed + iterationNumber);
+	}
+	else {
+		// In VALIDATION and TESTING modes, use fixed seeds for reproducibility
+		this->rng.setSeed(iterationNumber);
+	}	
+
+	// Randomize the initial angle between [- pi, pi]
+	double initialAngle = this->rng.getDouble(-M_PI, M_PI);
+	this->pendulum.setAngle(initialAngle);
+	// Randomize the initial velocity between [-1.0, 1.0]
+	double initialVelocity = this->rng.getDouble(-1.0, 1.0);
+	this->pendulum.setVelocity(initialVelocity);
+#else // SOLUTION_STRENGTHENING
 #ifdef SOLUTION
 	this->pendulum.setAngle(M_PI);
 	this->pendulum.setVelocity(0.0);
 #endif // SOLUTION
+#endif // SOLUTION_STRENGTHENING
 #ifdef SOLUTION
 	this->accumulatedReward = 0.0;
 #endif // SOLUTION
@@ -68,7 +102,7 @@ double PendulumWrapper::getScore(void) const
 {
 #ifdef SOLUTION
 	return accumulatedReward;
-#else
+#else // SOLUTION
 	return 0.0;
 #endif // SOLUTION
 }
@@ -77,3 +111,10 @@ bool PendulumWrapper::isTerminal(void) const
 {
 	return false;
 }
+
+#ifdef SOLUTION_PARALLEL
+bool PendulumWrapper::isCopyable(void) const
+{
+	return true;
+}
+#endif // SOLUTION_PARALLEL

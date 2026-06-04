@@ -38,21 +38,40 @@ def zipFilesInDir(dirName, zipObj, regex, parentName="", withSubdirectories = Tr
                     # Add file to zip 
                     zipObj.write(filePath, parentName + filePath)
 
+def replace_file_in_zip(zip_path, file_to_add, arcname):
+    """
+    Replace a file in a zip archive by first removing the existing file (if present),
+    then adding the new file.
+    """
+    import tempfile
 
+    # Create a temporary zip file
+    tmpfd, tmpname = tempfile.mkstemp(suffix='.zip')
+    os.close(tmpfd)
+    with ZipFile(zip_path, 'r') as zin, ZipFile(tmpname, 'w') as zout:
+        for item in zin.infolist():
+            if item.filename != arcname:
+                zout.writestr(item, zin.read(item.filename))
+        # Now add the new file
+        zout.write(file_to_add, arcname)
+    # Replace the original zip with the modified one
+    shutil.move(tmpname, zip_path)
 
 # Create the tutorialTemplate archive
 mainFolder = "gegelati-tutorial/"
 tutorialTemplateArchive = ZipFile("./docs/data/gegelati-tutorial.zip", "w")
 zipFileAdd(tutorialTemplateArchive,"bin/", mainFolder)
-zipFilesInDir("./",tutorialTemplateArchive, r'^(?!.*(CMakeLists))[^\.]+.*', mainFolder, False) # exclude .gitgnore and CMakeLists files
+zipFilesInDir("./",tutorialTemplateArchive, r'^(?!.*(CMakeLists|params))[^\.]+.*', mainFolder, False) # exclude .gitgnore and CMakeLists files
 zipFilesInDir("./dat/",tutorialTemplateArchive, r'.*', mainFolder)
 zipFilesInDir("./lib/",tutorialTemplateArchive, r'.*', mainFolder)
 zipFilesInDir("src/",tutorialTemplateArchive, r'.*', mainFolder, False)
 zipFilesInDir("src/manual/",tutorialTemplateArchive, r'.*', mainFolder)
-zipFilesInDir("src/training",tutorialTemplateArchive, r'^(?!.*(pendulum_wrapper))', mainFolder, False) # all files except pendulum_wrapper
+zipFilesInDir("src/training",tutorialTemplateArchive, r'^(?!.*(pendulum_wrapper|main-training))', mainFolder, False) # all files except pendulum_wrapper or main-training
 tutorialTemplateArchive.write("src/training/pendulum_wrapper_empty.cpp", mainFolder + "src/training/pendulum_wrapper.cpp" ) # overwrite empty_file
 tutorialTemplateArchive.write("src/training/pendulum_wrapper_empty.h", mainFolder + "src/training/pendulum_wrapper.h") # overwrite empty_file
+tutorialTemplateArchive.write("src/training/main-training_empty.cpp", mainFolder + "src/training/main-training.cpp") # overwrite empty_file
 tutorialTemplateArchive.write("CMakeLists_empty.txt", mainFolder + "CMakeLists.txt") # overwrite empty_file
+tutorialTemplateArchive.write("params_empty.json", mainFolder + "params.json") # overwrite empty_file
 tutorialTemplateArchive.close()
 
 # Create the pendulum_wrapper_solution archive
@@ -61,20 +80,27 @@ pendulumWrapperSolutionArchive.write("src/training/pendulum_wrapper_solution.cpp
 pendulumWrapperSolutionArchive.write("src/training/pendulum_wrapper_solution.h", "pendulum_wrapper.h") # overwrite empty_file
 pendulumWrapperSolutionArchive.close()
 
-# Create the gegelati-tutorial-solution archive
-mainFolder = "gegelati-tutorial/"
-tutorialSolutionArchive = ZipFile("./docs/data/gegelati-tutorial-solution.zip", "w")
-zipFileAdd(tutorialSolutionArchive,"bin/", mainFolder)
-zipFilesInDir("./",tutorialSolutionArchive, r'^(?!.*(CMakeLists))[^\.]+.*', mainFolder, False) # exclude .gitgnore and CMakeLists files
-zipFilesInDir("./dat/",tutorialSolutionArchive, r'.*', mainFolder)
-zipFilesInDir("./lib/",tutorialSolutionArchive, r'.*', mainFolder)
-zipFilesInDir("src/",tutorialSolutionArchive, r'.*', mainFolder, False)
-zipFilesInDir("src/manual/",tutorialSolutionArchive, r'.*', mainFolder)
-zipFilesInDir("src/training",tutorialSolutionArchive, r'^(?!.*(pendulum_wrapper))', mainFolder, False) # all files except pendulum_wrapper
-tutorialSolutionArchive.write("src/training/pendulum_wrapper_solution.cpp", mainFolder + "src/training/pendulum_wrapper.cpp" ) # overwrite empty_file
-tutorialSolutionArchive.write("src/training/pendulum_wrapper_solution.h", mainFolder + "src/training/pendulum_wrapper.h") # overwrite empty_file
-tutorialSolutionArchive.write("CMakeLists_empty.txt", mainFolder + "CMakeLists.txt") # overwrite empty_file
-tutorialSolutionArchive.close()
 
-# Make the main-inference.cpp file available
+# Create the gegelati-tutorial-solution archive by copying the template and patching needed files
+mainFolder = "gegelati-tutorial/"
+shutil.copy2("./docs/data/gegelati-tutorial.zip", "./docs/data/gegelati-tutorial-solution.zip")
+replace_file_in_zip("./docs/data/gegelati-tutorial-solution.zip", "src/training/pendulum_wrapper_solution.cpp", mainFolder + "src/training/pendulum_wrapper.cpp")
+replace_file_in_zip("./docs/data/gegelati-tutorial-solution.zip", "src/training/pendulum_wrapper_solution.h", mainFolder + "src/training/pendulum_wrapper.h")
+
+# Create the gegelati-tutorial-strengthening-solution archive by copying the solution archive
+mainFolder = "gegelati-tutorial/"
+shutil.copy2("./docs/data/gegelati-tutorial-solution.zip", "./docs/data/gegelati-tutorial-strengthening-solution.zip")
+replace_file_in_zip("./docs/data/gegelati-tutorial-strengthening-solution.zip", "src/training/pendulum_wrapper_strengthening.cpp", mainFolder + "src/training/pendulum_wrapper.cpp")
+replace_file_in_zip("./docs/data/gegelati-tutorial-strengthening-solution.zip", "src/training/pendulum_wrapper_strengthening.h", mainFolder + "src/training/pendulum_wrapper.h")
+replace_file_in_zip("./docs/data/gegelati-tutorial-strengthening-solution.zip", "params_strengthening.json", mainFolder + "params.json")
+
+# Create the gegelati-tutorial-parallel-solution archive by copying the solution archive
+mainFolder = "gegelati-tutorial/"
+shutil.copy2("./docs/data/gegelati-tutorial-strengthening-solution.zip", "./docs/data/gegelati-tutorial-parallel-solution.zip")
+replace_file_in_zip("./docs/data/gegelati-tutorial-parallel-solution.zip", "src/training/pendulum_wrapper_parallel.cpp", mainFolder + "src/training/pendulum_wrapper.cpp")
+replace_file_in_zip("./docs/data/gegelati-tutorial-parallel-solution.zip", "src/training/pendulum_wrapper_parallel.h", mainFolder + "src/training/pendulum_wrapper.h")
+replace_file_in_zip("./docs/data/gegelati-tutorial-parallel-solution.zip", "src/training/main-training_parallel.cpp", mainFolder + "src/training/main-training.cpp")
+
+# Make the main-inference.cpp file available for download
 shutil.copy2("./src/inference/main-inference.cpp", "./docs/data/")
+

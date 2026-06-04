@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
 	while(!exit) {
 		frame++;		
 
-		int action = Renderer::renderEnv(p.getAngle(), torque, frame, 0, p.TIME_DELTA);
+		int action = Renderer::renderEnv(p.getAngle(), torque, frame, 0, p.TIME_DELTA, false);
 
 		exit = (action == INT_MIN);
 		if (exit) {

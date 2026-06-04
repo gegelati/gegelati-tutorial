@@ -16,7 +16,9 @@
 
 #include "pendulum_wrapper.h"
 
+#ifndef DEACTIVATE_DISPLAY
 #define DEACTIVATE_DISPLAY 0
+#endif
 
 
 /**
@@ -48,7 +50,11 @@ void train_main(std::atomic<bool>& exitProgram, std::atomic<bool>& doDisplay, st
 	#endif
 
 	// Instantiate and initialize the Learning Agent (LA)
+	#ifdef SOLUTION_PARALLEL
+	Learn::ParallelLearningAgent la(pendulumLE, instructionSet, params);
+	#else // SOLUTION_PARALLEL
 	Learn::LearningAgent la(pendulumLE, instructionSet, params);
+	#endif // SOLUTION_PARALLEL
 	la.init();
 
 	// Basic logger for the training process
@@ -87,14 +93,13 @@ int main(int argc, char** argv) {
 		#if ( DEACTIVATE_DISPLAY == 0 )
 			// Start training in secondary thread
 			std::thread threadTraining(train_main, std::ref(exitProgram), std::ref(doDisplay), std::ref(generation), std::ref(time_delta), std::ref(replay));
+			// Replay code
+			Renderer::replayThread(exitProgram, doDisplay, generation, time_delta, replay);
 		#else 
 			std::cout << "No display version, send interrupt signal to process to exit." << std::endl;
 			// Start training in main thread
 			train_main(exitProgram, doDisplay, generation, time_delta, replay);
 		#endif
-
-		// Replay code
-		Renderer::replayThread(exitProgram, doDisplay, generation, time_delta, replay);
 
 		#if ( DEACTIVATE_DISPLAY == 0 )
 			// Exit the display thread
