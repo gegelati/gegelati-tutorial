@@ -55,9 +55,9 @@ jobs:
             compiler: msvc
           ## - os: macos-latest
           ##  compiler: msvc
-          # Exclude GCC and Clang on Windows (unless you want to setup MinGW/LLVM)
+          # Exclude clang on Windows (for now)
           - os: windows-latest
-            compiler: gcc
+            compiler: clang
           ## - os: windows-latest
           ##   compiler: clang
 
@@ -77,8 +77,8 @@ jobs:
         shell: bash
 
       - name: Set up compiler
-        if: matrix.compiler == 'gcc'
-        uses: egor-tensin/setup-gcc@v1
+        if: matrix.compiler == 'gcc' && matrix.os == 'ubuntu-latest'
+        uses: egor-tensin/setup-gcc@v2
         with:
           version: latest
         # GCC is default on Linux, but this ensures it's available
@@ -92,6 +92,10 @@ jobs:
       - name: Set up MSVC
         if: matrix.compiler == 'msvc' && runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Set up mingw
+        if: matrix.compiler == 'gcc' && matrix.os == 'windows-latest'
+        uses: egor-tensin/setup-mingw@v3
 
       - name: Install Libraries (Linux)
         if: matrix.os == 'ubuntu-latest'
@@ -109,9 +113,12 @@ jobs:
 
       - name: Download Gegelati neutral build (Windows)
         if: matrix.os == 'windows-latest' && matrix.gegelati_version == 'develop'
+        env:
+          SELECTED_COMPILER: ${{ matrix.compiler == 'msvc' && matrix.compiler || matrix.compiler == 'gcc' && 'mingw' || matrix.compiler }}
         run : |
           cd tutorial/gegelati-tutorial/lib
-          curl --output gegelatilib.zip https://gegelati.github.io/neutral-builds/gegelatilib-msvc-latest-develop.zip
+          echo https://gegelati.github.io/neutral-builds/gegelatilib-${{env.SELECTED_COMPILER}}-latest-develop.zip
+          curl --output gegelatilib.zip https://gegelati.github.io/neutral-builds/gegelatilib-${{env.SELECTED_COMPILER}}-latest-develop.zip
           unzip gegelatilib.zip
 
       - name: Configure CMake project
