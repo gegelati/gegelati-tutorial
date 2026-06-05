@@ -42,7 +42,7 @@ jobs:
           - gegelati-tutorial-parallel-solution.zip
         os: [ubuntu-latest, windows-latest] ##, windows-latest, macos-latest]
         compiler: [gcc, msvc] ##, clang, msvc]
-        gegelati_version: [release, develop]
+        gegelati_version: [master, develop]
         # Use trick to deactivate develop build on main branch only.
         isMain:
           - ${{ contains(github.ref, 'main') }}
@@ -101,11 +101,18 @@ jobs:
       - name: Build Gegelati (Linux/MacOS)
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
         run: |
-          git clone -b master https://github.com/gegelati/gegelati.git lib/gegelati
+          git clone -b ${{ matrix.gegelati_version }} https://github.com/gegelati/gegelati.git lib/gegelati
           cd lib/gegelati/bin
           cmake .. -DBUILD_TESTING=OFF -DSKIP_DOXYGEN_BUILD=ON -DCMAKE_BUILD_TYPE=Release
           sudo cmake --build . --target install --parallel $(nproc)
         shell: bash
+
+      - name: Download Gegelati neutral build (Windows)
+        if: matrix.os == 'windows-latest' && matrix.gegelati_version == 'develop'
+        run : |
+          cd tutorial/gegelati-tutorial/lib
+          curl --output gegelatilib.zip https://gegelati.github.io/neutral-builds/gegelatilib-msvc-latest-develop.zip
+          unzip gegelatilib.zip
 
       - name: Configure CMake project
         run: |
