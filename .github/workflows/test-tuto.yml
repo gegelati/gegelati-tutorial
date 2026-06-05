@@ -42,7 +42,14 @@ jobs:
           - gegelati-tutorial-parallel-solution.zip
         os: [ubuntu-latest, windows-latest] ##, windows-latest, macos-latest]
         compiler: [gcc, msvc] ##, clang, msvc]
+        gegelati_version: [release, develop]
+        # Use trick to deactivate develop build on main branch only.
+        isMain:
+          - ${{ contains(github.ref, 'main') }}
         exclude:
+          # Exclude develop build on main branch
+          - isMain: true
+            gegelati_version: develop
           # Exclude MSVC on non-Windows
           - os: ubuntu-latest
             compiler: msvc
@@ -54,7 +61,7 @@ jobs:
           ## - os: windows-latest
           ##   compiler: clang
 
-    name: Test ${{ matrix.archive }} on ${{ matrix.os }} with ${{ matrix.compiler }}
+    name: Test ${{ matrix.archive }} on ${{ matrix.os }} with ${{ matrix.compiler }} and Gegelati ${{ matrix.gegelati_version }}
     steps:
       - uses: actions/checkout@v3
 
