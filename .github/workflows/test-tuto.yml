@@ -62,6 +62,8 @@ jobs:
           ##   compiler: clang
 
     name: Test ${{ matrix.archive }} on ${{ matrix.os }} with ${{ matrix.compiler }} and Gegelati ${{ matrix.gegelati_version }}
+    env:
+      CMAKE_GENERATOR: ${{ matrix.compiler == 'msvc' && 'Visual Studio 17 2022' || matrix.compiler == 'gcc' && matrix.os == 'windows-latest' && 'MinGW Makefiles' || 'Unix Makefiles'}}
     steps:
       - uses: actions/checkout@v3
 
@@ -117,14 +119,13 @@ jobs:
           SELECTED_COMPILER: ${{ matrix.compiler == 'msvc' && matrix.compiler || matrix.compiler == 'gcc' && 'mingw' || matrix.compiler }}
         run : |
           cd tutorial/gegelati-tutorial/lib
-          echo https://gegelati.github.io/neutral-builds/gegelatilib-${{env.SELECTED_COMPILER}}-latest-develop.zip
           curl --output gegelatilib.zip https://gegelati.github.io/neutral-builds/gegelatilib-${{env.SELECTED_COMPILER}}-latest-develop.zip
           unzip gegelatilib.zip
 
       - name: Configure CMake project
         run: |
           mkdir -p tutorial/build
-          cmake -S tutorial/gegelati-tutorial -B build -DTESTING=ON
+          cmake -G "${{ env.CMAKE_GENERATOR }}" -S tutorial/gegelati-tutorial -B build -DTESTING=ON
         env:
           CC: ${{ matrix.compiler == 'gcc' && 'gcc' || matrix.compiler == 'clang' && 'clang' || '' }}
           CXX: ${{ matrix.compiler == 'gcc' && 'g++' || matrix.compiler == 'clang' && 'clang++' || '' }}
