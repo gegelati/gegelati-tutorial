@@ -145,5 +145,5 @@ jobs:
             export PATH="/c/ProgramData/mingw64/mingw64/bin:$PATH"
           fi
           cmake --build build --config Release --target tpg-training --parallel $(nproc)
-          cd build && ./Release/tpg-training # cd needed for windows dll 
+          cd build && ./Release/tpg-training | tee -a $GITHUB_STEP_SUMMARY  # cd needed for windows dll 
         shell: bash
