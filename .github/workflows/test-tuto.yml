@@ -140,6 +140,10 @@ jobs:
         if: matrix.archive != 'gegelati-tutorial.zip'
         run: |
           sed -i 's/"nbGenerations": [0-9]*/"nbGenerations": 4/' tutorial/gegelati-tutorial/params.json
+          if [[ "${{ matrix.compiler }}" = "gcc" && "${{ matrix.os }}" = "windows-latest" ]]; then
+            # Put compiler's mingw64 bin in PATH for dlls, otherwise git bash's own mingw64 is used and dlls are not compatible
+            export PATH="/c/ProgramData/mingw64/mingw64/bin:$PATH"
+          fi
           cmake --build build --config Release --target tpg-training --parallel $(nproc)
           cd build && ./Release/tpg-training # cd needed for windows dll 
         shell: bash
