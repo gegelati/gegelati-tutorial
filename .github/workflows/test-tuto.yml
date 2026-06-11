@@ -40,7 +40,7 @@ jobs:
           - gegelati-tutorial-solution.zip
           - gegelati-tutorial-strengthening-solution.zip
           - gegelati-tutorial-parallel-solution.zip
-        os: [ubuntu-latest, windows-latest] ##, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
         compiler: [gcc, msvc, clang]
         gegelati_version: [master, develop]
         # Use trick to deactivate develop build on main branch only.
@@ -53,8 +53,11 @@ jobs:
           # Exclude MSVC on non-Windows
           - os: ubuntu-latest
             compiler: msvc
-          ## - os: macos-latest
-          ##  compiler: msvc
+          - os: macos-latest
+            compiler: msvc
+          # Exclude gcc on MacOS (for now)
+          - os: macos-latest
+            compiler: gcc
           # Exclude clang on Windows (for now)
           - os: windows-latest
             compiler: clang
@@ -83,8 +86,8 @@ jobs:
           version: latest
         # GCC is default on Linux, but this ensures it's available
 
-      - name: Set up Clang
-        if: matrix.compiler == 'clang'
+      - name: Set up Clang on Linux # Already installed on MacOS
+        if: matrix.compiler == 'clang' && matrix.os != 'macos-latest'
         uses: egor-tensin/setup-clang@v1
         with:
           version: latest
@@ -101,6 +104,11 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
+
+      - name: Install Libraries (MacOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install sdl2 sdl2_image sdl2_ttf
 
       - name: Build Gegelati (Linux/MacOS)
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
@@ -137,7 +145,7 @@ jobs:
       - name: Build and run tpg-training target
         if: matrix.archive != 'gegelati-tutorial.zip'
         run: |
-          sed -i 's/"nbGenerations": [0-9]*/"nbGenerations": 4/' tutorial/gegelati-tutorial/params.json
+          sed -i.bak 's/"nbGenerations": [0-9]*/"nbGenerations": 4/' tutorial/gegelati-tutorial/params.json
           if [[ "${{ matrix.compiler }}" = "gcc" && "${{ matrix.os }}" = "windows-latest" ]]; then
             # Put compiler's mingw64 bin in PATH for dlls, otherwise git bash's own mingw64 is used and dlls are not compatible
             export PATH="/c/ProgramData/mingw64/mingw64/bin:$PATH"
