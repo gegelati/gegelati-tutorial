@@ -41,7 +41,7 @@ jobs:
           - gegelati-tutorial-strengthening-solution.zip
           - gegelati-tutorial-parallel-solution.zip
         os: [ubuntu-latest, windows-latest] ##, windows-latest, macos-latest]
-        compiler: [gcc, msvc] ##, clang, msvc]
+        compiler: [gcc, msvc, clang]
         gegelati_version: [master, develop]
         # Use trick to deactivate develop build on main branch only.
         isMain:
@@ -58,8 +58,6 @@ jobs:
           # Exclude clang on Windows (for now)
           - os: windows-latest
             compiler: clang
-          ## - os: windows-latest
-          ##   compiler: clang
 
     name: Test ${{ matrix.archive }} on ${{ matrix.os }} with ${{ matrix.compiler }} and Gegelati ${{ matrix.gegelati_version }}
     env:
