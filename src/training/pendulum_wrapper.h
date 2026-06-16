@@ -41,8 +41,29 @@ public:
 	double accumulatedReward;
 #endif // SOLUTION
 
+#ifdef SOLUTION_STRENGTHENING
+	/// Random Number Generator for the environment
+	Mutator::RNG rng;
+#endif // SOLUTION_STRENGTHENING
+
 	/// Default constructor for the PendulumWrapper
 	PendulumWrapper();
+
+#ifdef SOLUTION_PARALLEL
+	/// Copy constructor for the PendulumWrapper
+	PendulumWrapper(const PendulumWrapper& other);
+#endif // SOLUTION_PARALLEL
+
+#ifdef SOLUTION_PARALLEL
+	/**
+     * \brief Get a copy of the LearningEnvironment.
+     *
+     * This method should return a deep copy of the LearningEnvironment.
+     *
+     * \return a copy of the LearningEnvironment.
+     */
+	virtual Learn::LearningEnvironment* clone(void) const override;
+#endif // SOLUTION_PARALLEL
 
 	/**
 	 * \brief Get the data sources for this LearningEnvironment.
@@ -127,6 +148,17 @@ public:
 	 * \return a boolean indicating termination.
 	 */
 	virtual bool isTerminal(void) const override;
+
+#ifdef SOLUTION_PARALLEL
+	/**
+	 * \brief Can the LearningEnvironment be copy constructed to evaluate
+	 * several LearningAgent in parallel.
+	 *
+	 * \return true if the LearningEnvironment can be copied and run in
+	 * parallel.
+	 */
+	virtual bool isCopyable() const override;
+#endif // SOLUTION_PARALLEL
 };
 
 #endif // !PENDULUM_WRAPPER_H

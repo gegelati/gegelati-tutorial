@@ -1,4 +1,3 @@
-
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -123,7 +122,7 @@ void Renderer::displayText(const char* text, int posX, int posY) {
 
 }
 
-int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t generation, double timeDelta) {
+int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t generation, double timeDelta, bool syncReset) {
 	// Select the color for drawing. It is set to red here.
 	SDL_SetRenderDrawColor(display.renderer, 255, 255, 255, 255);
 	// Clear the entire screen to our selected color.
@@ -161,6 +160,16 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 	sprintf(frameNumber, "frame: %4" PRId64, frame);
 	Renderer::displayText(frameNumber, 0, 22);
 
+	// Print Sync status
+	char syncString[32];
+	if (syncReset) {
+		sprintf(syncString, "[W] Training waits on display.");
+	}
+	else {
+		sprintf(syncString, "");
+	}
+	Renderer::displayText(syncString, DISPLAY_W - 320, 0);
+
 	// Proceed to the actual display
 	SDL_RenderPresent(display.renderer);
 
@@ -176,6 +185,8 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 	// This is needed because repeated action are not grabbed at every frame 
 	// even when the key remains pressed.
 	static int action = 0;
+	// Flag to ensure 'w' is only sent once per physical press
+	static bool w_consumed = false;
 
 	SDL_Event event;
 	// Grab all next events off the queue.
@@ -205,12 +216,24 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 			case SDLK_l:
 				action = 3;
 				break;
+			case SDLK_w:
+				// only on initial keydown (no OS repeat)
+				if (event.key.repeat == 0) {
+					action = 4;
+					// mark as not yet consumed for this press
+					w_consumed = false;
+				}
+				break;
 			}
 			break;
 		case SDL_QUIT:
 			action = INT_MIN;
 			break;
 		case SDL_KEYUP:
+			// Reset per-key consumption state when released
+			if (event.key.keysym.sym == SDLK_w) {
+				w_consumed = false;
+			}
 			action = 0;
 			break;
 		default:
@@ -222,11 +245,31 @@ int Renderer::renderEnv(double state, double torque, uint64_t frame, uint64_t ge
 		}
 	}
 
-	return action;
+	// Ensure 'w' action is only returned once per physical press.
+	int ret = action;
+	if (ret == 4) {
+		if (!w_consumed) {
+			// first time we return 4 for this press: mark consumed and clear persistent action
+			w_consumed = true;
+			action = 0;
+		}
+		else {
+			// already consumed: don't repeat
+			ret = 0;
+		}
+	}
+
+	return ret;
 }
 
 void Renderer::replayThread(std::atomic<bool>& exit, std::atomic<bool>& doDisplay, std::atomic<uint64_t>& generation, double& delta, std::deque<std::tuple<uint64_t, double, double>>& replay)
 {
+	std::cout << "Pendulum training." << std::endl;
+	std::cout << "By default, the replay will be reset when a new generation is over." << std::endl <<
+		"\t [W]: Toggle stalling the TPG training until the replay of previous generation is over." << std::endl <<
+		"\t [Q]: Exit the simulator." << std::endl;
+	std::cout << std::endl << "Press [Enter] to start the training.";
+
 	// Init Display
 	renderInit();
 
@@ -235,12 +278,13 @@ void Renderer::replayThread(std::atomic<bool>& exit, std::atomic<bool>& doDispla
 	double angleDisplay = M_PI;
 	double torqueDisplay = 0.0;
 	uint64_t frame = 0;
+	bool waitForReplayEnd = false;
 	std::deque<std::tuple<uint64_t, double, double>> localReplay;
 
 	while (!exit) {
 
 		// Was a replay requested?
-		if (doDisplay) {
+		if (doDisplay && (!waitForReplayEnd || localReplay.empty())) {
 			// copy the replay 
 			localReplay = replay;
 			doDisplay = false;
@@ -253,11 +297,14 @@ void Renderer::replayThread(std::atomic<bool>& exit, std::atomic<bool>& doDispla
 			localReplay.pop_front();
 		}
 
-		int event = Renderer::renderEnv(angleDisplay, torqueDisplay, frame, generation, delta);
+		int event = Renderer::renderEnv(angleDisplay, torqueDisplay, frame, generation, delta, waitForReplayEnd);
 		switch (event) {
 		case INT_MIN:
 			exit = true;
 			doDisplay = false;
+			break;
+		case 4:
+			waitForReplayEnd = !waitForReplayEnd;
 			break;
 		case 0:
 		default:
