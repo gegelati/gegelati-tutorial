@@ -11,7 +11,8 @@ The objective of this tutorial is two-fold:
 
 The starting point of this tutorial is the C++ project obtained at the end of the _[GEGELATI introductory tutorial](/gegelati-tutorial)_. While completing the introductory tutorial is strongly advised, a copy of the project resulting from this tutorial can be downloaded at the following link: [pendulum_wrapper_solution.zip](/gegelati-tutorial/data/gegelati-tutorial-solution.zip).
 
-## Multi-episode evaluation setup
+## 0. Multi-episode evaluation setup
+
 ### Why evaluate over multiple episodes?
 An episode refers to a complete sequence of interactions between a reinforcement learning agent and its environment, starting from an initial state and ending when a terminal condition is met. For example, in the initial tutorial, an episode consists of the agent attempting to balance the pendulum for a fixed duration of 1500 time steps, as defined by the `maxNbActionsPerEval` parameter in `params.json`.
 
@@ -19,7 +20,8 @@ In reinforcement learning, evaluating an agent's performance over multiple episo
 
 Implementing multi-episode evaluation in <span style="font-variant: small-caps;">Gegelati</span> involves modifying the `PendulumWrapper` class to support multiple episodes during the evaluation phase. To vary the starting conditions of each episode, the pendulum's angle and angular velocity will be randomly initialized at the beginning of each episode.
 
-## 0. Modify PendulumWrapper to support multi-episode evaluation
+## 1. Modify PendulumWrapper to support multi-episode evaluation
+
 To implement multi-episode evaluation, we will first modify the `PendulumWrapper` class to support a stochastic reset of the pendulum's state at the beginning of each episode.
 
 To support random initialization, we will use a pseudo-random number generator to generate random values for the pendulum's angle and angular velocity within specified ranges.

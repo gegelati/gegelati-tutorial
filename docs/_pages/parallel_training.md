@@ -13,7 +13,7 @@ The starting point of this tutorial is the C++ project obtained at the end of th
 
 To fully benefit from the parallelization, a the multi-episode evaluation of the agents, covered in the [linked tutorial](/gegelati-tutorial/tutos/strengthening-agents), can be implemented before starting this tutorial. The result from the multi-episode evaluation tutorial can be downloaded at the following link: [gegelati-tutorial-strengthening-solution.zip](/gegelati-tutorial/data/gegelati-tutorial-strengthening-solution.zip).
 
-### Why make the environment copyable?
+## 0. Why make the environment copyable?
 
 The learning process of TPGs involves two main time-consuming steps per generation:
 - Evaluation of the fitness of each individual TPG root within the `PendulumWrapper` learning environment. This step takes time `T_eval` seconds at each generation in the printed log.
@@ -25,7 +25,7 @@ To better take not of the benefits of parallel training, keep a copy of the logs
 
 An important feature of <span style="font-variant: small-caps;">Gegelati</span> is that the parallelization of training is fully deterministic, which means that running the same training with the same random seed will always produce the same results, regardless of the number of threads used. This is achieved by ensuring that each worker thread operates on its own independent copy of the learning environment.
 
-## 0. Parallelize mutations
+## 1. Parallelize mutations
 
 ### Use the ParallelLearningAgent
 To enable parallel mutations, the sequential `LearningAgent` must be replaced with `ParallelLearningAgent`. By default, the number of threads is set to the number of available hardware threads on the machine.
@@ -45,7 +45,7 @@ Learn::ParallelLearningAgent la(pendulumLE, instructionSet, params);
 ### First parallel training run
 Build and run the `main-training` target of the project. You should observe that `T_mutat` times have slightly decreased compared to the sequential training log. Other columns relative to the trained TPG characteristics (`NbVert`, `NbActR`, `NbTeamR`) and the fitness of agents (`Min`, `Avg`, `Max`) should remain identical to the sequential training.
 
-## 1. Parallelize evaluations
+## 2. Parallelize evaluations
 
 ### Make the PendulumWrapper safely copyable
 To enable parallel evaluations, the `PendulumWrapper` must be made safely copyable. This is done first by implementing the copy constructor of the `PendulumWrapper` class, and then by overriding the `clone()` method inherited from the `LearningEnvironment` base class.
