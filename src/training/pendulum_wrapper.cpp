@@ -51,7 +51,7 @@ void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iter
 	// In TRAINING mode, randomize the initial state
 	if (mode == Learn::LearningMode::TRAINING) {
 		// Seed the RNG differently for each iteration
-		this->rng.setSeed(seed + iterationNumber);
+		this->rng.setSeed(seed);
 	}
 	else {
 		// In VALIDATION and TESTING modes, use fixed seeds for reproducibility
