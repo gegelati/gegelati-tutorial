@@ -9,7 +9,9 @@ The objective of this tutorial is to activate parallel training of Tangled Progr
 - instantiating a `ParallelLearningAgent`, and
 - making the `PendulumWrapper` safely copyable so worker threads receive independent environments.
 
-The starting point of this tutorial is the C++ project obtained at the end of the _[GEGELATI introductory tutorial](/gegelati-tutorial)_. While completing the introductory tutorial is strongly advised, a copy of the project resulting from this tutorial can be downloaded at the following link: [pendulum_wrapper_solution.zip](/gegelati-tutorial/data/gegelati-tutorial-solution.zip).
+The starting point of this tutorial is the C++ project obtained at the end of the _[GEGELATI introductory tutorial](/gegelati-tutorial)_. While completing the introductory tutorial is strongly advised, a copy of the project resulting from this tutorial can be downloaded at the following link: [pendulum_wrapper_solution.zip](/gegelati-tutorial/data/gegelati-tutorial-solution.zip). 
+
+To fully benefit from the parallelization, a the multi-episode evaluation of the agents, covered in the [linked tutorial](/gegelati-tutorial/tutos/strengthening-agents), can be implemented before starting this tutorial. The result from the multi-episode evaluation tutorial can be downloaded at the following link: [gegelati-tutorial-strengthening-solution.zip](/gegelati-tutorial/data/gegelati-tutorial-strengthening-solution.zip).
 
 ## Why make the environment copyable?
 
@@ -132,3 +134,4 @@ In this tutorial, you have successfully enabled parallel training of Tangled Pro
 More information about parallel training with <span style="font-variant: small-caps;">Gegelati</span> can be found in the following publication: 
 
 [_K. Desnos, N. Sourbier, P.-Y. Raumer, O. Gesny and M. Pelcat. GEGELATI: Lightweight Artificial Intelligence through Generic and Evolvable Tangled Program Graphs. In Workshop on Design and Architectures for Signal and Image Processing (DASIP), ACM, 2021_](https://arxiv.org/pdf/2012.08296)
+

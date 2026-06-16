@@ -89,3 +89,5 @@ In this tutorial, you have successfully enabled multi-episode evaluation for rei
 More information about reinforcement learning with <span style="font-variant: small-caps;">Gegelati</span> can be found in the following publication: 
 
 [_K. Desnos, N. Sourbier, P.-Y. Raumer, O. Gesny and M. Pelcat. GEGELATI: Lightweight Artificial Intelligence through Generic and Evolvable Tangled Program Graphs. In Workshop on Design and Architectures for Signal and Image Processing (DASIP), ACM, 2021_](https://arxiv.org/pdf/2012.08296)
+
+Since the training time of the learning agents were increased due to the multi-episode evaluation, the [the parallelization of the training process, covered in the linked tutorial, can be used to reduce the overall training time](/gegelati-tutorial/tutos/parallel-training).
