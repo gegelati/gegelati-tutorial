@@ -64,7 +64,7 @@ jobs:
 
     name: Test ${{ matrix.archive }} on ${{ matrix.os }} with ${{ matrix.compiler }} and Gegelati ${{ matrix.gegelati_version }}
     env:
-      CMAKE_GENERATOR: ${{ matrix.compiler == 'msvc' && 'Visual Studio 17 2022' || matrix.compiler == 'gcc' && matrix.os == 'windows-latest' && 'MinGW Makefiles' || 'Unix Makefiles'}}
+      CMAKE_GENERATOR: ${{ matrix.compiler == 'msvc' && 'Visual Studio 18 2026' || matrix.compiler == 'gcc' && matrix.os == 'windows-latest' && 'MinGW Makefiles' || 'Unix Makefiles'}}
     steps:
       - uses: actions/checkout@v3
 
