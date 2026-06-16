@@ -517,11 +517,11 @@ In this tutorial, you have learned:
 While this tutorial illustrates the basic concepts of TPG training, <span style="font-variant: small-caps;">Gegelati</span> offers many features to play with TPGs.
 The following tutorials guide you through these features, starting from the result of this tutorial.
 These tutorial can be followed in any order, so feel free to explore them based on your personal interests and objectives.
-* _[Partially Available]_ [Export, visualize and import TPG graphs in the DOT format.](/gegelati-tutorial/tutos/export-visualize-import)
-* _[Available Soon]_ Accelerate training with early termination, random initial states and testing.
+* [Export, visualize and import TPG graphs in the DOT format.](/gegelati-tutorial/tutos/export-visualize-import)
+* [Strengthening Reinforcement Learning Agents in with Multi-Episode Evaluation and Validation Phases](/gegelati-tutorial/tutos/strengthening-agents)
+* [Parallel Training of Tangled Program Graphs](/gegelati-tutorial/tutos/parallel-training)
 * _[Available Soon]_ Play with training meta-parameters.
 * _[Available Soon]_ Explore TPG statistics throughout the training.
-* _[Available Soon]_ Accelerate TPG training with deterministic multi-core support.
 * _[Available Soon]_ Generate standalone C code for ultra-fast inference.
 
 Several other open-source applications are available in the GitHub repository of <span style="font-variant: small-caps;">Gegelati</span>.
