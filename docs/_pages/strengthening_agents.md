@@ -19,12 +19,12 @@ In reinforcement learning, evaluating an agent's performance over multiple episo
 
 Implementing multi-episode evaluation in <span style="font-variant: small-caps;">Gegelati</span> involves modifying the `PendulumWrapper` class to support multiple episodes during the evaluation phase. To vary the starting conditions of each episode, the pendulum's angle and angular velocity will be randomly initialized at the beginning of each episode.
 
-### 0. Modify PendulumWrapper to support multi-episode evaluation
+## 0. Modify PendulumWrapper to support multi-episode evaluation
 To implement multi-episode evaluation, we will first modify the `PendulumWrapper` class to support a stochastic reset of the pendulum's state at the beginning of each episode.
 
 To support random initialization, we will use a pseudo-random number generator to generate random values for the pendulum's angle and angular velocity within specified ranges.
 
-#### TODO 1:
+#### TODO #1:
 Edit the `/gegelati-tutorial/src/environments/pendulum_wrapper.h`to add a random number generator as a member variable of the `PendulumWrapper` class. This pseudo-random number generator is provided in <span style="font-variant: small-caps;">Gegelati</span> with the `Mutator::RNG` class.
 
 {% details Solution to #1 (Click to expand) %}
@@ -40,7 +40,7 @@ public:
 
 {% enddetails %}
 
-#### TODO 2:
+#### TODO #2:
 Next, we will modify the `reset(size_t seed, Learn::LearningMode mode, uint16_t iterationNumber, uint64_t generationNumber)` method of the `PendulumWrapper` class to randomly initialize the pendulum's angle and angular velocity at the beginning of each episode.
 
 When calling the `reset(...)` method of the environment, </span style="font-variant: small-caps;">Gegelati</span> notably provides a `seed` parameter that can be used to seed the environment random number generator, using the `Mutator::RNG::seed(size_t seed)` method. Using this seeding mechanism ensures deterministic reproducibility of the random initialization across different runs.
@@ -66,10 +66,10 @@ void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iter
 
 {% enddetails %}
 
-### 1. Configure multi-episode evaluation in params.json
+## 1. Configure multi-episode evaluation in params.json
 To enable multi-episode evaluation during training, we need to modify the training parameters in the `params.json` file of the project.
 
-#### TODO 3:
+#### TODO #3:
 Edit the `/gegelati-tutorial/params.json` file to set the `nbEpisodesPerEval` parameter to a value greater than 1. This parameter specifies the number of episodes over which each agent will be evaluated during training. For this tutorial, set it to 5.
 
 {% details Solution to #3 (Click to expand) %}
