@@ -13,7 +13,7 @@ The starting point of this tutorial is the C++ project obtained at the end of th
 
 To fully benefit from the parallelization, a the multi-episode evaluation of the agents, covered in the [linked tutorial](/gegelati-tutorial/tutos/strengthening-agents), can be implemented before starting this tutorial. The result from the multi-episode evaluation tutorial can be downloaded at the following link: [gegelati-tutorial-strengthening-solution.zip](/gegelati-tutorial/data/gegelati-tutorial-strengthening-solution.zip).
 
-## Why make the environment copyable?
+### Why make the environment copyable?
 
 The learning process of TPGs involves two main time-consuming steps per generation:
 - Evaluation of the fitness of each individual TPG root within the `PendulumWrapper` learning environment. This step takes time `T_eval` seconds at each generation in the printed log.
@@ -27,6 +27,7 @@ An important feature of <span style="font-variant: small-caps;">Gegelati</span> 
 
 ## 0. Parallelize mutations
 
+### Use the ParallelLearningAgent
 To enable parallel mutations, the sequential `LearningAgent` must be replaced with `ParallelLearningAgent`. By default, the number of threads is set to the number of available hardware threads on the machine.
 
 #### TODO #1:
@@ -41,10 +42,12 @@ Learn::ParallelLearningAgent la(pendulumLE, instructionSet, params);
 
 {% enddetails %}
 
+### First parallel training run
 Build and run the `main-training` target of the project. You should observe that `T_mutat` times have slightly decreased compared to the sequential training log. Other columns relative to the trained TPG characteristics (`NbVert`, `NbActR`, `NbTeamR`) and the fitness of agents (`Min`, `Avg`, `Max`) should remain identical to the sequential training.
 
 ## 1. Parallelize evaluations
 
+### Make the PendulumWrapper safely copyable
 To enable parallel evaluations, the `PendulumWrapper` must be made safely copyable. This is done first by implementing the copy constructor of the `PendulumWrapper` class, and then by overriding the `clone()` method inherited from the `LearningEnvironment` base class.
 
 #### TODO #2:
@@ -119,7 +122,7 @@ bool PendulumWrapper::isCopyable() const {
 
 {% enddetails %}
 
-#### Test parallel evaluations
+### Test parallel evaluations
 Build and run the `main-training` target of the project. You should observe that `T_eval` times have significantly decreased compared to the sequential training log. Other columns relative to the trained TPG characteristics (`NbVert`, `NbActR`, `NbTeamR`) and the fitness of agents (`Min`, `Avg`, `Max`) should remain identical to the sequential training.
 
 It it possible to control the number of threads used by the `ParallelLearningAgent` by setting the `nbThreads` parameter in the `/gegelati-tutorial/params.json` file as follows:
