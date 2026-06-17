@@ -462,15 +462,12 @@ An example of log is presented hereafter:
 
 ```bash
 Pendulum TPG training.
-                                           Train
-      Gen   NbVert   NbActR  NbTeamR      Min      Avg      Max  T_mutat   T_eval  T_decim  T_total
-        0      157        0      150 -1994.49 -1253.84 -1073.07     0.00     0.92     0.00     0.97
-        1      166        0      150 -7214.09 -1327.43  -977.91    14.23     1.11     0.00    16.35
-        2      164        0      150 -6222.31 -1194.81  -936.95     4.10     1.53     0.00    22.02
-        3      167        0      150 -6862.46 -1180.28  -936.95     5.62     1.62     0.00    29.29
-        4      166        0      151 -1995.37 -1105.47  -936.95     7.60     1.63     0.00    38.56
-        5      168        0      150 -6990.10 -1162.87  -802.01     4.07     1.60     0.00    44.27
-        6      164        0      150 -6990.10 -1290.24  -802.01     5.95     1.52     0.00    51.78
+                                                 Train
+      Gen   NbVert   NbActR  NbTeamR      Min      Avg      Max   T_eval  T_decim  T_mutat  T_total
+        0      157        0      150 -1994.49 -1253.84 -1073.07     1.34     0.00     0.06     1.40
+        1      160        0      150 -2210.24 -1172.25 -1073.07     1.78     0.00     0.07     3.25
+        2      161        0      150 -6918.01 -1221.05 -1073.07     2.14     0.00     0.02     5.41
+        3      162        0      150 -7642.80 -1157.49  -939.14     2.24     0.00     0.08     7.73
 ```
 
 The generated logs contain a table that can be exported in the CSV format by giving a file path to the `LABasicLogger` constructor.
