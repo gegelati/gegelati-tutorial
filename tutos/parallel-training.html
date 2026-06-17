@@ -1,0 +1,407 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<!-- Math support from: https://zjuwhw.github.io/2017/06/04/MathJax.html-->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    processEscapes: true
+  },
+  chtml: {
+	scale: 0.8
+  },
+  svg: {
+	scale: 0.8
+  }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Parallel Training of Tangled Program Graphs - GEGELATI</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Your Name">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="GEGELATI">
+<meta property="og:title" content="Parallel Training of Tangled Program Graphs">
+<meta property="og:url" content="https://gegelati.github.io/tutos/parallel-training">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://gegelati.github.io/tutos/parallel-training">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://gegelati.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="GEGELATI Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+<link rel="manifest" href="assets/images/site.webmanifest">
+<link rel="mask-icon" href="assets/images/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/gegelati-logo-full.svg" alt=" "></a>
+        
+        <a class="site-title" href="/">
+           
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/publis/">Publications</a>
+            </li><li class="masthead__menu-item">
+              <a href="/projects/">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/gegelati-tutorial/tutos/">Tutorials</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://github.com/gegelati/gegelati">Source Code</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Parallel Training of Tangled Program Graphs">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://gegelati.github.io/tutos/parallel-training" class="u-url" itemprop="url">Parallel Training of Tangled Program Graphs
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#0-why-make-the-environment-copyable">0. Why make the environment copyable?</a></li><li><a href="#1-parallelize-mutations">1. Parallelize mutations</a><ul><li><a href="#use-the-parallellearningagent">Use the ParallelLearningAgent</a><ul><li><a href="#todo-1">TODO #1:</a></li></ul></li><li><a href="#first-parallel-training-run">First parallel training run</a></li></ul></li><li><a href="#2-parallelize-evaluations">2. Parallelize evaluations</a><ul><li><a href="#make-the-pendulumwrapper-safely-copyable">Make the PendulumWrapper safely copyable</a><ul><li><a href="#todo-2">TODO #2:</a></li><li><a href="#todo-3">TODO #3:</a></li><li><a href="#todo-4">TODO #4:</a></li></ul></li><li><a href="#test-parallel-evaluations">Test parallel evaluations</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>The objective of this tutorial is to activate parallel training of Tangled Program Graphs (TPGs) with <span style="font-variant: small-caps;">Gegelati</span> by:</p>
+<ul>
+  <li>instantiating a <code class="language-plaintext highlighter-rouge">ParallelLearningAgent</code>, and</li>
+  <li>making the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> safely copyable so worker threads receive independent environments.</li>
+</ul>
+
+<p>The starting point of this tutorial is the C++ project obtained at the end of the <em><a href="/gegelati-tutorial">GEGELATI introductory tutorial</a></em>. While completing the introductory tutorial is strongly advised, a copy of the project resulting from this tutorial can be downloaded at the following link: <a href="/gegelati-tutorial/data/gegelati-tutorial-solution.zip">pendulum_wrapper_solution.zip</a>.</p>
+
+<p>To fully benefit from the parallelization, a the multi-episode evaluation of the agents, covered in the <a href="/gegelati-tutorial/tutos/strengthening-agents">linked tutorial</a>, can be implemented before starting this tutorial. The result from the multi-episode evaluation tutorial can be downloaded at the following link: <a href="/gegelati-tutorial/data/gegelati-tutorial-strengthening-solution.zip">gegelati-tutorial-strengthening-solution.zip</a>.</p>
+
+<h2 id="0-why-make-the-environment-copyable">0. Why make the environment copyable?</h2>
+
+<p>The learning process of TPGs involves two main time-consuming steps per generation:</p>
+<ul>
+  <li>Evaluation of the fitness of each individual TPG root within the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> learning environment. This step takes time <code class="language-plaintext highlighter-rouge">T_eval</code> seconds at each generation in the printed log.</li>
+  <li>Mutation of the TPG population. This step takes time <code class="language-plaintext highlighter-rouge">T_mutat</code> seconds at each generation in the printed log.</li>
+</ul>
+
+<p>When using a <code class="language-plaintext highlighter-rouge">LearningAgent</code>, both steps are performed sequentially on a single thread. To accelerate training, it is possible to parallelize these steps across multiple threads/cores by using <code class="language-plaintext highlighter-rouge">ParallelLearningAgent</code>.</p>
+
+<p>To better take not of the benefits of parallel training, keep a copy of the logs produced by the sequential training for comparison.</p>
+
+<p>An important feature of <span style="font-variant: small-caps;">Gegelati</span> is that the parallelization of training is fully deterministic, which means that running the same training with the same random seed will always produce the same results, regardless of the number of threads used. This is achieved by ensuring that each worker thread operates on its own independent copy of the learning environment.</p>
+
+<h2 id="1-parallelize-mutations">1. Parallelize mutations</h2>
+
+<h3 id="use-the-parallellearningagent">Use the ParallelLearningAgent</h3>
+<p>To enable parallel mutations, the sequential <code class="language-plaintext highlighter-rouge">LearningAgent</code> must be replaced with <code class="language-plaintext highlighter-rouge">ParallelLearningAgent</code>. By default, the number of threads is set to the number of available hardware threads on the machine.</p>
+
+<h4 id="todo-1">TODO #1:</h4>
+<p>Edit the <code class="language-plaintext highlighter-rouge">/gegelati-tutorial/src/training/main-training.cpp</code> by replacing the line that instantiates the <code class="language-plaintext highlighter-rouge">LearningAgent</code> with a line that instantiates a <code class="language-plaintext highlighter-rouge">ParallelLearningAgent</code>:</p>
+
+<details><summary>Solution to #1 (Click to expand)</summary>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* main-training.cpp */</span>
+<span class="c1">// Instantiate and initialize the Learning Agent (LA)</span>
+<span class="n">Learn</span><span class="o">::</span><span class="n">ParallelLearningAgent</span> <span class="nf">la</span><span class="p">(</span><span class="n">pendulumLE</span><span class="p">,</span> <span class="n">instructionSet</span><span class="p">,</span> <span class="n">params</span><span class="p">);</span>
+</code></pre></div></div>
+
+</details>
+
+<h3 id="first-parallel-training-run">First parallel training run</h3>
+<p>Build and run the <code class="language-plaintext highlighter-rouge">main-training</code> target of the project. You should observe that <code class="language-plaintext highlighter-rouge">T_mutat</code> times have slightly decreased compared to the sequential training log. Other columns relative to the trained TPG characteristics (<code class="language-plaintext highlighter-rouge">NbVert</code>, <code class="language-plaintext highlighter-rouge">NbActR</code>, <code class="language-plaintext highlighter-rouge">NbTeamR</code>) and the fitness of agents (<code class="language-plaintext highlighter-rouge">Min</code>, <code class="language-plaintext highlighter-rouge">Avg</code>, <code class="language-plaintext highlighter-rouge">Max</code>) should remain identical to the sequential training.</p>
+
+<h2 id="2-parallelize-evaluations">2. Parallelize evaluations</h2>
+
+<h3 id="make-the-pendulumwrapper-safely-copyable">Make the PendulumWrapper safely copyable</h3>
+<p>To enable parallel evaluations, the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> must be made safely copyable. This is done first by implementing the copy constructor of the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> class, and then by overriding the <code class="language-plaintext highlighter-rouge">clone()</code> method inherited from the <code class="language-plaintext highlighter-rouge">LearningEnvironment</code> base class.</p>
+
+<h4 id="todo-2">TODO #2:</h4>
+<p>Edit the <code class="language-plaintext highlighter-rouge">/gegelati-tutorial/src/environments/pendulum_wrapper.h</code> and <code class="language-plaintext highlighter-rouge">/gegelati-tutorial/src/environments/pendulum_wrapper.cpp</code> to add a copy constructor <code class="language-plaintext highlighter-rouge">PendulumWrapper(const PendulumWrapper&amp; other)</code> to the class.</p>
+
+<p>It is important to note that the default copy constructor generated by the compiler would perform a shallow copy of the member variables, which is not suitable in this case. Therefore, a custom copy constructor must be implemented to ensure that all member variables are properly duplicated.</p>
+
+<p>Special care should be taken to handle the <code class="language-plaintext highlighter-rouge">std::vector&lt;Data::PointerWrapper&lt;double&gt;&gt; data</code> attribute, this attribute must be initialized as a copy-constructed copy of the <code class="language-plaintext highlighter-rouge">other.data</code> attribute. Then the pointers contained in the vector must be updated to point to the attributes of the <code class="language-plaintext highlighter-rouge">this-&gt;pendulum</code>, and not to <code class="language-plaintext highlighter-rouge">other.pendulum</code> as is the case after copy-constructing the <code class="language-plaintext highlighter-rouge">data</code> attribute.</p>
+
+<details><summary>Solution to #2 (Click to expand)</summary>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.h */</span>
+<span class="c1">// Copy constructor</span>
+<span class="n">PendulumWrapper</span><span class="p">(</span><span class="k">const</span> <span class="n">PendulumWrapper</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.cpp */</span>
+<span class="c1">// Copy constructor implementation</span>
+<span class="n">PendulumWrapper</span><span class="o">::</span><span class="n">PendulumWrapper</span><span class="p">(</span><span class="k">const</span> <span class="n">PendulumWrapper</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">LearningEnvironment</span><span class="p">(</span><span class="n">other</span><span class="p">),</span> <span class="c1">// Call base class copy constructor</span>
+      <span class="n">pendulum</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">pendulum</span><span class="p">),</span>   <span class="c1">// Copy-construct the pendulum</span>
+      <span class="n">data</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>            <span class="c1">// Copy-construct the data vector</span>
+<span class="p">{</span>
+    <span class="c1">// Update pointers in data to point to this-&gt;pendulum's attributes</span>
+	<span class="n">data</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="n">setPointer</span><span class="p">(</span><span class="o">&amp;</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">getAngle</span><span class="p">());</span>
+	<span class="n">data</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">setPointer</span><span class="p">(</span><span class="o">&amp;</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">getVelocity</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+</details>
+
+<h4 id="todo-3">TODO #3:</h4>
+<p>Next, override the <code class="language-plaintext highlighter-rouge">clone()</code> method in the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> class to return a new instance of <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> created using the copy constructor.</p>
+
+<details><summary>Solution to #3 (Click to expand)</summary>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.h */</span>
+<span class="c1">// Override clone method</span>
+<span class="n">Data</span><span class="o">::</span><span class="n">LearningEnvironment</span><span class="o">*</span> <span class="n">clone</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.cpp */</span>
+<span class="c1">// Override clone method implementation</span>
+<span class="n">Data</span><span class="o">::</span><span class="n">LearningEnvironment</span><span class="o">*</span> <span class="n">PendulumWrapper</span><span class="o">::</span><span class="n">clone</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">PendulumWrapper</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">);</span> <span class="c1">// Use copy constructor</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+</details>
+
+<h4 id="todo-4">TODO #4:</h4>
+<p>To signal to <span style="font-variant: small-caps;">Gegelati</span> that the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> can be safely copied for parallel evaluation, the <code class="language-plaintext highlighter-rouge">LearningEnvironment::isCopyable()</code> method must be overridden to return <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+<details><summary>Solution to #4 (Click to expand)</summary>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.h */</span>
+<span class="c1">// Override isCopyable method</span>
+<span class="kt">bool</span> <span class="n">isCopyable</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.cpp */</span>
+<span class="c1">// Override isCopyable method implementation</span>
+<span class="kt">bool</span> <span class="n">PendulumWrapper</span><span class="o">::</span><span class="n">isCopyable</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="c1">// Indicate that this environment is copyable</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+</details>
+
+<h3 id="test-parallel-evaluations">Test parallel evaluations</h3>
+<p>Build and run the <code class="language-plaintext highlighter-rouge">main-training</code> target of the project. You should observe that <code class="language-plaintext highlighter-rouge">T_eval</code> times have significantly decreased compared to the sequential training log. Other columns relative to the trained TPG characteristics (<code class="language-plaintext highlighter-rouge">NbVert</code>, <code class="language-plaintext highlighter-rouge">NbActR</code>, <code class="language-plaintext highlighter-rouge">NbTeamR</code>) and the fitness of agents (<code class="language-plaintext highlighter-rouge">Min</code>, <code class="language-plaintext highlighter-rouge">Avg</code>, <code class="language-plaintext highlighter-rouge">Max</code>) should remain identical to the sequential training.</p>
+
+<p>It it possible to control the number of threads used by the <code class="language-plaintext highlighter-rouge">ParallelLearningAgent</code> by setting the <code class="language-plaintext highlighter-rouge">nbThreads</code> parameter in the <code class="language-plaintext highlighter-rouge">/gegelati-tutorial/params.json</code> file as follows:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"nbThreads"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="err">,</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>In this tutorial, you have successfully enabled parallel training of Tangled Program Graphs (TPGs) in <span style="font-variant: small-caps;">Gegelati</span> by replacing the sequential <code class="language-plaintext highlighter-rouge">LearningAgent</code> with <code class="language-plaintext highlighter-rouge">ParallelLearningAgent</code> and making the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> safely copyable.</p>
+
+<p>More information about parallel training with <span style="font-variant: small-caps;">Gegelati</span> can be found in the following publication:</p>
+
+<p><a href="https://arxiv.org/pdf/2012.08296"><em>K. Desnos, N. Sourbier, P.-Y. Raumer, O. Gesny and M. Pelcat. GEGELATI: Lightweight Artificial Intelligence through Generic and Evolvable Tangled Program Graphs. In Workshop on Design and Architectures for Signal and Image Processing (DASIP), ACM, 2021</em></a></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 GEGELATI. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

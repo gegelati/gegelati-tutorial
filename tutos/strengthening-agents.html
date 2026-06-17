@@ -1,0 +1,453 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<!-- Math support from: https://zjuwhw.github.io/2017/06/04/MathJax.html-->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    processEscapes: true
+  },
+  chtml: {
+	scale: 0.8
+  },
+  svg: {
+	scale: 0.8
+  }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Strengthening Reinforcement Learning Agents in with Multi-Episode Evaluation and Validation Phases - GEGELATI</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Your Name">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="GEGELATI">
+<meta property="og:title" content="Strengthening Reinforcement Learning Agents in with Multi-Episode Evaluation and Validation Phases">
+<meta property="og:url" content="https://gegelati.github.io/tutos/strengthening-agents">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://gegelati.github.io/tutos/strengthening-agents">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://gegelati.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="GEGELATI Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+<link rel="manifest" href="assets/images/site.webmanifest">
+<link rel="mask-icon" href="assets/images/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/gegelati-logo-full.svg" alt=" "></a>
+        
+        <a class="site-title" href="/">
+           
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/publis/">Publications</a>
+            </li><li class="masthead__menu-item">
+              <a href="/projects/">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/gegelati-tutorial/tutos/">Tutorials</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://github.com/gegelati/gegelati">Source Code</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Strengthening Reinforcement Learning Agents in with Multi-Episode Evaluation and Validation Phases">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://gegelati.github.io/tutos/strengthening-agents" class="u-url" itemprop="url">Strengthening Reinforcement Learning Agents in with Multi-Episode Evaluation and Validation Phases
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#0-multi-episode-evaluation-of-agents">0. Multi-episode evaluation of agents</a><ul><li><a href="#why-evaluate-over-multiple-episodes">Why evaluate over multiple episodes?</a></li><li><a href="#modify-pendulumwrapper-to-support-multi-episode-evaluation">Modify PendulumWrapper to support multi-episode evaluation</a><ul><li><a href="#todo-1">TODO #1:</a></li><li><a href="#todo-2">TODO #2:</a></li></ul></li><li><a href="#configure-multi-episode-evaluation-in-paramsjson">Configure multi-episode evaluation in params.json</a><ul><li><a href="#todo-3">TODO #3:</a></li></ul></li><li><a href="#run-training-with-multi-episode-evaluation">Run training with multi-episode evaluation</a></li></ul></li><li><a href="#2-validation-phase-at-the-end-of-each-generation">2. Validation phase at the end of each generation</a><ul><li><a href="#initialize-validation-episodes-with-fixed-conditions">Initialize validation episodes with fixed conditions</a><ul><li><a href="#todo-4">TODO #4:</a></li></ul></li><li><a href="#activate-validation-phase-in-paramsjson">Activate validation phase in params.json</a><ul><li><a href="#todo-5">TODO #5:</a></li></ul></li><li><a href="#run-training-with-validation-phase">Run training with validation phase</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>The objective of this tutorial is two-fold:</p>
+<ol>
+  <li>Strengthen the built reinforcement learning agents by evaluating them over multiple episodes during training, and</li>
+  <li>Activate a validation phase at the end of each generation to monitor potential overfitting, and</li>
+</ol>
+
+<p>The starting point of this tutorial is the C++ project obtained at the end of the <em><a href="/gegelati-tutorial">GEGELATI introductory tutorial</a></em>. While completing the introductory tutorial is strongly advised, a copy of the project resulting from this tutorial can be downloaded at the following link: <a href="/gegelati-tutorial/data/gegelati-tutorial-solution.zip">pendulum_wrapper_solution.zip</a>.</p>
+
+<h2 id="0-multi-episode-evaluation-of-agents">0. Multi-episode evaluation of agents</h2>
+
+<h3 id="why-evaluate-over-multiple-episodes">Why evaluate over multiple episodes?</h3>
+<p>An episode refers to a complete sequence of interactions between a reinforcement learning agent and its environment, starting from an initial state and ending when a terminal condition is met. For example, in the initial tutorial, an episode consists of the agent attempting to balance the pendulum for a fixed duration of 1500 time steps, as defined by the <code class="language-plaintext highlighter-rouge">maxNbActionsPerEval</code> parameter in <code class="language-plaintext highlighter-rouge">params.json</code>.</p>
+
+<p>In reinforcement learning, evaluating an agent’s performance over multiple episodes is crucial for obtaining a reliable evaluation of its true capabilities. This is because the performance of an agent can vary significantly from one episode to another due to the inherent stochasticity of the environment and the agent’s policy. By averaging the results over multiple episodes, we can mitigate the effects of randomness and strengthen the robustness of the learned policy.</p>
+
+<p>Implementing multi-episode evaluation in <span style="font-variant: small-caps;">Gegelati</span> involves modifying the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> class to support multiple episodes during the evaluation phase. To vary the starting conditions of each episode, the pendulum’s angle and angular velocity will be randomly initialized at the beginning of each episode.</p>
+
+<h3 id="modify-pendulumwrapper-to-support-multi-episode-evaluation">Modify PendulumWrapper to support multi-episode evaluation</h3>
+<p>To implement multi-episode evaluation, we will first modify the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> class to support a stochastic reset of the pendulum’s state at the beginning of each episode.</p>
+
+<p>To support random initialization, we will use a pseudo-random number generator to generate random values for the pendulum’s angle and angular velocity within specified ranges.</p>
+
+<h4 id="todo-1">TODO #1:</h4>
+<p>Edit the <code class="language-plaintext highlighter-rouge">/gegelati-tutorial/src/environments/pendulum_wrapper.h</code> to add a random number generator as a member variable of the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> class. This pseudo-random number generator is provided in <span style="font-variant: small-caps;">Gegelati</span> with the <code class="language-plaintext highlighter-rouge">Mutator::RNG</code> class.</p>
+
+<details><summary>Solution to #1 (Click to expand)</summary>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.h */</span>
+<span class="k">class</span> <span class="nc">PendulumWrapper</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Learn</span><span class="o">::</span><span class="n">LearningEnvironment</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="c1">// Existing code...</span>
+
+    <span class="c1">/// Random Number Generator for the environment</span>
+	<span class="n">Mutator</span><span class="o">::</span><span class="n">RNG</span> <span class="n">rng</span><span class="p">;</span>
+</code></pre></div></div>
+
+</details>
+
+<h4 id="todo-2">TODO #2:</h4>
+<p>Next, we will modify the <code class="language-plaintext highlighter-rouge">reset(size_t seed, Learn::LearningMode mode, uint16_t iterationNumber, uint64_t generationNumber)</code> method of the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> class to randomly initialize the pendulum’s angle and angular velocity at the beginning of each episode.</p>
+
+<p>When calling the <code class="language-plaintext highlighter-rouge">reset(...)</code> method of the environment, <span style="font-variant: small-caps;">Gegelati</span> notably provides a <code class="language-plaintext highlighter-rouge">seed</code> parameter that can be used to seed the environment random number generator, using the <code class="language-plaintext highlighter-rouge">Mutator::RNG::setSeed(size_t seed)</code> method. The provided <code class="language-plaintext highlighter-rouge">seed</code> value is unique for each iteration and generation. Using this seeding mechanism ensures deterministic reproducibility of the random initialization across different runs.</p>
+
+<p>Once the RNG is seeded, we will use the <code class="language-plaintext highlighter-rouge">Mutator::RNG::getDouble(double min, double max)</code> method to generate random values within specified ranges. For example, we can set the angle to be randomly initialized between -π and π radians, and the angular velocity to be randomly initialized between -1.0 and 1.0 radians per second.</p>
+
+<details><summary>Solution to #2 (Click to expand)</summary>
+<p>The reset method be modified as follows:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* pendulum_wrapper.cpp */</span>
+<span class="kt">void</span> <span class="n">PendulumWrapper</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">seed</span><span class="p">,</span> <span class="n">Learn</span><span class="o">::</span><span class="n">LearningMode</span> <span class="n">mode</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">iterationNumber</span><span class="p">,</span> <span class="kt">uint64_t</span> <span class="n">generationNumber</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Seed the RNG differently for each iteration</span>
+	<span class="k">this</span><span class="o">-&gt;</span><span class="n">rng</span><span class="p">.</span><span class="n">setSeed</span><span class="p">(</span><span class="n">seed</span><span class="p">);</span>
+
+    <span class="c1">// Randomize the initial angle between [-pi, pi]</span>
+	<span class="kt">double</span> <span class="n">initialAngle</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">rng</span><span class="p">.</span><span class="n">getDouble</span><span class="p">(</span><span class="o">-</span><span class="n">M_PI</span><span class="p">,</span> <span class="n">M_PI</span><span class="p">);</span>
+	<span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">setAngle</span><span class="p">(</span><span class="n">initialAngle</span><span class="p">);</span>
+	<span class="c1">// Randomize the initial velocity between [-1.0, 1.0]</span>
+	<span class="kt">double</span> <span class="n">initialVelocity</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">rng</span><span class="p">.</span><span class="n">getDouble</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+	<span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">setVelocity</span><span class="p">(</span><span class="n">initialVelocity</span><span class="p">);</span>
+
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">accumulatedReward</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+</details>
+
+<h3 id="configure-multi-episode-evaluation-in-paramsjson">Configure multi-episode evaluation in params.json</h3>
+<p>To enable multi-episode evaluation during training, we need to modify the training parameters in the <code class="language-plaintext highlighter-rouge">params.json</code> file of the project.</p>
+
+<h4 id="todo-3">TODO #3:</h4>
+<p>Edit the <code class="language-plaintext highlighter-rouge">/gegelati-tutorial/params.json</code> file to set the <code class="language-plaintext highlighter-rouge">nbEpisodesPerEval</code> parameter to a value greater than 1. This parameter specifies the number of episodes over which each agent will be evaluated during training. For this tutorial, set it to 5.</p>
+
+<details><summary>Solution to #3 (Click to expand)</summary>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Existing</span><span class="w"> </span><span class="err">parameters...</span><span class="w">
+    </span><span class="nl">"nbEpisodesPerEval"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Existing</span><span class="w"> </span><span class="err">parameters...</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+</details>
+
+<h3 id="run-training-with-multi-episode-evaluation">Run training with multi-episode evaluation</h3>
+<p>With the modifications to the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> class and the updated training parameters, we are now ready to run the training process with multi-episode evaluation enabled. During training, each agent will be evaluated over 5 episodes, and the average fitness across these episodes will be used to guide the evolutionary process.</p>
+
+<p>The output of the training process generated in the console should look as follows:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                                                 Train
+      Gen   NbVert   NbActR  NbTeamR      Min      Avg      Max  T_eval  T_decim  T_mutat  T_total
+        0      157        0      150 <span class="nt">-7315</span>.27 <span class="nt">-1746</span>.27  <span class="nt">-839</span>.34    6.67     0.00     3.43    10.10
+        1      160        0      150 <span class="nt">-5556</span>.83 <span class="nt">-1469</span>.08  <span class="nt">-644</span>.54    9.70     0.00     4.68    24.48
+        2      159        0      150 <span class="nt">-4979</span>.20 <span class="nt">-1274</span>.80  <span class="nt">-744</span>.56    9.15     0.00     5.26    38.89
+        3      161        0      150 <span class="nt">-3757</span>.80 <span class="nt">-1268</span>.95  <span class="nt">-744</span>.56    9.68     0.00     5.84    54.41
+</code></pre></div></div>
+
+<p>The cumulative execution time should be approximately 5 times longer than before. The reported <code class="language-plaintext highlighter-rouge">Max</code>, <code class="language-plaintext highlighter-rouge">Avg</code>, and <code class="language-plaintext highlighter-rouge">Min</code> training scores should also change. In this specific learning environment, the diversity of initial conditions in the multi-episode evaluation makes the learning task slightly easier at the beginning of the process, resulting in a higher <code class="language-plaintext highlighter-rouge">Max</code> score and slightly faster training of the agent in the initial generations. Indeed, with randomized initial angle and velocity, the pendulum will already be swinging in most episodes, which on average improves its proximity to the desired upward position, thus automatically increasing the received reward.</p>
+
+<h2 id="2-validation-phase-at-the-end-of-each-generation">2. Validation phase at the end of each generation</h2>
+<p>When training an agent with a varying environments, where the difficulty of the task can change from one episode to another, it is possible that the agent overfits to the training episodes and fails to generalize to unseen situations. For example, in the pendulum environment, an agent may learn to balance the pendulum only when it starts from a specific angle and velocity, but fail to do so when the initial conditions are different.</p>
+
+<p>To monitor potential overfitting during training, we can implement a validation phase at the end of each generation. This involves evaluating the surviving best fitting roots of the TPG on a separate validation set of episodes that are not used during the training phase. By comparing the performance of the best agents on the training episodes and the validation episodes, we can detect if the agents are overfitting to the training data.</p>
+
+<h3 id="initialize-validation-episodes-with-fixed-conditions">Initialize validation episodes with fixed conditions</h3>
+
+<p>While the training episodes are randomly initialized at the beginning of each episode, the validation episodes can be initialized with a fixed set of starting conditions to ensure consistency in the evaluation.</p>
+
+<p>To implement the validation phase, we will once again modify the <code class="language-plaintext highlighter-rouge">reset(size_t seed, Learn::LearningMode mode, uint16_t iterationNumber, uint64_t generationNumber)</code> method of the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> class to support a validation mode that uses fixed starting conditions for the pendulum’s angle and angular velocity. The <code class="language-plaintext highlighter-rouge">mode</code> parameter provided to the <code class="language-plaintext highlighter-rouge">reset(...)</code> method can be used to determine whether the environment is in training mode or validation mode.</p>
+
+<h4 id="todo-4">TODO #4:</h4>
+<p>Edit the <code class="language-plaintext highlighter-rouge">reset(size_t seed, Learn::LearningMode mode, uint16_t iterationNumber, uint64_t generationNumber)</code> method of the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code>. When the <code class="language-plaintext highlighter-rouge">mode</code> parameter is not set to <code class="language-plaintext highlighter-rouge">Learn::LearningMode::TRAINING</code>, seed the environment’s random number generator with a seed solely depending on the <code class="language-plaintext highlighter-rouge">iterationNumber</code> (but not the <code class="language-plaintext highlighter-rouge">generationNumber</code> nor the given <code class="language-plaintext highlighter-rouge">seed</code>). This ensures that the validation episodes are initialized with fixed starting conditions for each iteration of the validation epidodes. Keep the random initialization for training episodes as previously implemented.</p>
+
+<details><summary>Solution to #4 (Click to expand)</summary>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">PendulumWrapper</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">seed</span><span class="p">,</span> <span class="n">Learn</span><span class="o">::</span><span class="n">LearningMode</span> <span class="n">mode</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">iterationNumber</span><span class="p">,</span> <span class="kt">uint64_t</span> <span class="n">generationNumber</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">mode</span> <span class="o">==</span> <span class="n">Learn</span><span class="o">::</span><span class="n">LearningMode</span><span class="o">::</span><span class="n">TRAINING</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c1">// Seed the RNG differently for each iteration</span>
+		<span class="k">this</span><span class="o">-&gt;</span><span class="n">rng</span><span class="p">.</span><span class="n">setSeed</span><span class="p">(</span><span class="n">seed</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="k">else</span> <span class="p">{</span>
+		<span class="c1">// In VALIDATION mode, use fixed seeds for reproducibility</span>
+		<span class="k">this</span><span class="o">-&gt;</span><span class="n">rng</span><span class="p">.</span><span class="n">setSeed</span><span class="p">(</span><span class="n">iterationNumber</span><span class="p">);</span>
+	<span class="p">}</span>	
+
+	<span class="c1">// Randomize the initial angle between [- pi, pi]</span>
+	<span class="kt">double</span> <span class="n">initialAngle</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">rng</span><span class="p">.</span><span class="n">getDouble</span><span class="p">(</span><span class="o">-</span><span class="n">M_PI</span><span class="p">,</span> <span class="n">M_PI</span><span class="p">);</span>
+	<span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">setAngle</span><span class="p">(</span><span class="n">initialAngle</span><span class="p">);</span>
+	<span class="c1">// Randomize the initial velocity between [-1.0, 1.0]</span>
+	<span class="kt">double</span> <span class="n">initialVelocity</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">rng</span><span class="p">.</span><span class="n">getDouble</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+	<span class="k">this</span><span class="o">-&gt;</span><span class="n">pendulum</span><span class="p">.</span><span class="n">setVelocity</span><span class="p">(</span><span class="n">initialVelocity</span><span class="p">);</span>
+
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">accumulatedReward</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+</details>
+
+<h3 id="activate-validation-phase-in-paramsjson">Activate validation phase in params.json</h3>
+<p>To enable the validation phase at the end of each generation, we need to modify the training parameters in the <code class="language-plaintext highlighter-rouge">params.json</code> file of the project.</p>
+
+<h4 id="todo-5">TODO #5:</h4>
+<p>Edit the <code class="language-plaintext highlighter-rouge">/gegelati-tutorial/params.json</code> file to set the <code class="language-plaintext highlighter-rouge">doValidation</code> parameter to a <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+<details><summary>Solution to #5 (Click to expand)</summary>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Existing</span><span class="w"> </span><span class="err">parameters...</span><span class="w">
+    </span><span class="nl">"doValidation"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Existing</span><span class="w"> </span><span class="err">parameters...</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+</details>
+
+<h3 id="run-training-with-validation-phase">Run training with validation phase</h3>
+<p>With the modifications to the <code class="language-plaintext highlighter-rouge">PendulumWrapper</code> class and the updated training parameters, we are now ready to run the training process with the validation phase enabled. During training, after each generation, the best fitting roots of the TPG will be evaluated on a separate validation set of episodes, and the average fitness on the validation episodes will be reported in the console output.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Pendulum TPG training.
+                                                 Train                      Valid
+      Gen   NbVert   NbActR  NbTeamR      Min      Avg      Max      Min      Avg      Max   T_eval  T_valid  T_decim  T_mutat  T_total
+        0      157        0      150 <span class="nt">-7315</span>.27 <span class="nt">-1746</span>.27  <span class="nt">-839</span>.34 <span class="nt">-1515</span>.04 <span class="nt">-1277</span>.94  <span class="nt">-858</span>.22     5.99     3.07     0.00     3.12     9.12
+        1      160        0      150 <span class="nt">-5556</span>.83 <span class="nt">-1469</span>.08  <span class="nt">-644</span>.54 <span class="nt">-1381</span>.13 <span class="nt">-1215</span>.51  <span class="nt">-858</span>.22     8.90     4.22     0.00     4.26    22.28
+        2      159        0      150 <span class="nt">-4979</span>.20 <span class="nt">-1274</span>.80  <span class="nt">-744</span>.56 <span class="nt">-1293</span>.25 <span class="nt">-1198</span>.73  <span class="nt">-858</span>.22     8.41     4.78     0.00     4.84    35.53
+        3      161        0      150 <span class="nt">-3757</span>.80 <span class="nt">-1268</span>.95  <span class="nt">-744</span>.56 <span class="nt">-1362</span>.07 <span class="nt">-1192</span>.69  <span class="nt">-858</span>.22     8.91     5.30     0.00     5.37    49.81
+</code></pre></div></div>
+
+<p>As expected, new columns are added to the console output to report the minimum, average, and maximum fitness of the best fitting roots of the TPG on the validation episodes. The reported fitness values are different from those on the training episodes, as different initial conditions are used for the validation episodes. In general, the reported fitness values on the validation episodes should be lower, but not too far from those on the training episodes especially for the maximum fitness. Divergence between the training and validation fitness values may indicate that the agents are overfitting to the training episodes and failing to generalize to unseen situations.</p>
+
+<p>An additional column is also added to report the execution time of the validation phase, which should be shorter than the execution time of the training phase, as only the best fitting roots of the TPG are evaluated on the validation episodes, instead of all the agents in the population.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>In this tutorial, you have successfully enabled multi-episode evaluation for reinforcement learning agents in <span style="font-variant: small-caps;">Gegelati</span>. By evaluating agents over multiple episodes, you have strengthened the robustness of the learned policy and mitigated the effects of randomness in the environment.</p>
+
+<p>More information about reinforcement learning with <span style="font-variant: small-caps;">Gegelati</span> can be found in the following publication:</p>
+
+<p><a href="https://arxiv.org/pdf/2012.08296"><em>K. Desnos, N. Sourbier, P.-Y. Raumer, O. Gesny and M. Pelcat. GEGELATI: Lightweight Artificial Intelligence through Generic and Evolvable Tangled Program Graphs. In Workshop on Design and Architectures for Signal and Image Processing (DASIP), ACM, 2021</em></a></p>
+
+<p>Since the training time of the learning agents were increased due to the multi-episode evaluation, the <a href="/gegelati-tutorial/tutos/parallel-training">the parallelization of the training process, covered in the linked tutorial, can be used to reduce the overall training time</a>.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 GEGELATI. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
