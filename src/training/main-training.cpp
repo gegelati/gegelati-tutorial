@@ -67,7 +67,7 @@ void train_main(std::atomic<bool>& exitProgram, std::atomic<bool>& doDisplay, st
 
 		#if ( DEACTIVATE_DISPLAY == 0 )
 			// Get replay of best root actions on the pendulum for the display
-			replay = createReplay(pendulumLE, la.getBestRoot().first, instructionSet, params);
+			replay = createReplay(pendulumLE, la.getSelector()->getBestRoot().first, instructionSet, params);
 			generation = i;
 
 			// trigger display
