@@ -128,7 +128,8 @@ At the end of the training process, the TPG needs to be exported for further uti
 The TPGs exported in the previous step contained all roots present in the TPG at a given generation, which is useful to better understand the training process, but also to pause a training process and restart it later.
 
 When exporting the TPG resulting from the training, only the graph stemming from the root team providing the best results needs to be exported.
-To keep only the TPG stemming from the best root, the `Learn::LearningAgent::keepBestPolicy()` method should be used.
+To keep only the TPG stemming from the best root, the `Selector::Selector::keepBestPolicy()` method should be used.
+The selector can be retrieved by using the `Learn::LearningAgent::getSelector()` method.
 
 **Hitchhiker programs:**
 In TPG graphs, so-called "hitchhiker" programs may appear.
@@ -174,7 +175,7 @@ std::shared_ptr<TPG::TPGGraph> tpg = la.getTPGGraph();
 TPG::TPGInstrumentedFactory().clearUnusedTPGGraphElements(*tpg);
 
 // Keep only the best root
-la.keepBestPolicy();
+la.getSelector()->keepBestPolicy();
 
 // Clean introns
 tpg->clearProgramIntrons();

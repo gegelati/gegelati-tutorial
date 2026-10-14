@@ -88,13 +88,13 @@ Next, override the `clone()` method in the `PendulumWrapper` class to return a n
 ```cpp  
 /* pendulum_wrapper.h */
 // Override clone method
-Data::LearningEnvironment* clone() const override;
+Learn::LearningEnvironment* clone() const override;
 ```
 
 ```cpp
 /* pendulum_wrapper.cpp */
 // Override clone method implementation
-Data::LearningEnvironment* PendulumWrapper::clone() const {
+Learn::LearningEnvironment* PendulumWrapper::clone() const {
     return new PendulumWrapper(*this); // Use copy constructor
 }
 ```

@@ -73,13 +73,13 @@ void PendulumWrapper::reset(size_t seed, Learn::LearningMode mode, uint16_t iter
 To enable multi-episode evaluation during training, we need to modify the training parameters in the `params.json` file of the project.
 
 #### TODO #3:
-Edit the `/gegelati-tutorial/params.json` file to set the `nbEpisodesPerEval` parameter to a value greater than 1. This parameter specifies the number of episodes over which each agent will be evaluated during training. For this tutorial, set it to 5.
+Edit the `/gegelati-tutorial/params.json` file to set the `nbIterationsPerPolicyEvaluation` parameter to a value greater than 1. This parameter specifies the number of episodes over which each agent will be evaluated during training. For this tutorial, set it to 5.
 
 {% details Solution to #3 (Click to expand) %}
 ```json
 {
     // Existing parameters...
-    "nbEpisodesPerEval": 5,
+    "nbIterationsPerPolicyEvaluation": 5,
     // Existing parameters...
 }
 ```

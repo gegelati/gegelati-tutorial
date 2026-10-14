@@ -71,7 +71,7 @@ int main(int argc, char** argv) {
 			pendulumLE.doAction(action);
 
 			// Display the result.
-			auto uiAction = Renderer::renderEnv(pendulumLE.pendulum.getAngle(), pendulumLE.actions[action] * pendulumLE.pendulum.MAX_TORQUE, frame, 0, pendulumLE.pendulum.TIME_DELTA);
+			auto uiAction = Renderer::renderEnv(pendulumLE.pendulum.getAngle(), pendulumLE.actions[action] * pendulumLE.pendulum.MAX_TORQUE, frame, 0, pendulumLE.pendulum.TIME_DELTA, false);
 			exit = uiAction == INT_MIN;
 		}
 		// Display the score obtained
